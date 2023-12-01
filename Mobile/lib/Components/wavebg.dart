@@ -12,7 +12,7 @@ class WavePainter extends CustomPainter {
     final path = Path();
     path.moveTo(0, size.height);
     path.quadraticBezierTo(size.width / 3, size.height * 0.75, size.width / 2, size.height * 0.5);
-    path.quadraticBezierTo(size.width * 2 / 3, size.height * 0.25, size.width, 0);
+    path.quadraticBezierTo(size.width * 2 / 3, size.height * 0.25, size.width, size.height);
     path.close();
 
     canvas.drawPath(path, paint);
@@ -31,7 +31,7 @@ class WaveBackground extends StatelessWidget {
   Widget build(BuildContext context) {
     return CustomPaint(
       painter: WavePainter(color),
-      size: Size.infinite,
+      size: const Size(500,500),
     );
   }
 }

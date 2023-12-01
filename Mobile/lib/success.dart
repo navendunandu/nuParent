@@ -21,9 +21,16 @@ class SuccessScreen extends StatelessWidget {
                 width: 300,
               )),
               Padding(
-                padding: const EdgeInsets.only(left: 140.0, top: 100),
+                padding: const EdgeInsets.only(left: 138.0, top: 100),
                 child: ClipOval(
-                  child: Image.asset('assets/Logo.jpeg', width: 80),
+
+                  child: Container(
+                    color: AppColors.white,
+                    child: Padding(
+                      padding: const EdgeInsets.all(15.0),
+                      child: Image.asset('assets/nuParent.png', width: 50, height: 50,),
+                    ),
+                  ),
                 ),
               ),
             ],

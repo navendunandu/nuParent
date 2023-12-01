@@ -35,9 +35,16 @@ class _LoginScreenState extends State<LoginScreen> {
                     height: 350, fit: BoxFit.cover),
               ),
               Padding(
-                padding: const EdgeInsets.fromLTRB(25.0, 60.0, 0, 0),
+                padding: const EdgeInsets.fromLTRB(25.0, 50.0, 0, 0),
                 child: ClipOval(
-                  child: Image.asset('assets/Logo.jpeg', width: 100),
+
+                  child: Container(
+                    color: AppColors.white,
+                    child: Padding(
+                      padding: const EdgeInsets.all(15.0),
+                      child: Image.asset('assets/nuParent.png', width: 80, height: 80,),
+                    ),
+                  ),
                 ),
               ),
             ],
