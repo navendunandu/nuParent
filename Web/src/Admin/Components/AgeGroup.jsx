@@ -1,8 +1,12 @@
 import React from 'react'
 import { DataGrid } from '@mui/x-data-grid';
-import { Box, Button, Stack, TextField, Typography } from '@mui/material';
+import { Box, Button, Container, Stack, TextField, Typography } from '@mui/material';
 
 
+const AgeGroup = () => {
+
+
+    
 const columns = [
     { field: 'SL.NO', headerName: 'SL.NO', width: 70 },
     { field: 'Name', headerName: 'NAME', width: 130 },
@@ -42,7 +46,6 @@ const rows = [
     { id: 9, lastName: 'Roxie', firstName: 'Harvey', age: 65 },
 ];
 
-const AgeGroup = () => {
     return (
         <div>
             <Typography variant="h4" gutterBottom>
@@ -56,12 +59,13 @@ const AgeGroup = () => {
                 noValidate
                 autoComplete="off"
             >
+                <Container maxWidth="sm">
+                    <Stack spacing={2} direction="row">
+                        <TextField id="outlined-basic" label="Age" variant="outlined" />
 
-                <Stack spacing={2} direction="row">
-                    <TextField id="outlined-basic" label="Age" variant="outlined" />
-
-                    <Button variant="contained"sx={{width:150}}>Submit</Button>
-                </Stack>
+                        <Button variant="contained" sx={{ width: 150 }}>Submit</Button>
+                    </Stack>
+                </Container>
 
             </Box>
             <div style={{ height: 400, width: '100%' }}>

@@ -3,6 +3,9 @@ import { DataGrid } from '@mui/x-data-grid';
 import { Box, Button, FormControl, InputLabel, MenuItem, Select, Stack, TextField, Typography } from '@mui/material';
 
 
+const Reminder = () => {
+
+    
 const columns = [
     { field: 'SL.NO', headerName: 'SL.NO', width: 70 },
     { field: 'Name', headerName: 'NAME', width: 130 },
@@ -42,7 +45,6 @@ const rows = [
     { id: 9, lastName: 'Roxie', firstName: 'Harvey', age: 65 },
 ];
 
-const Reminder = () => {
     return (
         <div>
             <Typography variant="h4" gutterBottom>

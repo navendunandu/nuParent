@@ -6,6 +6,10 @@ import { styled } from '@mui/material/styles';
 
 
 
+const Reminder = () => {
+
+
+    
 const columns = [
     { field: 'SL.NO', headerName: 'SL.NO', width: 70 },
     { field: 'Name', headerName: 'NAME', width: 130 },
@@ -57,7 +61,6 @@ const VisuallyHiddenInput = styled('input')({
     width: 1,
 });
 
-const Reminder = () => {
     return (
         <div>
             <Typography variant="h4" gutterBottom>
