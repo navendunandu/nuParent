@@ -49,14 +49,33 @@ class _BrushingInstructionState extends State<BrushingInstruction> {
                     const SizedBox(
                       height: 20,
                     ),
-                    ClipRRect(
-                      borderRadius: const BorderRadius.all(Radius.circular(100)),
-                      child: Image.asset('assets/Teeths.png'),
+                    Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(100),
+                        boxShadow: const [
+                          BoxShadow(
+                            color: Colors.grey, 
+                            offset: Offset(0, 2), 
+                            blurRadius: 4, 
+                          ),
+                        ],
+                      ),
+                      child: ClipRRect(
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(100)),
+                        child: Image.asset('assets/Teeths.png'),
+                      ),
                     ),
                     const SizedBox(
                       height: 20,
                     ),
-                    const Text('Brushing Instruction', style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: AppColors.darkblue),),
+                    const Text(
+                      'Brushing Instruction',
+                      style: TextStyle(
+                          fontSize: 22,
+                          fontWeight: FontWeight.bold,
+                          color: AppColors.darkblue),
+                    ),
                     const SizedBox(
                       height: 20,
                     ),
