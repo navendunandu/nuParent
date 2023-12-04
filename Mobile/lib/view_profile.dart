@@ -14,7 +14,9 @@ class _ViewProfileState extends State<ViewProfile> {
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
-          onPressed: () {},
+          onPressed: () {
+            Navigator.pop(context);
+          },
           icon: const Icon(Icons.arrow_back_ios_new), //Back Icon
         ),
       ),
@@ -48,7 +50,6 @@ class _ViewProfileState extends State<ViewProfile> {
                   ),
                   Row(
                     children: [
-                      Elevate
                       ElevatedButton.icon(
                         style: const ButtonStyle(
                           backgroundColor: MaterialStatePropertyAll(AppColors.white)

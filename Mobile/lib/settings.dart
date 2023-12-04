@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:nu_parent/Reminder.dart';
+import 'package:nu_parent/howtovideos.dart';
 import 'package:nu_parent/main.dart';
 import 'package:nu_parent/view_profile.dart';
 // import 'package:nu_parent/main.dart';
@@ -161,16 +163,26 @@ class SettingsScreen extends StatelessWidget {
                 "How to Videos",
                 textAlign: TextAlign.center,
               ),
-              onTap: () {},
+              onTap: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const HowToVideos()));
+              },
             ),
             ListTile(
               contentPadding: const EdgeInsets.all(2),
               tileColor: AppColors.tileprimaryblue,
               title: const Text(
-                "Remainders",
+                "Reminders",
                 textAlign: TextAlign.center,
               ),
-              onTap: () {},
+              onTap: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const Reminder()));
+              },
             ),
             ListTile(
               contentPadding: const EdgeInsets.all(2),
