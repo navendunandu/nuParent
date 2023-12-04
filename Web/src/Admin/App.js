@@ -63,7 +63,7 @@ const ResponsiveDrawer = (props) => {
       <Divider />
       <List className='sidebar-sty'>
         <ListItem disablePadding className='inner-box'>
-          <Link to={'/Admin/'} className={`sidebar-btn ${location.pathname === '/Admin/' ? 'active-link' : ''}`} >
+          <Link to={'/Admin/'} className={`sidebar-btn ${location.pathname === '/Admin/' ? 'active-link' : ''}`} onClick={handleDrawerToggle}>
             <ListItemButton >
               <ListItemIcon>
                 <DashboardIcon />
@@ -73,7 +73,7 @@ const ResponsiveDrawer = (props) => {
           </Link>
         </ListItem>
         <ListItem disablePadding className='inner-box'>
-          <Link to={'/Admin/Age'}  className={`sidebar-btn ${location.pathname === '/Admin/Age' ? 'active-link' : ''}`} >
+          <Link to={'/Admin/Age'}  className={`sidebar-btn ${location.pathname === '/Admin/Age' ? 'active-link' : ''}`} onClick={handleDrawerToggle} >
             <ListItemButton >
               <ListItemIcon>
               <DashboardIcon />
@@ -83,7 +83,7 @@ const ResponsiveDrawer = (props) => {
           </Link>
         </ListItem>
         <ListItem disablePadding className='inner-box'>
-          <Link to={'/Admin/Reminder'}  className={`sidebar-btn ${location.pathname === '/Admin/Reminder' ? 'active-link' : ''}`} >
+          <Link to={'/Admin/Reminder'}  className={`sidebar-btn ${location.pathname === '/Admin/Reminder' ? 'active-link' : ''}`} onClick={handleDrawerToggle} >
             <ListItemButton >
               <ListItemIcon>
               <DashboardIcon />
@@ -93,7 +93,7 @@ const ResponsiveDrawer = (props) => {
           </Link>
         </ListItem>
         <ListItem disablePadding className='inner-box'>
-          <Link to={'/Admin/UploadVideos'}   className={`sidebar-btn ${location.pathname === '/Admin/UploadVideos' ? 'active-link' : ''}`} >
+          <Link to={'/Admin/UploadVideos'}   className={`sidebar-btn ${location.pathname === '/Admin/UploadVideos' ? 'active-link' : ''}`} onClick={handleDrawerToggle}>
             <ListItemButton >
               <ListItemIcon>
               <DashboardIcon />
@@ -103,7 +103,7 @@ const ResponsiveDrawer = (props) => {
           </Link>
         </ListItem>
         <ListItem disablePadding className='inner-box'>
-          <Link to={'/Admin/Brushing'}  className={`sidebar-btn ${location.pathname === '/Admin/Brushing' ? 'active-link' : ''}`} >
+          <Link to={'/Admin/Brushing'}  className={`sidebar-btn ${location.pathname === '/Admin/Brushing' ? 'active-link' : ''}`} onClick={handleDrawerToggle}>
             <ListItemButton >
               <ListItemIcon>
               <DashboardIcon />
@@ -113,7 +113,7 @@ const ResponsiveDrawer = (props) => {
           </Link>
         </ListItem>
         <ListItem disablePadding className='inner-box'>
-          <Link to={'/Admin/OralHygiene'}   className={`sidebar-btn ${location.pathname === '/Admin/OralHygiene' ? 'active-link' : ''}`} >
+          <Link to={'/Admin/OralHygiene'}   className={`sidebar-btn ${location.pathname === '/Admin/OralHygiene' ? 'active-link' : ''}`} onClick={handleDrawerToggle}>
             <ListItemButton >
               <ListItemIcon>
               <DashboardIcon />
@@ -123,7 +123,7 @@ const ResponsiveDrawer = (props) => {
           </Link>
         </ListItem>
         <ListItem disablePadding className='inner-box'>
-          <Link to={'/Admin/Dietaryintake'}  className={`sidebar-btn ${location.pathname === '/Admin/Dietaryintake' ? 'active-link' : ''}`}>
+          <Link to={'/Admin/Dietaryintake'}  className={`sidebar-btn ${location.pathname === '/Admin/Dietaryintake' ? 'active-link' : ''}`} onClick={handleDrawerToggle}>
             <ListItemButton >
               <ListItemIcon>
               <DashboardIcon />

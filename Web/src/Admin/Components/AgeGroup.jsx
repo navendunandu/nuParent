@@ -1,32 +1,46 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { DataGrid } from '@mui/x-data-grid';
-import { Box, Button, Stack, TextField, Typography } from '@mui/material';
+import { Box, Button, Container, Stack, TextField, Typography , Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle,} from '@mui/material';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 
+const AgeGroup = () => {
+
+    const [open, setOpen] = useState(false);
+
+    const handleClickOpen = () => {
+        setOpen(true);
+    };
+
+    const handleClose = () => {
+        setOpen(false);
+    };
+
+
+
+    
 const columns = [
-    { field: 'SL.NO', headerName: 'SL.NO', width: 70 },
-    { field: 'Name', headerName: 'NAME', width: 130 },
-    { field: 'Gender', headerName: 'GENDER', width: 130 },
+    { field: 'SL.NO', headerName: 'SL.NO',flex: 1},
+    
     {
-        field: 'email',
-        headerName: 'EMAIL',
-        width: 140,
+        field: 'age',
+        headerName: 'Age Group',
+        flex: 3,
     },
     {
-        field: 'phone',
-        headerName: 'PHONE NUMBER',
-        description: 'This column has a value getter and is not sortable.',
-        sortable: false,
-        width: 180,
-
-    },
-    {
-        field: 'Action',
-        headerName: 'Full name',
-        description: 'This column has a value getter and is not sortable.',
-        sortable: false,
-        width: 160,
-
+        field: "action",
+        headerName: "Action",
+        flex: 1,
+        renderCell: (params) => {
+            return (
+                <>
+                    <DeleteIcon
+                        className="divListDelete"
+                        onClick={() => handleClickOpen(params)}
+                    />
+                </>
+            );
+        },
     },
 ];
 
@@ -42,8 +56,8 @@ const rows = [
     { id: 9, lastName: 'Roxie', firstName: 'Harvey', age: 65 },
 ];
 
-const AgeGroup = () => {
     return (
+        <>
         <div>
             <Typography variant="h4" gutterBottom>
                 Age
@@ -56,12 +70,13 @@ const AgeGroup = () => {
                 noValidate
                 autoComplete="off"
             >
+                <Container maxWidth="sm">
+                    <Stack spacing={2} direction="row">
+                        <TextField id="outlined-basic" label="Age" variant="outlined" />
 
-                <Stack spacing={2} direction="row">
-                    <TextField id="outlined-basic" label="Age" variant="outlined" />
-
-                    <Button variant="contained"sx={{width:150}}>Submit</Button>
-                </Stack>
+                        <Button variant="contained" sx={{ width: 150 }}>Submit</Button>
+                    </Stack>
+                </Container>
 
             </Box>
             <div style={{ height: 400, width: '100%' }}>
@@ -78,6 +93,28 @@ const AgeGroup = () => {
                 />
             </div>
         </div>
+         <Dialog
+         open={open}
+         onClose={handleClose}
+         aria-labelledby="alert-dialog-title"
+         aria-describedby="alert-dialog-description"
+     >
+         <DialogTitle id="alert-dialog-title">
+             {"Confirm Delete"}
+         </DialogTitle>
+         <DialogContent>
+             <DialogContentText id="alert-dialog-description">
+                 Are you sure to delete this user permanenently
+             </DialogContentText>
+         </DialogContent>
+         <DialogActions>
+             <Button onClick={handleClose}>Disagree</Button>
+             <Button onClick={handleClose} autoFocus>
+                 Agree
+             </Button>
+         </DialogActions>
+     </Dialog>
+     </>
     )
 }
 
