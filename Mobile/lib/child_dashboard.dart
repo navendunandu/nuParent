@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:nu_parent/brushing_instruction.dart';
+import 'package:nu_parent/dietary_intake.dart';
 import 'package:nu_parent/main.dart';
 import 'package:nu_parent/oral_hygiene.dart';
 import 'package:nu_parent/settings.dart';
@@ -233,28 +234,33 @@ class _ChildProfileState extends State<ChildDashboard> {
                   )),
                 ),
               ),
-              Container(
-                height: 150,
-                width: 150,
-                decoration: BoxDecoration(
-                    color: AppColors.lightblue,
-                    borderRadius: const BorderRadius.all(Radius.circular(10)),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black.withOpacity(0.2),
-                        spreadRadius: 1,
-                        blurRadius: 5,
-                        offset: const Offset(0, 2),
-                      )
-                    ]),
-                child: const Center(
-                    child: Text(
-                  'Dietary intake',
-                  style: TextStyle(
-                      color: AppColors.white,
-                      fontWeight: FontWeight.w500,
-                      fontSize: 18),
-                )),
+              GestureDetector(
+                onTap: (){
+                  Navigator.push(context, MaterialPageRoute(builder: (context)=> const DietaryIntake()));
+                },
+                child: Container(
+                  height: 150,
+                  width: 150,
+                  decoration: BoxDecoration(
+                      color: AppColors.lightblue,
+                      borderRadius: const BorderRadius.all(Radius.circular(10)),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withOpacity(0.2),
+                          spreadRadius: 1,
+                          blurRadius: 5,
+                          offset: const Offset(0, 2),
+                        )
+                      ]),
+                  child: const Center(
+                      child: Text(
+                    'Dietary intake',
+                    style: TextStyle(
+                        color: AppColors.white,
+                        fontWeight: FontWeight.w500,
+                        fontSize: 18),
+                  )),
+                ),
               ),
             ],
           ),
