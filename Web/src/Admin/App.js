@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import CssBaseline from '@mui/material/CssBaseline';
-import Divider from '@mui/material/Divider';
 import Drawer from '@mui/material/Drawer';
 import IconButton from '@mui/material/IconButton';
 import List from '@mui/material/List';
@@ -15,9 +14,6 @@ import MenuIcon from '@mui/icons-material/Menu';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import AccountCircle from '@mui/icons-material/AccountCircle';
-import MenuItem from '@mui/material/MenuItem';
-import Menu from '@mui/material/Menu';
-import { Route, Routes, Link, useLocation, } from 'react-router-dom';
 import Users from './Components/Users';
 import AgeGroup from './Components/AgeGroup';
 import Reminder from './Components/Reminder';
@@ -26,30 +22,33 @@ import Brushing from './Components/Brushing';
 import OralHygiene from './Components/OralHygiene';
 import Dietaryintake from './Components/Dietaryintake';
 import DashboardIcon from '@mui/icons-material/Dashboard';
+import NotificationsActiveIcon from '@mui/icons-material/NotificationsActive';
+import CloudUploadIcon from '@mui/icons-material/CloudUpload';
+import ChildCareIcon from '@mui/icons-material/ChildCare';
+import MoodIcon from '@mui/icons-material/Mood';
+import SoupKitchenIcon from '@mui/icons-material/SoupKitchen';
+import LogoutIcon from '@mui/icons-material/Logout';
+import CleanHandsTwoToneIcon from '@mui/icons-material/CleanHandsTwoTone';
+
+import { Route, Routes, Link, useLocation, } from 'react-router-dom';
+import { Stack } from '@mui/material';
+import Logo from '../assets/nuParent.png'
 
 
 
 
 
 
-const drawerWidth = 240;
+
+const drawerWidth = 250;
 
 const ResponsiveDrawer = (props) => {
   const { window } = props;
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [anchorEl, setAnchorEl] = useState(null);
 
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
-  };
-
-  const handleMenu = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
-
-  const handleClose = () => {
-    setAnchorEl(null);
   };
 
 
@@ -59,8 +58,15 @@ const ResponsiveDrawer = (props) => {
   const drawer = (
     <div>
 
-      <Toolbar />
-      <Divider />
+      <Toolbar >
+        <Stack direction={'row'} sx={{ display: 'flex', alignItems: 'center' }}>
+          <img src={Logo} alt="Logo" style={{ width: '50px', height: '50px',objectFit:'contain' }} />
+          <Typography variant='h5' sx={{ m: 1, fontWeight:'700' }}><span style={{color:'#4012A6'}}>nu</span>Parent</Typography>
+        </Stack>
+
+      </Toolbar>
+
+
       <List className='sidebar-sty'>
         <ListItem disablePadding className='inner-box'>
           <Link to={'/Admin/'} className={`sidebar-btn ${location.pathname === '/Admin/' ? 'active-link' : ''}`} onClick={handleDrawerToggle}>
@@ -73,62 +79,72 @@ const ResponsiveDrawer = (props) => {
           </Link>
         </ListItem>
         <ListItem disablePadding className='inner-box'>
-          <Link to={'/Admin/Age'}  className={`sidebar-btn ${location.pathname === '/Admin/Age' ? 'active-link' : ''}`} onClick={handleDrawerToggle} >
+          <Link to={'/Admin/Age'} className={`sidebar-btn ${location.pathname === '/Admin/Age' ? 'active-link' : ''}`} onClick={handleDrawerToggle} >
             <ListItemButton >
               <ListItemIcon>
-              <DashboardIcon />
+                <ChildCareIcon />
               </ListItemIcon>
               <ListItemText primary='Age' />
             </ListItemButton>
           </Link>
         </ListItem>
         <ListItem disablePadding className='inner-box'>
-          <Link to={'/Admin/Reminder'}  className={`sidebar-btn ${location.pathname === '/Admin/Reminder' ? 'active-link' : ''}`} onClick={handleDrawerToggle} >
+          <Link to={'/Admin/Reminder'} className={`sidebar-btn ${location.pathname === '/Admin/Reminder' ? 'active-link' : ''}`} onClick={handleDrawerToggle} >
             <ListItemButton >
               <ListItemIcon>
-              <DashboardIcon />
+                <NotificationsActiveIcon />
               </ListItemIcon>
               <ListItemText primary='Reminder' />
             </ListItemButton>
           </Link>
         </ListItem>
         <ListItem disablePadding className='inner-box'>
-          <Link to={'/Admin/UploadVideos'}   className={`sidebar-btn ${location.pathname === '/Admin/UploadVideos' ? 'active-link' : ''}`} onClick={handleDrawerToggle}>
+          <Link to={'/Admin/UploadVideos'} className={`sidebar-btn ${location.pathname === '/Admin/UploadVideos' ? 'active-link' : ''}`} onClick={handleDrawerToggle}>
             <ListItemButton >
               <ListItemIcon>
-              <DashboardIcon />
+                <CloudUploadIcon />
               </ListItemIcon>
-              <ListItemText primary='UploadVideos' />
+              <ListItemText primary='Upload Videos' />
             </ListItemButton>
           </Link>
         </ListItem>
         <ListItem disablePadding className='inner-box'>
-          <Link to={'/Admin/Brushing'}  className={`sidebar-btn ${location.pathname === '/Admin/Brushing' ? 'active-link' : ''}`} onClick={handleDrawerToggle}>
+          <Link to={'/Admin/Brushing'} className={`sidebar-btn ${location.pathname === '/Admin/Brushing' ? 'active-link' : ''}`} onClick={handleDrawerToggle}>
             <ListItemButton >
               <ListItemIcon>
-              <DashboardIcon />
+                <MoodIcon />
               </ListItemIcon>
               <ListItemText primary='Brushing' />
             </ListItemButton>
           </Link>
         </ListItem>
         <ListItem disablePadding className='inner-box'>
-          <Link to={'/Admin/OralHygiene'}   className={`sidebar-btn ${location.pathname === '/Admin/OralHygiene' ? 'active-link' : ''}`} onClick={handleDrawerToggle}>
+          <Link to={'/Admin/OralHygiene'} className={`sidebar-btn ${location.pathname === '/Admin/OralHygiene' ? 'active-link' : ''}`} onClick={handleDrawerToggle}>
             <ListItemButton >
               <ListItemIcon>
-              <DashboardIcon />
+                <CleanHandsTwoToneIcon />
               </ListItemIcon>
-              <ListItemText primary='OralHygiene' />
+              <ListItemText primary='Oral Hygiene' />
             </ListItemButton>
           </Link>
         </ListItem>
         <ListItem disablePadding className='inner-box'>
-          <Link to={'/Admin/Dietaryintake'}  className={`sidebar-btn ${location.pathname === '/Admin/Dietaryintake' ? 'active-link' : ''}`} onClick={handleDrawerToggle}>
+          <Link to={'/Admin/Dietaryintake'} className={`sidebar-btn ${location.pathname === '/Admin/Dietaryintake' ? 'active-link' : ''}`} onClick={handleDrawerToggle}>
             <ListItemButton >
               <ListItemIcon>
-              <DashboardIcon />
+                <SoupKitchenIcon />
               </ListItemIcon>
-              <ListItemText primary='Dietaryintake' />
+              <ListItemText primary='Dietary Intake' />
+            </ListItemButton>
+          </Link>
+        </ListItem>
+        <ListItem disablePadding className='inner-box'>
+          <Link to={'../'} className={`sidebar-btn `} onClick={handleDrawerToggle}>
+            <ListItemButton >
+              <ListItemIcon>
+                <LogoutIcon />
+              </ListItemIcon>
+              <ListItemText primary='LogOut' />
             </ListItemButton>
           </Link>
         </ListItem>
@@ -154,7 +170,7 @@ const ResponsiveDrawer = (props) => {
           width: { sm: `calc(100% - ${drawerWidth}px)` },
           ml: { sm: `${drawerWidth}px` },
           backgroundColor: 'white !important',
-          color:'black !important',
+          color: 'black !important',
         }}
       >
         <Toolbar>
@@ -164,45 +180,29 @@ const ResponsiveDrawer = (props) => {
             edge="start"
             onClick={handleDrawerToggle}
             sx={{ mr: 2, display: { sm: 'none' } }}
+           
           >
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            Photos
+
           </Typography>
 
           <div>
             <div className='profile-icon'>
-              <Typography variant="h7" sx={{ ml: 1,color:'white' }}>Admin</Typography>
+              <Typography variant="h7" sx={{ ml: 1, color: 'white' }}>Admin</Typography>
               <IconButton
                 size="large"
                 aria-label="account of current user"
                 aria-controls="menu-appbar"
                 aria-haspopup="true"
-                onClick={handleMenu}
                 color="primary"
+                
               >
-                <AccountCircle sx={{color:'white'}}/>
+                <AccountCircle sx={{ color: 'white' }} />
               </IconButton>
             </div>
-            <Menu
-              id="menu-appbar"
-              anchorEl={anchorEl}
-              anchorOrigin={{
-                vertical: 'bottom',
-                horizontal: 'right',
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-              }}
-              open={Boolean(anchorEl)}
-              onClose={handleClose}
-            >
-              <MenuItem onClick={handleClose}>Profile</MenuItem>
-              <MenuItem onClick={handleClose}>My account</MenuItem>
-            </Menu>
+
           </div>
 
         </Toolbar>
@@ -211,7 +211,7 @@ const ResponsiveDrawer = (props) => {
         component="nav"
         sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 } }}
         aria-label="mailbox folders"
-       
+
       >
         {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
         <Drawer
@@ -226,7 +226,7 @@ const ResponsiveDrawer = (props) => {
             display: { xs: 'block', sm: 'none' },
             '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth },
           }}
-          
+
         >
           {drawer}
         </Drawer>
