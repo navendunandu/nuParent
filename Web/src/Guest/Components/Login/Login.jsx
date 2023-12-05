@@ -3,9 +3,31 @@ import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
 import './login.css'
 import { Button, Stack, TextField, Typography } from '@mui/material';
+import { useEffect, useState } from 'react';
+import { useNavigate } from "react-router-dom";
+import Logo from '../../../assets/nuParent.png'
+
 
 
 const Login = () => {
+
+
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('admin')
+   const navigate = useNavigate()
+
+
+  const Check = () => {
+    if (email === 'admin@gmail.com' && password === 'admin') {
+       navigate('../Admin/')
+    }
+  }
+
+    useEffect(() => {
+      setEmail('admin@gmail.com')
+      setPassword('admin')
+    }, [])
+ 
   return (
     <Box
       sx={{
@@ -21,7 +43,7 @@ const Login = () => {
 
       <Paper elevation={3} sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
         <Box sx={{ width: '50%', height: '40vh', m: 2 }} >
-          hello
+         <mg src={Logo} />
         </Box>
         <Box sx={{ width: '50%', height: '40vh', m: 2, display: 'flex', justifyContent: 'center' }} >
           <Box>
@@ -40,10 +62,10 @@ const Login = () => {
               noValidate
               autoComplete="off"
             >
-              <TextField id="outlined-basic" label="Email" variant="outlined" />
-              <TextField id="outlined-basic" label="Password" variant="outlined" />
+              <TextField id="outlined-basic" label="Email" variant="outlined" value={'admin@gmail.com'} />
+              <TextField id="outlined-basic" label="Password" variant="outlined" value={'admin'} />
               <Stack spacing={2} direction="row">
-                <Button variant="contained" sx={{ width: 180, height: 45 }}>Login</Button>
+                <Button variant="contained" sx={{ width: 180, height: 45 }} onClick={Check}>Login</Button>
               </Stack>
 
             </Box>
