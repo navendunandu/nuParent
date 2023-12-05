@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:nu_parent/main.dart';
+import 'package:nu_parent/oral_hygiene_babies.dart';
 
 class OralHygiene extends StatefulWidget {
   const OralHygiene({super.key});
@@ -13,6 +14,12 @@ class _OralHygieneState extends State<OralHygiene> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        leading: IconButton(
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          icon: const Icon(Icons.arrow_back_ios_new),
+        ),
         title: const Center(
             child: Text(
           'Oral Hygiene',
@@ -49,7 +56,9 @@ class _OralHygieneState extends State<OralHygiene> {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   GestureDetector(
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.push(context, MaterialPageRoute(builder: (context)=>const OralHygieneBabies()));
+                    },
                     child: Container(
                       height: 150,
                       width: 150,
