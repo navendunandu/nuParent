@@ -141,11 +141,7 @@ class _BrushingInstructionState extends State<BrushingInstruction> {
                       children: [
                         GestureDetector(
                           onTap: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) =>
-                                        const BrushingInstruction()));
+                            
                           },
                           child: Container(
                             height: 150,
