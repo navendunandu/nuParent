@@ -36,21 +36,21 @@ const Login = () => {
         '& > :not(style)': {
           m: 2,
           width: '100%',
-          minHeight: 640,
+          minHeight: '95vh',
         },
       }}
     >
 
-      <Paper elevation={3} sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-        <Box sx={{ width: '50%', height: '40vh', m: 2 }} >
-         <mg src={Logo} />
+      <Paper elevation={3} sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight:'100% ' }}>
+        <Box sx={{ width: '50%', m: 2, display:'flex', justifyContent:'center' }} >
+         <img src={Logo} width={300} />
         </Box>
-        <Box sx={{ width: '50%', height: '40vh', m: 2, display: 'flex', justifyContent: 'center' }} >
+        <Box sx={{ width: '50%', m: 2, display: 'flex', justifyContent: 'center' }} >
           <Box>
             <Typography sx={{ display: 'flex', justifyContent: 'center' }} variant='h4'>Login</Typography>
 
             <hr />
-            <Typography sx={{ display: 'flex', justifyContent: 'center' }} variant='h7'>Signin to your account</Typography>
+            <Typography sx={{ display: 'flex', justifyContent: 'center' }} variant='h7'>Sign in to your account</Typography>
 
 
 
