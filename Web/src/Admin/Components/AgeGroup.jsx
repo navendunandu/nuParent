@@ -2,13 +2,18 @@ import React, { useState } from 'react'
 import { DataGrid } from '@mui/x-data-grid';
 import { Box, Button, Container, Stack, TextField, Typography , Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle,} from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
+import { db } from '../../config/firebase';
 
 
 const AgeGroup = () => {
 
     const [open, setOpen] = useState(false);
+    const [ageData, setAgeData] = useState([]);
+    const [selectedRow, setSelectedRow] = useState(null);
+    
 
-    const handleClickOpen = () => {
+    const handleClickOpen = (params) => {
+        setSelectedRow(params);
         setOpen(true);
     };
 
@@ -16,45 +21,58 @@ const AgeGroup = () => {
         setOpen(false);
     };
 
+    const addAge = async (age) => {
+        try {
+            await db.collection('ageGroups').add({ age });
+            loadAgeGroups();
+        } catch (error) {
+            console.error('Error adding document: ', error);
+        }
+    };
 
+    const loadAgeGroups = async () => {
+        try {
+            const snapshot = await db.collection('ageGroups').get();
+            const ageGroups = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+            setAgeData(ageGroups);
+        } catch (error) {
+            console.error('Error getting documents: ', error);
+        }
+    };
 
-    
-const columns = [
-    { field: 'SL.NO', headerName: 'SL.NO',flex: 1},
-    
-    {
-        field: 'age',
-        headerName: 'Age Group',
-        flex: 3,
-    },
-    {
-        field: "action",
-        headerName: "Action",
-        flex: 1,
-        renderCell: (params) => {
-            return (
-                <>
+    const deleteAge = async () => {
+        try {
+            if (selectedRow) {
+                await db.collection('ageGroups').doc(selectedRow.id).delete();
+                setOpen(false);
+                loadAgeGroups();
+            }
+        } catch (error) {
+            console.error('Error removing document: ', error);
+        }
+    };
+
+    useEffect(() => {
+        loadAgeGroups();
+    }, []);
+
+    const columns = [
+        { field: 'id', headerName: 'ID', flex: 1 },
+        { field: 'age', headerName: 'Age Group', flex: 3 },
+        {
+            field: "action",
+            headerName: "Action",
+            flex: 1,
+            renderCell: (params) => {
+                return (
                     <DeleteIcon
                         className="divListDelete"
                         onClick={() => handleClickOpen(params)}
                     />
-                </>
-            );
+                );
+            },
         },
-    },
-];
-
-const rows = [
-    { id: 1, lastName: 'Snow', firstName: 'Jon', age: 35 },
-    { id: 2, lastName: 'Lannister', firstName: 'Cersei', age: 42 },
-    { id: 3, lastName: 'Lannister', firstName: 'Jaime', age: 45 },
-    { id: 4, lastName: 'Stark', firstName: 'Arya', age: 16 },
-    { id: 5, lastName: 'Targaryen', firstName: 'Daenerys', age: null },
-    { id: 6, lastName: 'Melisandre', firstName: null, age: 150 },
-    { id: 7, lastName: 'Clifford', firstName: 'Ferrara', age: 44 },
-    { id: 8, lastName: 'Frances', firstName: 'Rossini', age: 36 },
-    { id: 9, lastName: 'Roxie', firstName: 'Harvey', age: 65 },
-];
+    ];
 
     return (
         <>
@@ -72,7 +90,7 @@ const rows = [
             >
                 <Container maxWidth="sm">
                     <Stack spacing={2} direction="row">
-                        <TextField id="outlined-basic" label="Age" variant="outlined" />
+                        <TextField id="outlined-basic" label="Age" variant="outlined" onChange={(e)=>{setAgeData(e.target.value)}}/>
 
                         <Button variant="contained" sx={{ width: 150 }}>Submit</Button>
                     </Stack>
