@@ -1,3 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:intl/intl.dart';
@@ -15,6 +18,12 @@ class RegistrationScreen extends StatefulWidget {
 
 class _RegistrationScreenState extends State<RegistrationScreen> {
   final _dateController = TextEditingController();
+  final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _phoneController = TextEditingController();
+  final TextEditingController _addressController = TextEditingController();
+  final _formKey = GlobalKey<FormState>();
+  String? _prefix;
   XFile? _selectedImage;
   String? _imageUrl;
   DateTime? _selectedDate;
@@ -42,12 +51,26 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
       setState(() {
         _selectedDate = pickedDate;
         _dateController.text = DateFormat('dd-MM-yyyy').format(pickedDate);
+        print(_dateController.text);
       });
     }
   }
 
   String? selectedPrefix;
   List<String> prefix = ['Mr', 'Mrs', 'Ms'];
+
+  Future<void>_registerUser() async{
+    if(_formKey.currentState!.validate()){
+      // try{
+      //   final FirebaseAuth auth = FirebaseAuth.instance;
+      //   final FirebaseStorage storage = FirebaseStorage.instance;
+      //   final FirebaseFirestore firestore = FirebaseFirestore.instance;
+
+      //   final UserCredential userCredential = 
+      //   await auth.createUserWithEmailAndPassword(email: email, password: password)
+      // }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -121,7 +144,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                     ),
                   ),
                   const SizedBox(
-                    height: 30,
+                    height: 20,
                   ),
                   Row(
                     children: [
@@ -141,7 +164,11 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                               borderSide: BorderSide.none,
                             ),
                           ),
-                          onChanged: (String? newValue) {},
+                          onChanged: (String? newValue) {
+                              setState(() {
+                                _prefix= newValue;
+                              });
+                          },
                           isExpanded: false,
                           items: prefix
                               .map<DropdownMenuItem<String>>((String value) {
@@ -173,6 +200,24 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                     ],
                   ),
                   const SizedBox(
+                    height: 20,
+                  ),
+                  TextFormField(
+                    decoration: InputDecoration(
+                      hintText: 'Email',
+                      contentPadding: const EdgeInsets.symmetric(
+                        vertical: 20.0,
+                        horizontal: 25.0,
+                      ),
+                      filled: true,
+                      fillColor: const Color.fromARGB(31, 121, 120, 120),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10.0),
+                        borderSide: BorderSide.none,
+                      ),
+                    ),
+                  ),
+                      const SizedBox(
                     height: 20,
                   ),
                   IntlPhoneField(
@@ -216,7 +261,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                   ),
                   const Text('Select Gender'),
                   const SizedBox(
-                    height: 20,
+                    height: 10,
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -266,7 +311,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                     ],
                   ),
                   const SizedBox(
-                    height: 20,
+                    height: 10,
                   ),
                   TextFormField(
                     decoration: InputDecoration(
