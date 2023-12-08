@@ -1,15 +1,27 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { DataGrid } from '@mui/x-data-grid';
 import { Box, Button, FormControl, InputLabel, MenuItem, Select, Stack, TextField, Typography, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
+import { db } from '../../config/firebase';
+import { addDoc, collection, getDocs, deleteDoc, doc } from 'firebase/firestore';
 
 
 const Brushing = () => {
 
 
     const [open, setOpen] = useState(false);
+    const [brushingData, setBrushingData] = useState([]);
+    const [brushing, setBrusing] = useState('');
+    const [selectedRow, setSelectedRow] = useState(null);
+    const [ageData, setAgeData] = useState([]);
+    const [age, setAge] = useState('');
 
-    const handleClickOpen = () => {
+
+
+
+   
+    const handleClickOpen = (params) => {
+        setSelectedRow(params);
         setOpen(true);
     };
 
@@ -18,8 +30,64 @@ const Brushing = () => {
     };
 
 
+    const addBrushing = async () => {
+        try {
+            await addDoc(collection(db, "brushing"), { brushing, age })
+            loadBrushing();
+            setAge('')
+            setBrusing('')
+        } catch (error) {
+            console.error('Error adding document: ', error);
+        }
+    };
+
+    const loadBrushing = async () => {
+        try {
+            const querySnapshot = await getDocs(collection(db, "brushing"));
+            const brushing = querySnapshot.docs.map((doc, index) => ({ id: doc.id, index: index + 1, ...doc.data() }));
+            setBrushingData(brushing);
+        } catch (error) {
+            console.error('Error getting documents: ', error);
+        }
+
+
+    };
+
+    const deleteBrushing = async () => {
+        try {
+            if (selectedRow) {
+                await deleteDoc(doc(db, "brushing", selectedRow.id));
+                setOpen(false);
+                setSelectedRow(null)
+                loadBrushing();
+            }
+        } catch (error) {
+            console.error('Error removing document: ', error);
+        }
+    };
+
+    const loadAgeGroups = async () => {
+        try {
+            const querySnapshot = await getDocs(collection(db, "ageGroups"));
+            const ageGroups = querySnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+            setAgeData(ageGroups);
+        } catch (error) {
+            console.error('Error getting documents: ', error);
+        }
+
+          
+    };
+
+
+
+    useEffect(() => {
+        loadBrushing();
+        loadAgeGroups();
+    }, []);
+
+
     const columns = [
-        { field: 'SL.NO', headerName: 'SL.NO', flex: 1 },
+        { field: 'index', headerName: 'ID', flex: 1 },
 
         {
             field: 'brushing',
@@ -43,17 +111,7 @@ const Brushing = () => {
         },
     ];
 
-    const rows = [
-        { id: 1, lastName: 'Snow', firstName: 'Jon', age: 35 },
-        { id: 2, lastName: 'Lannister', firstName: 'Cersei', age: 42 },
-        { id: 3, lastName: 'Lannister', firstName: 'Jaime', age: 45 },
-        { id: 4, lastName: 'Stark', firstName: 'Arya', age: 16 },
-        { id: 5, lastName: 'Targaryen', firstName: 'Daenerys', age: null },
-        { id: 6, lastName: 'Melisandre', firstName: null, age: 150 },
-        { id: 7, lastName: 'Clifford', firstName: 'Ferrara', age: 44 },
-        { id: 8, lastName: 'Frances', firstName: 'Rossini', age: 36 },
-        { id: 9, lastName: 'Roxie', firstName: 'Harvey', age: 65 },
-    ];
+   
 
     return (
         <>
@@ -76,23 +134,28 @@ const Brushing = () => {
                             <Select
                                 labelId="demo-simple-select-label"
                                 id="demo-simple-select"
-                                value={''}
+                                value={age}
                                 label="Age"
+                                onChange={(event) => setAge(event.target.value)}
                             >
-                                <MenuItem value={10}>Ten</MenuItem>
-                                <MenuItem value={20}>Twenty</MenuItem>
-                                <MenuItem value={30}>Thirty</MenuItem>
+                                {
+                                    ageData.map((doc,key) => (
+                                        <MenuItem key={key} value={doc.id}>{doc.age}</MenuItem>
+
+                                    ))
+                                }
+                               
                             </Select>
                         </FormControl>
-                        <TextField id="outlined-basic" label="Brushing Details" variant="outlined" />
+                        <TextField id="outlined-basic" onChange={(event) => setBrusing(event.target.value)} label="Brushing Details" variant="outlined"  />
 
-                        <Button variant="contained" sx={{ width: 150 }}>Submit</Button>
+                        <Button variant="contained" sx={{ width: 150 }} onClick={addBrushing}>Submit</Button>
                     </Stack>
 
                 </Box>
                 <div style={{ height: 400, width: '100%' }}>
                     <DataGrid
-                        rows={rows}
+                        rows={brushingData}
                         columns={columns}
                         initialState={{
                             pagination: {
@@ -120,7 +183,7 @@ const Brushing = () => {
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={handleClose}>Disagree</Button>
-                    <Button onClick={handleClose} autoFocus>
+                    <Button onClick={deleteBrushing} autoFocus>
                         Agree
                     </Button>
                 </DialogActions>
