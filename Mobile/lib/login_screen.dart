@@ -27,24 +27,13 @@ class _LoginScreenState extends State<LoginScreen> {
         children: [
           Stack(
             children: [
-              ClipRRect(
-                borderRadius: const BorderRadius.only(
-                    bottomLeft: Radius.circular(50),
-                    bottomRight: Radius.circular(50)),
-                child: Image.asset('assets/Family1.png',
-                    height: 350, fit: BoxFit.cover),
-              ),
-              Padding(
-                padding: const EdgeInsets.fromLTRB(25.0, 50.0, 0, 0),
-                child: ClipOval(
-
-                  child: Container(
-                    color: AppColors.white,
-                    child: Padding(
-                      padding: const EdgeInsets.all(15.0),
-                      child: Image.asset('assets/nuParent.png', width: 80, height: 80,),
-                    ),
-                  ),
+              Image.asset('assets/TeethFamily.jpg',
+                  height: 350, fit: BoxFit.fitWidth),
+              ClipOval(
+              
+                child: Container(
+                  color: AppColors.white,
+                  child: ClipOval(child: Image.asset('assets/nuParent.png', width: 80, height: 80,)),
                 ),
               ),
             ],
