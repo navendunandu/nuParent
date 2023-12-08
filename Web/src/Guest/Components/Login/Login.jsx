@@ -43,7 +43,7 @@ const Login = () => {
 
       <Paper elevation={3} sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight:'100% ' }}>
         <Box sx={{ width: '50%', m: 2, display:'flex', justifyContent:'center' }} >
-         <img src={Logo} width={300} />
+         <img src={Logo} width={300}  alt=''/>
         </Box>
         <Box sx={{ width: '50%', m: 2, display: 'flex', justifyContent: 'center' }} >
           <Box>

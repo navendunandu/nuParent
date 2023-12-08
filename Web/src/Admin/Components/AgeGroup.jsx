@@ -1,14 +1,16 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { DataGrid } from '@mui/x-data-grid';
 import { Box, Button, Container, Stack, TextField, Typography , Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle,} from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { db } from '../../config/firebase';
+import { addDoc, collection, getDocs } from 'firebase/firestore';
 
 
 const AgeGroup = () => {
 
     const [open, setOpen] = useState(false);
     const [ageData, setAgeData] = useState([]);
+    const [age, setAge] = useState('');
     const [selectedRow, setSelectedRow] = useState(null);
     
 
@@ -21,9 +23,12 @@ const AgeGroup = () => {
         setOpen(false);
     };
 
-    const addAge = async (age) => {
+    const addAge = async () => {
         try {
-            await db.collection('ageGroups').add({ age });
+            console.log(age);
+            const docRef = await addDoc(collection(db, "ageGroups"), {age})
+            console.log(docRef);
+
             loadAgeGroups();
         } catch (error) {
             console.error('Error adding document: ', error);
@@ -32,12 +37,18 @@ const AgeGroup = () => {
 
     const loadAgeGroups = async () => {
         try {
-            const snapshot = await db.collection('ageGroups').get();
-            const ageGroups = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+            const querySnapshot = await getDocs(collection(db, "ageGroups"));
+            const ageGroups = querySnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
             setAgeData(ageGroups);
         } catch (error) {
             console.error('Error getting documents: ', error);
         }
+
+
+
+
+
+          
     };
 
     const deleteAge = async () => {
@@ -90,16 +101,16 @@ const AgeGroup = () => {
             >
                 <Container maxWidth="sm">
                     <Stack spacing={2} direction="row">
-                        <TextField id="outlined-basic" label="Age" variant="outlined" onChange={(e)=>{setAgeData(e.target.value)}}/>
+                        <TextField id="outlined-basic" label="Age" variant="outlined" value={age} onChange={(e)=>{setAge(e.target.value)}}/>
 
-                        <Button variant="contained" sx={{ width: 150 }}>Submit</Button>
+                        <Button variant="contained" sx={{ width: 150 }} onClick={addAge}>Submit</Button>
                     </Stack>
                 </Container>
 
             </Box>
             <div style={{ height: 400, width: '100%' }}>
                 <DataGrid
-                    rows={rows}
+                    rows={ageData}
                     columns={columns}
                     initialState={{
                         pagination: {
@@ -127,7 +138,7 @@ const AgeGroup = () => {
          </DialogContent>
          <DialogActions>
              <Button onClick={handleClose}>Disagree</Button>
-             <Button onClick={handleClose} autoFocus>
+             <Button onClick={deleteAge} autoFocus>
                  Agree
              </Button>
          </DialogActions>
