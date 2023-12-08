@@ -18,28 +18,20 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Stack(
-        fit: StackFit.expand,
-        children: [
-          // Background Image
-          Image.asset(
-            'assets/Vector1.png',
-            fit: BoxFit.cover,
-          ),
-
-          // Container with a centered image
-          SizedBox(
-            width: 100,
-            child: Center(
-              child: Image.asset(
-                'assets/nuParent.png',
-                fit: BoxFit.contain,
-                width: 300,
-                // Additional properties can be added here if needed
-              ),
+      body: Container(
+        decoration: const BoxDecoration(
+          color: Colors.white,
+          image: DecorationImage(image: AssetImage('assets/Vector-1.png'), fit: BoxFit.scaleDown, alignment: Alignment.bottomCenter)
+        ),
+        child: Center(
+          child: ClipOval(
+            child: Image.asset(
+              'assets/nuParent.png',
+              fit: BoxFit.contain,
+              width: 250,
             ),
           ),
-        ],
+        ),
       ),
     );
   }
