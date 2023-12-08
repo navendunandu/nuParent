@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { DataGrid } from '@mui/x-data-grid';
 import { Box, Button, FormControl, InputLabel, MenuItem, Select, Stack, TextField, Typography, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -30,10 +30,11 @@ const Reminder = () => {
     
     const addReminder = async () => {
         try {
-            await addDoc(collection(db, "brushing"), { brushing, age })
-            loadBrushing();
+            await addDoc(collection(db, "reminder"), { reminder, duration, age })
+            loadReminder();
             setAge('')
-            setBrusing('')
+            setReminder('')
+            setDuration('')
         } catch (error) {
             console.error('Error adding document: ', error);
         }
@@ -41,7 +42,7 @@ const Reminder = () => {
 
     const loadReminder = async () => {
         try {
-            const querySnapshot = await getDocs(collection(db, "brushing"));
+            const querySnapshot = await getDocs(collection(db, "reminder"));
             const brushing = querySnapshot.docs.map((doc, index) => ({ id: doc.id, index: index + 1, ...doc.data() }));
             setReminderData(brushing);
         } catch (error) {
@@ -54,10 +55,10 @@ const Reminder = () => {
     const deleteReminder = async () => {
         try {
             if (selectedRow) {
-                await deleteDoc(doc(db, "brushing", selectedRow.id));
+                await deleteDoc(doc(db, "reminder", selectedRow.id));
                 setOpen(false);
                 setSelectedRow(null)
-                loadBrushing();
+                loadReminder();
             }
         } catch (error) {
             console.error('Error removing document: ', error);
@@ -79,7 +80,7 @@ const Reminder = () => {
 
 
     useEffect(() => {
-        loadBrushing();
+        loadReminder();
         loadAgeGroups();
     }, []);
 
@@ -132,7 +133,7 @@ const Reminder = () => {
                             <Select
                                 labelId="demo-simple-select-label"
                                 id="demo-simple-select"
-                                value={''}
+                                value={age}
                                 label="Age"
                                 onChange={(event) => setAge(event.target.value)}
                                 >
@@ -181,7 +182,7 @@ const Reminder = () => {
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={handleClose}>Disagree</Button>
-                    <Button onClick={handleClose} autoFocus>
+                    <Button onClick={deleteReminder} autoFocus>
                         Agree
                     </Button>
                 </DialogActions>

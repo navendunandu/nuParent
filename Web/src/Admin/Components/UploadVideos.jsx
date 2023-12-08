@@ -1,33 +1,146 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { DataGrid } from '@mui/x-data-grid';
 import { Box, Button, FormControl, InputLabel, MenuItem, Select, Stack, TextField, Typography, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, } from '@mui/material';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import { styled } from '@mui/material/styles';
 import DeleteIcon from '@mui/icons-material/Delete';
+import VisibilityIcon from '@mui/icons-material/Visibility';
+import { db, storage } from '../../config/firebase';
+import { addDoc, collection, getDocs, deleteDoc, doc } from 'firebase/firestore';
+import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 
 
 
-const Reminder = () => {
+const UploadVideos = () => {
 
 
     const [open, setOpen] = useState(false);
+    // const [openPlayer, setOpenPlayer] = useState(false);
+    const [uploadVideosData, setUploadVideosData] = useState([]);
+    const [videoTitle, setVideoTitle] = useState('');
+    const [video, setVideo] = useState([]);
+    const [selectedRow, setSelectedRow] = useState(null);
+    const [ageData, setAgeData] = useState([]);
+    const [age, setAge] = useState('');
+    //const [singleVideo, setSingleVideo] = useState([]);
 
-    const handleClickOpen = () => {
+    const handleClickOpen = (params) => {
+        setSelectedRow(params);
         setOpen(true);
     };
+    // const handleClickOpenVideo = (params) => {  
+
+    //     setSingleVideo(params);
+    //     setOpenPlayer(true);
+    // };
+
+
 
     const handleClose = () => {
         setOpen(false);
     };
 
+    // const handleClosePlayer = () => {
+    //     setOpenPlayer(false)
+    // }
+
+
+
+
+
+    const addUploadVideo = async () => {
+        try {
+            const type = video.type;
+
+            if (!type || !type.startsWith('video/')) {
+                alert('Invalid file type. Please upload a video.');
+                return; 
+            }
+
+
+            const storageRef = ref(storage, 'Video/' + video.name);
+            await uploadBytesResumable(storageRef, video);
+            const videoUrl = await getDownloadURL(storageRef).then((downloadURL) => {
+                return downloadURL
+            });
+            await addDoc(collection(db, "uploadVideo"), { videoTitle, videoUrl, age })
+            loadUploadVideo();
+            setAge('')
+            setVideoTitle('')
+            setVideo('')
+        } catch (error) {
+            console.error('Error adding document: ', error);
+        }
+    };
+
+    const loadUploadVideo = async () => {
+        try {
+            const querySnapshot = await getDocs(collection(db, "uploadVideo"));
+            const uploadVideo = querySnapshot.docs.map((doc, index) => ({ id: doc.id, index: index + 1, ...doc.data() }));
+            setUploadVideosData(uploadVideo);
+        } catch (error) {
+            console.error('Error getting documents: ', error);
+        }
+
+
+    };
+
+    const deleteUploadVideo = async () => {
+        try {
+            if (selectedRow) {
+                await deleteDoc(doc(db, "uploadVideo", selectedRow.id));
+                setOpen(false);
+                setSelectedRow(null)
+                loadUploadVideo();
+            }
+        } catch (error) {
+            console.error('Error removing document: ', error);
+        }
+    };
+
+    const loadAgeGroups = async () => {
+        try {
+            const querySnapshot = await getDocs(collection(db, "ageGroups"));
+            const ageGroups = querySnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+            setAgeData(ageGroups);
+        } catch (error) {
+            console.error('Error getting documents: ', error);
+        }
+
+
+    };
+
+
+
+    useEffect(() => {
+        loadUploadVideo();
+        loadAgeGroups();
+    }, []);
+
+
 
     const columns = [
-        { field: 'SL.NO', headerName: 'SL.NO', flex: 1 },
+        { field: 'index', headerName: 'ID', flex: 1 },
 
         {
-            field: 'videos',
+            field: 'videoTitle',
             headerName: 'Videos',
             flex: 3,
+        },
+        {
+            field: 'videoUrl',
+            headerName: 'Videos',
+            flex: 3,
+            renderCell: (params) => {
+                return (
+                    <>
+                        <VisibilityIcon
+                            className="divListDelete"
+                           // onClick={() => handleClickOpenVideo(params)}
+                        />
+                    </>
+                );
+            },
         },
         {
             field: "action",
@@ -46,17 +159,7 @@ const Reminder = () => {
         },
     ];
 
-    const rows = [
-        { id: 1, lastName: 'Snow', firstName: 'Jon', age: 35 },
-        { id: 2, lastName: 'Lannister', firstName: 'Cersei', age: 42 },
-        { id: 3, lastName: 'Lannister', firstName: 'Jaime', age: 45 },
-        { id: 4, lastName: 'Stark', firstName: 'Arya', age: 16 },
-        { id: 5, lastName: 'Targaryen', firstName: 'Daenerys', age: null },
-        { id: 6, lastName: 'Melisandre', firstName: null, age: 150 },
-        { id: 7, lastName: 'Clifford', firstName: 'Ferrara', age: 44 },
-        { id: 8, lastName: 'Frances', firstName: 'Rossini', age: 36 },
-        { id: 9, lastName: 'Roxie', firstName: 'Harvey', age: 65 },
-    ];
+
 
     const VisuallyHiddenInput = styled('input')({
         clip: 'rect(0 0 0 0)',
@@ -74,7 +177,7 @@ const Reminder = () => {
         <>
             <div>
                 <Typography variant="h4" gutterBottom>
-                    Reminder
+                    Upload Video
                 </Typography>
                 <Box
                     component="form"
@@ -91,27 +194,31 @@ const Reminder = () => {
                             <Select
                                 labelId="demo-simple-select-label"
                                 id="demo-simple-select"
-                                value={''}
+                                value={age}
                                 label="Age"
+                                onChange={(event) => setAge(event.target.value)}
                             >
-                                <MenuItem value={10}>Ten</MenuItem>
-                                <MenuItem value={20}>Twenty</MenuItem>
-                                <MenuItem value={30}>Thirty</MenuItem>
+                                {
+                                    ageData.map((doc, key) => (
+                                        <MenuItem key={key} value={doc.id}>{doc.age}</MenuItem>
+
+                                    ))
+                                }
                             </Select>
                         </FormControl>
-                        <TextField id="outlined-basic" label="Video Title" variant="outlined" />
-                        <Button component="label" variant="contained" startIcon={<CloudUploadIcon />}>
+                        <TextField id="outlined-basic" label="Video Title" variant="outlined" onChange={(event) => setVideoTitle(event.target.value)} />
+                        <Button component="label" variant="contained" startIcon={<CloudUploadIcon />} onChange={(event) => setVideo(event.target.files[0])}>
                             Upload file
                             <VisuallyHiddenInput type="file" />
                         </Button>
 
-                        <Button variant="contained" sx={{ width: 150 }}>Submit</Button>
+                        <Button variant="contained" sx={{ width: 150 }} onClick={addUploadVideo}>Submit</Button>
                     </Stack>
 
                 </Box>
                 <div style={{ height: 400, width: '100%' }}>
                     <DataGrid
-                        rows={rows}
+                        rows={uploadVideosData}
                         columns={columns}
                         initialState={{
                             pagination: {
@@ -139,13 +246,21 @@ const Reminder = () => {
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={handleClose}>Disagree</Button>
-                    <Button onClick={handleClose} autoFocus>
+                    <Button onClick={deleteUploadVideo} autoFocus>
                         Agree
                     </Button>
                 </DialogActions>
             </Dialog>
+            {/* <Dialog
+                open={openPlayer}
+                onClose={handleClosePlayer}
+                aria-labelledby="alert-dialog-title"
+                aria-describedby="alert-dialog-description"
+            >
+           
+            </Dialog> */}
         </>
     )
 }
 
-export default Reminder
+export default UploadVideos

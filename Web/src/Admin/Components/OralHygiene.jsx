@@ -132,7 +132,7 @@ const columns = [
                         <Select
                             labelId="demo-simple-select-label"
                             id="demo-simple-select"
-                            value={''}
+                            value={age}
                             label="Age"
                             onChange={(event) => setAge(event.target.value)}
                             >
