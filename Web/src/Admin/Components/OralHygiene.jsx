@@ -86,10 +86,10 @@ const OralHygiene = () => {
 
     
 const columns = [
-    { field: 'SL.NO', headerName: 'SL.NO', flex : 1},
+    { field: 'index', headerName: 'ID', flex: 1 },
    
     {
-        field: 'oralhygiene',
+        field: 'oralHygiene',
         headerName: 'Oral Hygiene',
         flex: 3,
     },
