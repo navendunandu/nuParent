@@ -80,7 +80,6 @@ const Users = () => {
                             },
                         }}
                         pageSizeOptions={[5, 10]}
-                        checkboxSelection
                     />
                 </div>
             </div>

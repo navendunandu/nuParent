@@ -15,6 +15,8 @@ const Reminder = () => {
     const [selectedRow, setSelectedRow] = useState(null);
     const [ageData, setAgeData] = useState([]);
     const [age, setAge] = useState('');
+    const [error, setError] = useState('');
+
 
     const handleClickOpen = (params) => {
         setSelectedRow(params);
@@ -29,6 +31,10 @@ const Reminder = () => {
 
     
     const addReminder = async () => {
+        if (!reminder || !age ||!duration) {
+            setError('Both reminder Details and Age  and duration are required');
+            return;
+        }
         try {
             await addDoc(collection(db, "reminder"), { reminder, duration, age })
             loadReminder();
@@ -43,8 +49,20 @@ const Reminder = () => {
     const loadReminder = async () => {
         try {
             const querySnapshot = await getDocs(collection(db, "reminder"));
-            const brushing = querySnapshot.docs.map((doc, index) => ({ id: doc.id, index: index + 1, ...doc.data() }));
-            setReminderData(brushing);
+            const reminderData = querySnapshot.docs.map((doc, index) => ({ id: doc.id, index: index + 1, ...doc.data() }));
+          
+
+            const ageGroupsQuerySnapshot = await getDocs(collection(db, "ageGroups"));
+            const ageGroupsData = ageGroupsQuerySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+
+            const joinedData = reminderData
+                .filter(reminderDataItem => ageGroupsData.some(ageGroup => ageGroup.id === reminderDataItem.age))
+                .map(reminderDataItem => {
+                    const matchingAgeGroup = ageGroupsData.find(ageGroup => ageGroup.id === reminderDataItem.age);
+                    return { ...reminderDataItem, ageGroup: matchingAgeGroup.age };
+                });
+
+                setReminderData(joinedData);
         } catch (error) {
             console.error('Error getting documents: ', error);
         }
@@ -94,6 +112,18 @@ const Reminder = () => {
             headerName: 'Reminder',
             flex: 3
         },
+        
+        {
+            field: 'duration',
+            headerName: 'Duration',
+            flex: 3
+        },
+        
+        {
+            field: 'ageGroup',
+            headerName: 'Age Group',
+            flex: 3
+        },
        
         {
             field: "action",
@@ -135,7 +165,7 @@ const Reminder = () => {
                                 id="demo-simple-select"
                                 value={age}
                                 label="Age"
-                                onChange={(event) => setAge(event.target.value)}
+                                onChange={(event) =>{ setAge(event.target.value);setError(''); }}
                                 >
                                     {
                                         ageData.map((doc, key) => (
@@ -145,11 +175,12 @@ const Reminder = () => {
                                     }
                             </Select>
                         </FormControl>
-                        <TextField id="outlined-basic" value={duration} label="Enter Duration" variant="outlined" onChange={(event) => setDuration(event.target.value)} />
-                        <TextField id="outlined-basic" value={reminder} label="Enter Type Name" variant="outlined"  onChange={(event) => setReminder(event.target.value)}   />
+                        <TextField id="outlined-basic" value={duration} label="Enter Duration" variant="outlined" onChange={(event) => {setDuration(event.target.value);setError(''); }} />
+                        <TextField id="outlined-basic" value={reminder} label="Enter Type Name" variant="outlined"  onChange={(event) => {setReminder(event.target.value);setError(''); }}   />
 
                         <Button variant="contained" sx={{ width: 150 }} onClick={addReminder}>Submit</Button>
                     </Stack>
+                    {error && <Typography color="error">{error}</Typography>}
 
                 </Box>
                 <div style={{ height: 400, width: '100%' }}>
@@ -162,7 +193,6 @@ const Reminder = () => {
                             },
                         }}
                         pageSizeOptions={[5, 10]}
-                        checkboxSelection
                     />
                 </div>
             </div>

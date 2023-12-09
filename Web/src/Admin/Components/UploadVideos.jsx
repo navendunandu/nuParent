@@ -7,7 +7,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import { db, storage } from '../../config/firebase';
 import { addDoc, collection, getDocs, deleteDoc, doc } from 'firebase/firestore';
-import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
+import { ref, uploadBytesResumable, getDownloadURL, deleteObject } from "firebase/storage";
 
 
 
@@ -15,24 +15,24 @@ const UploadVideos = () => {
 
 
     const [open, setOpen] = useState(false);
-    // const [openPlayer, setOpenPlayer] = useState(false);
+    const [openPlayer, setOpenPlayer] = useState(false);
     const [uploadVideosData, setUploadVideosData] = useState([]);
     const [videoTitle, setVideoTitle] = useState('');
-    const [video, setVideo] = useState([]);
+    const [video, setVideo] = useState(null);
     const [selectedRow, setSelectedRow] = useState(null);
     const [ageData, setAgeData] = useState([]);
     const [age, setAge] = useState('');
-    //const [singleVideo, setSingleVideo] = useState([]);
+    const [singleVideo, setSingleVideo] = useState([]);
 
     const handleClickOpen = (params) => {
         setSelectedRow(params);
         setOpen(true);
     };
-    // const handleClickOpenVideo = (params) => {  
+    const handleClickOpenVideo = (params) => {
 
-    //     setSingleVideo(params);
-    //     setOpenPlayer(true);
-    // };
+        setSingleVideo(params.row.videoUrl);
+        setOpenPlayer(true);
+    };
 
 
 
@@ -40,10 +40,16 @@ const UploadVideos = () => {
         setOpen(false);
     };
 
-    // const handleClosePlayer = () => {
-    //     setOpenPlayer(false)
-    // }
+    const handleClosePlayer = () => {
+        setOpenPlayer(false)
+    }
 
+
+    const generateRandomName = (prefix) => {
+        const randomString = Math.random().toString(36).substring(2, 8);
+        const timestamp = new Date().getTime();
+        return `${prefix}_${randomString}_${timestamp}`;
+    }
 
 
 
@@ -51,15 +57,19 @@ const UploadVideos = () => {
     const addUploadVideo = async () => {
         try {
             const type = video.type;
+            const metadata = {
+                contentType: video.type
+            };
 
             if (!type || !type.startsWith('video/')) {
                 alert('Invalid file type. Please upload a video.');
-                return; 
+                return;
             }
 
 
-            const storageRef = ref(storage, 'Video/' + video.name);
-            await uploadBytesResumable(storageRef, video);
+            const randomName = generateRandomName(video.name);
+            const storageRef = ref(storage, `Video/${randomName}`);
+            await uploadBytesResumable(storageRef, video, metadata);
             const videoUrl = await getDownloadURL(storageRef).then((downloadURL) => {
                 return downloadURL
             });
@@ -88,6 +98,9 @@ const UploadVideos = () => {
     const deleteUploadVideo = async () => {
         try {
             if (selectedRow) {
+                const filePath = selectedRow.row.videoUrl
+                const fileRef = ref(storage, filePath);
+                await deleteObject(fileRef);
                 await deleteDoc(doc(db, "uploadVideo", selectedRow.id));
                 setOpen(false);
                 setSelectedRow(null)
@@ -124,7 +137,7 @@ const UploadVideos = () => {
 
         {
             field: 'videoTitle',
-            headerName: 'Videos',
+            headerName: 'Video Title',
             flex: 3,
         },
         {
@@ -136,7 +149,7 @@ const UploadVideos = () => {
                     <>
                         <VisibilityIcon
                             className="divListDelete"
-                           // onClick={() => handleClickOpenVideo(params)}
+                            onClick={() => handleClickOpenVideo(params)}
                         />
                     </>
                 );
@@ -206,9 +219,11 @@ const UploadVideos = () => {
                                 }
                             </Select>
                         </FormControl>
-                        <TextField id="outlined-basic" label="Video Title" variant="outlined" onChange={(event) => setVideoTitle(event.target.value)} />
+                        <TextField id="outlined-basic" label="Video Title" variant="outlined" value={videoTitle} onChange={(event) => setVideoTitle(event.target.value)} />
                         <Button component="label" variant="contained" startIcon={<CloudUploadIcon />} onChange={(event) => setVideo(event.target.files[0])}>
-                            Upload file
+                            {video ? (video.name.length > 20 ? video.name.slice(0, 20) + "..." : video.name) : "Upload"}
+
+
                             <VisuallyHiddenInput type="file" />
                         </Button>
 
@@ -226,7 +241,6 @@ const UploadVideos = () => {
                             },
                         }}
                         pageSizeOptions={[5, 10]}
-                        checkboxSelection
                     />
                 </div>
             </div>
@@ -251,14 +265,27 @@ const UploadVideos = () => {
                     </Button>
                 </DialogActions>
             </Dialog>
-            {/* <Dialog
+            <Dialog
                 open={openPlayer}
                 onClose={handleClosePlayer}
-                aria-labelledby="alert-dialog-title"
-                aria-describedby="alert-dialog-description"
+                aria-labelledby="responsive-dialog-title"
+
             >
-           
-            </Dialog> */}
+
+
+                <video controls width="300px" height="auto">
+
+                    <source src={singleVideo} />
+                    Your browser does not support the video tag.
+                </video>
+                <Button onClick={handleClosePlayer} sx={{ color: 'black' }} >
+                    Close
+                </Button>
+
+
+
+
+            </Dialog>
         </>
     )
 }

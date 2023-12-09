@@ -1,18 +1,16 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react';
 import { DataGrid } from '@mui/x-data-grid';
-import { Box, Button, Container, Stack, TextField, Typography, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, } from '@mui/material';
+import { Box, Button, Container, Stack, TextField, Typography, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { db } from '../../config/firebase';
 import { addDoc, collection, getDocs, deleteDoc, doc } from 'firebase/firestore';
 
-
 const AgeGroup = () => {
-
     const [open, setOpen] = useState(false);
     const [ageData, setAgeData] = useState([]);
     const [age, setAge] = useState('');
     const [selectedRow, setSelectedRow] = useState(null);
-
+    const [error, setError] = useState('');
 
     const handleClickOpen = (params) => {
         setSelectedRow(params);
@@ -23,11 +21,18 @@ const AgeGroup = () => {
         setOpen(false);
     };
 
-    const addAge = async () => {
+    const addAge = async (e) => {
+        e.preventDefault(); // prevent form submission
+        if (!age) {
+            setError('Age is required');
+            return;
+        }
+
         try {
-            await addDoc(collection(db, "ageGroups"), { age })
+            await addDoc(collection(db, "ageGroups"), { age });
             loadAgeGroups();
-            setAge('')
+            setAge('');
+            setError('');
         } catch (error) {
             console.error('Error adding document: ', error);
         }
@@ -41,8 +46,6 @@ const AgeGroup = () => {
         } catch (error) {
             console.error('Error getting documents: ', error);
         }
-
-
     };
 
     const deleteAge = async () => {
@@ -50,7 +53,7 @@ const AgeGroup = () => {
             if (selectedRow) {
                 await deleteDoc(doc(db, "ageGroups", selectedRow.id));
                 setOpen(false);
-                setSelectedRow(null)
+                setSelectedRow(null);
                 loadAgeGroups();
             }
         } catch (error) {
@@ -58,7 +61,6 @@ const AgeGroup = () => {
         }
     };
 
-    
     useEffect(() => {
         loadAgeGroups();
     }, []);
@@ -87,23 +89,23 @@ const AgeGroup = () => {
                 <Typography variant="h4" gutterBottom>
                     Age
                 </Typography>
-                <Box
-                    component="form"
-                    sx={{
-                        '& > :not(style)': { m: 4, width: '100%' },
-                    }}
-                    noValidate
-                    autoComplete="off"
-                >
-                    <Container maxWidth="sm">
-                        <Stack spacing={2} direction="row">
-                            <TextField id="outlined-basic" label="Age" variant="outlined" value={age} onChange={(e) => { setAge(e.target.value) }} />
-
-                            <Button variant="contained" sx={{ width: 150 }} onClick={addAge}>Submit</Button>
-                        </Stack>
-                    </Container>
-
-                </Box>
+                <form onSubmit={addAge}>
+                    <Box
+                        sx={{
+                            '& > :not(style)': { m: 4, width: '100%' },
+                        }}
+                        noValidate
+                        autoComplete="off"
+                    >
+                        <Container maxWidth="sm">
+                            <Stack spacing={2} direction="row">
+                                <TextField id="outlined-basic" label="Age" variant="outlined" value={age} onChange={(e) => { setAge(e.target.value); setError(''); }} />
+                                <Button variant="contained" sx={{ width: 150 }} type='submit' >Submit</Button>
+                            </Stack>
+                            {error && <Typography color="error">{error}</Typography>}
+                        </Container>
+                    </Box>
+                </form>
                 <div style={{ height: 400, width: '100%' }}>
                     <DataGrid
                         rows={ageData}
@@ -114,7 +116,6 @@ const AgeGroup = () => {
                             },
                         }}
                         pageSizeOptions={[5, 10]}
-                        checkboxSelection
                     />
                 </div>
             </div>
@@ -129,7 +130,7 @@ const AgeGroup = () => {
                 </DialogTitle>
                 <DialogContent>
                     <DialogContentText id="alert-dialog-description">
-                        Are you sure to delete this user permanenently
+                        Are you sure to delete this user permanently
                     </DialogContentText>
                 </DialogContent>
                 <DialogActions>
@@ -140,7 +141,7 @@ const AgeGroup = () => {
                 </DialogActions>
             </Dialog>
         </>
-    )
-}
+    );
+};
 
-export default AgeGroup
+export default AgeGroup;

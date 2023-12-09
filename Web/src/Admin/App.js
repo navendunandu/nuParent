@@ -72,7 +72,7 @@ const ResponsiveDrawer = (props) => {
           <Link to={'/Admin/'} className={`sidebar-btn ${location.pathname === '/Admin/' ? 'active-link' : ''}`} onClick={handleDrawerToggle}>
             <ListItemButton >
               <ListItemIcon>
-                <DashboardIcon />
+                <DashboardIcon className='icon-clr' />
               </ListItemIcon>
               <ListItemText primary='DashBoard' />
             </ListItemButton>
@@ -82,7 +82,7 @@ const ResponsiveDrawer = (props) => {
           <Link to={'/Admin/Age'} className={`sidebar-btn ${location.pathname === '/Admin/Age' ? 'active-link' : ''}`} onClick={handleDrawerToggle} >
             <ListItemButton >
               <ListItemIcon>
-                <ChildCareIcon />
+                <ChildCareIcon className='icon-clr' />
               </ListItemIcon>
               <ListItemText primary='Age' />
             </ListItemButton>
@@ -92,7 +92,7 @@ const ResponsiveDrawer = (props) => {
           <Link to={'/Admin/Reminder'} className={`sidebar-btn ${location.pathname === '/Admin/Reminder' ? 'active-link' : ''}`} onClick={handleDrawerToggle} >
             <ListItemButton >
               <ListItemIcon>
-                <NotificationsActiveIcon />
+                <NotificationsActiveIcon className='icon-clr'/>
               </ListItemIcon>
               <ListItemText primary='Reminder' />
             </ListItemButton>
@@ -102,7 +102,7 @@ const ResponsiveDrawer = (props) => {
           <Link to={'/Admin/UploadVideos'} className={`sidebar-btn ${location.pathname === '/Admin/UploadVideos' ? 'active-link' : ''}`} onClick={handleDrawerToggle}>
             <ListItemButton >
               <ListItemIcon>
-                <CloudUploadIcon />
+                <CloudUploadIcon className='icon-clr'/>
               </ListItemIcon>
               <ListItemText primary='Upload Videos' />
             </ListItemButton>
@@ -112,7 +112,7 @@ const ResponsiveDrawer = (props) => {
           <Link to={'/Admin/Brushing'} className={`sidebar-btn ${location.pathname === '/Admin/Brushing' ? 'active-link' : ''}`} onClick={handleDrawerToggle}>
             <ListItemButton >
               <ListItemIcon>
-                <MoodIcon />
+                <MoodIcon className='icon-clr' />
               </ListItemIcon>
               <ListItemText primary='Brushing' />
             </ListItemButton>
@@ -122,7 +122,7 @@ const ResponsiveDrawer = (props) => {
           <Link to={'/Admin/OralHygiene'} className={`sidebar-btn ${location.pathname === '/Admin/OralHygiene' ? 'active-link' : ''}`} onClick={handleDrawerToggle}>
             <ListItemButton >
               <ListItemIcon>
-                <CleanHandsTwoToneIcon />
+                <CleanHandsTwoToneIcon className='icon-clr' />
               </ListItemIcon>
               <ListItemText primary='Oral Hygiene' />
             </ListItemButton>
@@ -132,7 +132,7 @@ const ResponsiveDrawer = (props) => {
           <Link to={'/Admin/Dietaryintake'} className={`sidebar-btn ${location.pathname === '/Admin/Dietaryintake' ? 'active-link' : ''}`} onClick={handleDrawerToggle}>
             <ListItemButton >
               <ListItemIcon>
-                <SoupKitchenIcon />
+                <SoupKitchenIcon className='icon-clr'/>
               </ListItemIcon>
               <ListItemText primary='Dietary Intake' />
             </ListItemButton>
@@ -142,7 +142,7 @@ const ResponsiveDrawer = (props) => {
           <Link to={'../'} className={`sidebar-btn `} onClick={handleDrawerToggle}>
             <ListItemButton >
               <ListItemIcon>
-                <LogoutIcon />
+                <LogoutIcon className='icon-clr'/>
               </ListItemIcon>
               <ListItemText primary='LogOut' />
             </ListItemButton>
