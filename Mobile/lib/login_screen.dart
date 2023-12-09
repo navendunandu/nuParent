@@ -3,6 +3,7 @@ import 'package:flutter_signin_button/flutter_signin_button.dart';
 import 'package:nu_parent/child_dashboard.dart';
 import 'package:nu_parent/main.dart';
 import 'package:nu_parent/registration_screen.dart';
+import 'package:nu_parent/services/auth_services.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -12,6 +13,7 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  
   bool _obscureText = true;
   bool _isChecked = false;
   void _togglePasswordVisibility() {
@@ -226,7 +228,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         text: "Sign in with Google",
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(30.0)),
-                        onPressed: () {},
+                        onPressed: () =>AuthService().signInWithGoogle(),
                       ),
                     ),
                   ],
