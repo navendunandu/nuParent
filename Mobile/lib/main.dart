@@ -12,7 +12,7 @@ void main() async {
 }
 
 class AppColors {
-  static const primaryColor = Colors.blueAccent;
+  static const primaryColor = Color.fromARGB(255, 0, 30, 80);
   static const accentColor = Colors.blue;
   static const white = Colors.white;
   static const black = Colors.black;

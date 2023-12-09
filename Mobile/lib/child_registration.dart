@@ -48,6 +48,7 @@ class _RegistrationChildState extends State<RegistrationChild> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      // backgroundColor: AppColors.accentColor,
       appBar: const CustomTopBar(showBackIcon: false),
       // AppBar(
       //   leading: IconButton(
