@@ -95,6 +95,11 @@ const Brushing = () => {
             flex: 3
         },
         {
+            field: 'age',
+            headerName: 'Brushing ',
+            flex: 3
+        },
+        {
             field: "action",
             headerName: "Action",
             flex: 1,
