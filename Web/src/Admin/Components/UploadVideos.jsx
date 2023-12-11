@@ -24,6 +24,9 @@ const UploadVideos = () => {
     const [age, setAge] = useState('');
     const [singleVideo, setSingleVideo] = useState([]);
 
+    const [videoTitleError, setVideoTitleError] = useState(false);
+    const [ageError, setAgeError] = useState(false);
+
     const handleClickOpen = (params) => {
         setSelectedRow(params);
         setOpen(true);
@@ -55,6 +58,17 @@ const UploadVideos = () => {
 
 
     const addUploadVideo = async () => {
+        if (!videoTitle) {
+            setVideoTitleError(true);
+            return;
+        }
+        if (!age) {
+            setAgeError(true);
+            return;
+        }
+
+        setVideoTitleError(false);
+        setAgeError(false);
         try {
             const type = video.type;
             const metadata = {
@@ -78,6 +92,8 @@ const UploadVideos = () => {
             setAge('')
             setVideoTitle('')
             setVideo('')
+
+           
         } catch (error) {
             console.error('Error adding document: ', error);
         }
@@ -209,7 +225,11 @@ const UploadVideos = () => {
                                 id="demo-simple-select"
                                 value={age}
                                 label="Age"
-                                onChange={(event) => setAge(event.target.value)}
+                                onChange={(event) => {
+                                    setAge(event.target.value);
+                                    setAgeError(false); // Clear error when age is selected
+                                }}
+                                error={ageError}
                             >
                                 {
                                     ageData.map((doc, key) => (
@@ -219,7 +239,12 @@ const UploadVideos = () => {
                                 }
                             </Select>
                         </FormControl>
-                        <TextField id="outlined-basic" label="Video Title" variant="outlined" value={videoTitle} onChange={(event) => setVideoTitle(event.target.value)} />
+                        <TextField id="outlined-basic" label="Video Title" variant="outlined" value={videoTitle} onChange={(event) => {
+                                setVideoTitle(event.target.value);
+                                setVideoTitleError(false); // Clear error when video title is entered
+                            }}
+                            error={videoTitleError}
+                        />
                         <Button component="label" variant="contained" startIcon={<CloudUploadIcon />} onChange={(event) => setVideo(event.target.files[0])}>
                             {video ? (video.name.length > 20 ? video.name.slice(0, 20) + "..." : video.name) : "Upload"}
 

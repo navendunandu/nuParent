@@ -60,8 +60,8 @@ const ResponsiveDrawer = (props) => {
 
       <Toolbar >
         <Stack direction={'row'} sx={{ display: 'flex', alignItems: 'center' }}>
-          <img src={Logo} alt="Logo" style={{ width: '50px', height: '50px',objectFit:'contain' }} />
-          <Typography variant='h5' sx={{ m: 1, fontWeight:'700' }}><span style={{color:'#4012A6'}}>nu</span>Parent</Typography>
+          <img src={Logo} alt="Logo" style={{ width: '60px', height: '60px',objectFit:'contain' }} />
+          <Typography variant='h5' sx={{ m: 1, fontWeight:'700' }} style={{color:'#420D17'}}><span style={{color:'#FA0D28'}}>nu</span>Parent</Typography>
         </Stack>
 
       </Toolbar>
