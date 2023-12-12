@@ -56,8 +56,10 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
       context: context,
       initialDate: _selectedDate ?? DateTime.now(),
       firstDate: DateTime(2000, 1, 1),
-      lastDate: DateTime(2050, 12, 31),
+      lastDate: DateTime(2002, 12, 31),
     );
+
+    
     if (pickedDate != null) {
       setState(() {
         _selectedDate = pickedDate;
@@ -265,7 +267,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                                 borderRadius: BorderRadius.circular(10.0),
                                 borderSide: BorderSide.none),
                           ),
-                          initialCountryCode: 'IN',
+                          initialCountryCode: 'GB',
                           disableLengthCheck: true,
                           onChanged: (phone) {
                             print(phone.completeNumber);
