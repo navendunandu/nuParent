@@ -52,85 +52,30 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   }
 
   void _selectDate() async {
-    final DateTime? pickedDate = await showDatePicker(
-      context: context,
-      initialDate: _selectedDate ?? DateTime.now(),
-      firstDate: DateTime(2000, 1, 1),
-      lastDate: DateTime(2002, 12, 31),
-    );
+  final DateTime currentDate = DateTime.now();
+  final DateTime lastDate = currentDate.subtract(Duration(days: 6570)); // 6570 days is approximately 18 years
 
-    
-    if (pickedDate != null) {
-      setState(() {
-        _selectedDate = pickedDate;
-        _dateController.text = DateFormat('dd-MM-yyyy').format(pickedDate);
-        print(_dateController.text);
-      });
-    }
+  DateTime? pickedDate = await showDatePicker(
+    context: context,
+    initialDate: _selectedDate ?? lastDate, // Use lastDate if _selectedDate is null
+    firstDate: DateTime(1900, 1, 1),
+    lastDate: lastDate,
+  );
+
+  if (pickedDate != null) {
+    setState(() {
+      _selectedDate = pickedDate;
+      _dateController.text = DateFormat('dd-MM-yyyy').format(pickedDate);
+      print(_dateController.text);
+    });
   }
+}
 
   String? selectedPrefix;
   List<String> prefix = ['Mr', 'Mrs', 'Ms'];
 
   Future<void> _registerUser() async {
-    Navigator.pushReplacement(context,
-        MaterialPageRoute(builder: (context) => const RegistrationChild()));
-    if (_formKey.currentState!.validate()) {
-      try{
-        final FirebaseAuth auth = FirebaseAuth.instance;
-        final FirebaseStorage storage = FirebaseStorage.instance;
-        final FirebaseFirestore firestore = FirebaseFirestore.instance;
-
-        final UserCredential userCredential =
-        await auth.createUserWithEmailAndPassword(email: _emailController.text.trim(), password: _passController.text.trim());
-
-        final User? user = userCredential.user;
-
-        if(user != null){
-          Fluttertoast.showToast(msg: 'Registration Successful!',
-          toastLength: Toast.LENGTH_SHORT,
-            gravity: ToastGravity.BOTTOM,
-            backgroundColor: Colors.green,
-            textColor: Colors.white,
-          );
-
-          final String userId = user.uid;
-
-          if(_selectedImage != null){
-            final Reference ref = storage.ref().child('user_profile_images/$userId.jpg');
-            await ref.putFile(File(_selectedImage!.path));
-            final imageUrl = await ref.getDownloadURL();
-            setState((){
-              _imageUrl = imageUrl;
-            });
-          }
-        
-          await firestore.collection('users').doc(userId).set({
-            'name': _nameController.text,
-            'email': _emailController.text,
-            'password': _passController.text,
-            'profileImageUrl': _imageUrl,
-            'phone': _phoneController.text,
-            'dob': _dateController.text,
-            'gender': _selectedGender,
-            'address': _addressController.text,
-          });
-
-          Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> const RegistrationChild()));
-        }
-      }
-
-      catch(e){
-        Fluttertoast.showToast(
-          msg: 'Error registering user: $e',
-          toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.BOTTOM,
-          backgroundColor: Colors.red,
-          textColor: Colors.white,
-        );
-        print('Error registering user: $e');
-      }
-    }
+    
   }
 
   @override
