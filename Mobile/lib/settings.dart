@@ -11,137 +11,24 @@ class SettingsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        leading: IconButton(
-          onPressed: () {
-            Navigator.pop(context);
-          },
-          icon: const Icon(Icons.arrow_back_ios_new), //Back Icon
-        ),
-      ),
       body: Container(
         decoration: const BoxDecoration(
             image: DecorationImage(
-                image: AssetImage('assets/Vector2.png'),
-                fit: BoxFit.cover,
-                alignment: Alignment.bottomCenter)),
+                image: AssetImage('assets/Vector-1.png'),
+                 fit: BoxFit.scaleDown, alignment: Alignment.bottomCenter,
+               )),
         child: ListView(
           children: [
-            SizedBox(
-              height: 140,
-              child: Stack(
-                children: [
-                  Positioned(
-                    left: 90,
-                    top: 5,
-                    child: Container(
-                      width: 80,
-                      height: 80,
-                      decoration: const BoxDecoration(
-                        boxShadow: [
-                          BoxShadow(
-                            color: Color.fromARGB(33, 0, 0, 0),
-                            spreadRadius: 1,
-                            blurRadius: 10,
-                            offset: Offset(0, 0),
-                          ),
-                        ],
-                        shape: BoxShape.circle,
-                        color: Color.fromARGB(255, 213, 232, 251),
-                      ),
-                    ),
-                  ),
-                  Positioned(
-                    left: 80,
-                    top: 5,
-                    child: Container(
-                      width: 18,
-                      height: 18,
-                      decoration: const BoxDecoration(
-                        boxShadow: [
-                          BoxShadow(
-                            color: Color.fromARGB(33, 0, 0, 0),
-                            spreadRadius: 1,
-                            blurRadius: 10,
-                            offset: Offset(0, 0),
-                          ),
-                        ],
-                        shape: BoxShape.circle,
-                        color: Color.fromARGB(255, 213, 232, 251),
-                      ),
-                    ),
-                  ),
-                  Positioned(
-                    left: 92,
-                    top: 82,
-                    child: Container(
-                      width: 10,
-                      height: 10,
-                      decoration: const BoxDecoration(
-                        boxShadow: [
-                          BoxShadow(
-                            color: Color.fromARGB(33, 0, 0, 0),
-                            spreadRadius: 1,
-                            blurRadius: 10,
-                            offset: Offset(0, 0),
-                          ),
-                        ],
-                        shape: BoxShape.circle,
-                        color: Color.fromARGB(255, 0, 131, 231),
-                      ),
-                    ),
-                  ),
-                  Positioned(
-                    left: 125,
-                    top: 75,
-                    child: Container(
-                      width: 35,
-                      height: 35,
-                      decoration: const BoxDecoration(
-                        boxShadow: [
-                          BoxShadow(
-                            color: Color.fromARGB(33, 0, 0, 0),
-                            spreadRadius: 1,
-                            blurRadius: 10,
-                            offset: Offset(0, 0),
-                          ),
-                        ],
-                        shape: BoxShape.circle,
-                        color: Color.fromARGB(255, 99, 137, 165),
-                      ),
-                    ),
-                  ),
-                  Positioned(
-                    left: 40,
-                    top: 25,
-                    child: Container(
-                      width: 55,
-                      height: 55,
-                      decoration: const BoxDecoration(
-                        boxShadow: [
-                          BoxShadow(
-                            color: Color.fromARGB(33, 0, 0, 0),
-                            spreadRadius: 1,
-                            blurRadius: 10,
-                            offset: Offset(0, 0),
-                          ),
-                        ],
-                        shape: BoxShape.circle,
-                        color: Color.fromARGB(255, 0, 82, 140),
-                      ),
-                    ),
-                  ),
-                  const Center(
-                      child: Text(
-                    'Settings',
-                    style: TextStyle(
-                        fontSize: 26,
-                        fontWeight: FontWeight.w500,
-                        color: AppColors.darkblue),
-                  ))
-                ],
-              ),
-            ),
+            const SizedBox(
+                height: 140,
+                child: Center(
+                    child: Text(
+                  'Settings',
+                  style: TextStyle(
+                      fontSize: 26,
+                      fontWeight: FontWeight.w500,
+                      color: AppColors.darkblue),
+                ))),
             ListTile(
               contentPadding: const EdgeInsets.all(2),
               tileColor: AppColors.tileprimaryblue,
@@ -178,10 +65,8 @@ class SettingsScreen extends StatelessWidget {
                 textAlign: TextAlign.center,
               ),
               onTap: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => const Reminder()));
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => const Reminder()));
               },
             ),
             ListTile(

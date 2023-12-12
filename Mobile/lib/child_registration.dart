@@ -45,213 +45,245 @@ class _RegistrationChildState extends State<RegistrationChild> {
       });
     }
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // backgroundColor: AppColors.accentColor,
-      appBar: const CustomTopBar(showBackIcon: false),
-      // AppBar(
-      //   leading: IconButton(
-      //       onPressed: () {
-      //         Navigator.pop(context);
-      //       },
-      //       icon: const Icon(Icons.arrow_back_ios_new)),
-      // ),
-      body: SingleChildScrollView(
-          child: Form(
-            child: Padding(
-              padding: const EdgeInsets.only(left: 20.0, right: 20.0),
-              child: Column(
-                mainAxisSize: MainAxisSize.max,
-                crossAxisAlignment: CrossAxisAlignment.start,
+      body: Column(
+        children: [
+          Expanded(
+            child: Container(
+              decoration: const BoxDecoration(
+                  gradient: RadialGradient(
+                colors: [
+                  Color.fromARGB(255, 245, 251, 255),
+                  AppColors.tileprimaryblue
+                ],
+                radius: .5, // Adjust the radius based on your preference
+                center: Alignment(0.2, -.6),
+              )),
+              child: SingleChildScrollView(
+                  child: Column(
                 children: [
-                  const Text(
-                    "Child Profile",
-                    textAlign: TextAlign.left,
-                    style: TextStyle(
-                      fontSize: 28,
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
-                  const Text('Please make sure all the details are right.'),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  Center(
-                    child: GestureDetector(
-                      onTap: _pickImage,
-                      child: Stack(
+                  const CustomTopBar(
+                      showBackIcon: false, showNotificationButton: false),
+                  Form(
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 20.0, right: 20.0),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.max,
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          CircleAvatar(
-                            radius: 50,
-                            backgroundColor: const Color(0xff4c505b),
-                            backgroundImage: _selectedImage != null
-                                ? FileImage(File(_selectedImage!.path))
-                                : _imageUrl != null
-                                    ? NetworkImage(_imageUrl!)
-                                    : const AssetImage(
-                                            'assets/dummy-profile-pic.png')
-                                        as ImageProvider,
-                            child: _selectedImage == null && _imageUrl == null
-                                ? const Icon(
-                                    Icons.add,
-                                    size: 40,
-                                    color: Color.fromARGB(255, 134, 134, 134),
-                                  )
-                                : null,
+                          const Text(
+                            "Child Profile",
+                            textAlign: TextAlign.left,
+                            style: TextStyle(
+                              fontSize: 28,
+                              fontWeight: FontWeight.w500,
+                            ),
                           ),
-                          if (_selectedImage != null || _imageUrl != null)
-                            const Positioned(
-                              bottom: 0,
-                              right: 0,
-                              child: CircleAvatar(
-                                backgroundColor: AppColors.white,
-                                radius: 18,
-                                child: Icon(
-                                  Icons.edit,
-                                  size: 18,
-                                  color: AppColors.black,
-                                ),
+                          const Text(
+                              'Please make sure all the details are right.'),
+                          const SizedBox(
+                            height: 20,
+                          ),
+                          Center(
+                            child: GestureDetector(
+                              onTap: _pickImage,
+                              child: Stack(
+                                children: [
+                                  CircleAvatar(
+                                    radius: 50,
+                                    backgroundColor: const Color(0xff4c505b),
+                                    backgroundImage: _selectedImage != null
+                                        ? FileImage(File(_selectedImage!.path))
+                                        : _imageUrl != null
+                                            ? NetworkImage(_imageUrl!)
+                                            : const AssetImage(
+                                                    'assets/dummy-profile-pic.png')
+                                                as ImageProvider,
+                                    child: _selectedImage == null &&
+                                            _imageUrl == null
+                                        ? const Icon(
+                                            Icons.add,
+                                            size: 40,
+                                            color: Color.fromARGB(
+                                                255, 134, 134, 134),
+                                          )
+                                        : null,
+                                  ),
+                                  if (_selectedImage != null ||
+                                      _imageUrl != null)
+                                    const Positioned(
+                                      bottom: 0,
+                                      right: 0,
+                                      child: CircleAvatar(
+                                        backgroundColor: AppColors.white,
+                                        radius: 18,
+                                        child: Icon(
+                                          Icons.edit,
+                                          size: 18,
+                                          color: AppColors.black,
+                                        ),
+                                      ),
+                                    ),
+                                ],
                               ),
                             ),
-                        ],
-                      ),
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 30,
-                  ),
-                  TextFormField(
-                          decoration: InputDecoration(
-                            hintText: 'Name',
-                            contentPadding: const EdgeInsets.symmetric(
-                              vertical: 20.0,
-                              horizontal: 25.0,
+                          ),
+                          const SizedBox(
+                            height: 30,
+                          ),
+                          TextFormField(
+                            decoration: InputDecoration(
+                              hintText: 'Name',
+                              contentPadding: const EdgeInsets.symmetric(
+                                vertical: 20.0,
+                                horizontal: 25.0,
+                              ),
+                              filled: true,
+                              fillColor:
+                                  const Color.fromARGB(241, 241, 241, 255),
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10.0),
+                                borderSide: BorderSide.none,
+                              ),
                             ),
-                            filled: true,
-                            fillColor: const Color.fromARGB(31, 121, 120, 120),
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(10.0),
-                              borderSide: BorderSide.none,
+                          ),
+                          const SizedBox(
+                            height: 20,
+                          ),
+                          TextField(
+                            controller: _dateController,
+                            readOnly: true,
+                            decoration: InputDecoration(
+                              suffixIcon:
+                                  const Icon(Icons.calendar_month_outlined),
+                              hintText: 'Date of Birth',
+                              contentPadding: const EdgeInsets.symmetric(
+                                  vertical: 20.0, horizontal: 25.0),
+                              filled: true,
+                              fillColor:
+                                  const Color.fromARGB(241, 241, 241, 255),
+                              border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(10.0),
+                                  borderSide: BorderSide.none),
+                            ),
+                            onTap: _selectDate,
+                          ),
+                          const SizedBox(
+                            height: 20,
+                          ),
+                          const Text('Select Gender'),
+                          const SizedBox(
+                            height: 20,
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              Row(
+                                children: [
+                                  Radio<String>(
+                                    activeColor: AppColors.primaryColor,
+                                    value: 'Male',
+                                    groupValue: selectedGender,
+                                    onChanged: (value) {
+                                      setState(() {
+                                        selectedGender = value!;
+                                      });
+                                    },
+                                  ),
+                                  const Text('Male'),
+                                ],
+                              ),
+                              Row(
+                                children: [
+                                  Radio<String>(
+                                    activeColor: AppColors.primaryColor,
+                                    value: 'Female',
+                                    groupValue: selectedGender,
+                                    onChanged: (value) {
+                                      setState(() {
+                                        selectedGender = value!;
+                                      });
+                                    },
+                                  ),
+                                  const Text('Female'),
+                                ],
+                              ),
+                              Row(
+                                children: [
+                                  Radio<String>(
+                                    activeColor: AppColors.primaryColor,
+                                    value: 'Other',
+                                    groupValue: selectedGender,
+                                    onChanged: (value) {
+                                      setState(() {
+                                        selectedGender = value!;
+                                      });
+                                    },
+                                  ),
+                                  const Text('Other'),
+                                ],
+                              ),
+                            ],
+                          ),
+                          const SizedBox(
+                            height: 20,
+                          ),
+                          TextFormField(
+                            decoration: InputDecoration(
+                              hintText: 'Address Line',
+                              contentPadding: const EdgeInsets.symmetric(
+                                vertical: 20.0,
+                                horizontal: 25.0,
+                              ),
+                              filled: true,
+                              fillColor:
+                                  const Color.fromARGB(241, 241, 241, 255),
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10.0),
+                                borderSide: BorderSide.none,
+                              ),
                             ),
                           ),
-                        ),
-                        const SizedBox(
-                          height: 20,
-                        ),
-                  TextField(
-                    controller: _dateController,
-                    readOnly: true,
-                    decoration: InputDecoration(
-                      suffixIcon: const Icon(Icons.calendar_month_outlined),
-                      hintText: 'Date of Birth',
-                      contentPadding: const EdgeInsets.symmetric(
-                          vertical: 20.0, horizontal: 25.0),
-                      filled: true,
-                      fillColor: const Color.fromARGB(31, 121, 120, 120),
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10.0),
-                          borderSide: BorderSide.none),
-                    ),
-                    onTap: _selectDate,
-                  ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  const Text('Select Gender'),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      Row(
-                        children: [
-                          Radio<String>(
-                            value: 'Male',
-                            groupValue: selectedGender,
-                            onChanged: (value) {
-                              setState(() {
-                                selectedGender = value!;
-                              });
-                            },
+                          const SizedBox(
+                            height: 20,
                           ),
-                          const Text('Male'),
-                        ],
-                      ),
-                      Row(
-                        children: [
-                          Radio<String>(
-                            value: 'Female',
-                            groupValue: selectedGender,
-                            onChanged: (value) {
-                              setState(() {
-                                selectedGender = value!;
-                              });
-                            },
+                          Center(
+                            child: ElevatedButton(
+                              onPressed: () {
+                                Navigator.pushReplacement(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            const SuccessScreen()));
+                              },
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: AppColors.primaryColor,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10.0),
+                                ),
+                                padding: const EdgeInsets.fromLTRB(
+                                    160.0, 15, 160.0, 15),
+                              ),
+                              child: const Text(
+                                'Save',
+                                style: TextStyle(
+                                    fontSize: 20, color: AppColors.white),
+                              ),
+                            ),
                           ),
-                          const Text('Female'),
                         ],
-                      ),
-                       Row(
-                        children: [
-                          Radio<String>(
-                            value: 'Other',
-                            groupValue: selectedGender,
-                            onChanged: (value) {
-                              setState(() {
-                                selectedGender = value!;
-                              });
-                            },
-                          ),
-                          const Text('Other'),
-                        ],
-                      ),
-                    ],
-                  ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  TextFormField(
-                    decoration: InputDecoration(
-                      hintText: 'Address Line',
-                      contentPadding: const EdgeInsets.symmetric(
-                        vertical: 20.0,
-                        horizontal: 25.0,
-                      ),
-                      filled: true,
-                      fillColor: const Color.fromARGB(31, 121, 120, 120),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10.0),
-                        borderSide: BorderSide.none,
-                      ),
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  Center(
-                    child: ElevatedButton(
-                      onPressed: () {
-                        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> const SuccessScreen()));
-                      },
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: AppColors.primaryColor,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10.0),
-                        ),
-                        padding: const EdgeInsets.fromLTRB(160.0, 15, 160.0, 15),
-                      ),
-                      child: const Text(
-                        'Save',
-                        style: TextStyle(fontSize: 20, color: AppColors.white),
                       ),
                     ),
                   ),
                 ],
-              ),
+              )),
             ),
-          )),
+          ),
+        ],
+      ),
     );
   }
 }

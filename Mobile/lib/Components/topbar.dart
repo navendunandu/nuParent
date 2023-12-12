@@ -3,11 +3,14 @@ import 'package:nu_parent/main.dart';
 
 class CustomTopBar extends StatelessWidget implements PreferredSizeWidget {
   final bool showBackIcon;
+  final bool showNotificationButton;
+  const CustomTopBar(
+      {Key? key, this.showBackIcon = true, this.showNotificationButton = true})
+      : super(key: key);
 
-  const CustomTopBar({Key? key, this.showBackIcon = true}) : super(key: key);
-
-   @override
-  Size get preferredSize => showBackIcon ? const Size.fromHeight(110) : const Size.fromHeight(80);
+  @override
+  Size get preferredSize =>
+      showBackIcon ? const Size.fromHeight(110) : const Size.fromHeight(80);
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +27,8 @@ class CustomTopBar extends StatelessWidget implements PreferredSizeWidget {
                     borderRadius: const BorderRadius.all(Radius.circular(5.0)),
                     child: Stack(
                       children: [
-                        Image.asset('assets/dummy-profile-pic.png', height: 50, fit: BoxFit.cover),
+                        Image.asset('assets/dummy-profile-pic.png',
+                            height: 50, fit: BoxFit.cover),
                         const Padding(
                           padding: EdgeInsets.only(left: 35, top: 35),
                           child: Icon(
@@ -43,28 +47,34 @@ class CustomTopBar extends StatelessWidget implements PreferredSizeWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text('Hello,'),
-                      Text('Kamalapriya Ajay',
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold
-                      ),),
+                      Text(
+                        'Kamalapriya Ajay',
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
                     ],
                   ),
                 ],
               ),
               Container(
                 decoration: BoxDecoration(
-                  color: AppColors.whiteblue,
-                  borderRadius: BorderRadius.circular(8.0)
-                ),
-                
-                child: const Padding(
-                padding: EdgeInsets.all(8.0),
-                child: Icon(Icons.notifications),
-              )),
+                    color: showNotificationButton ? AppColors.whiteblue : null,
+                    borderRadius: BorderRadius.circular(8.0)),
+                child: showNotificationButton
+                    ? const Padding(
+                        padding: EdgeInsets.all(8.0),
+                        child: Icon(Icons.notifications),
+                      )
+                    : GestureDetector(
+                        onTap: () {},
+                        child: const Text(
+                          'Skip',
+                        ),
+                      ),
+              ),
             ],
           ),
         ),
-        if(showBackIcon)
+        if (showBackIcon)
           Row(
             children: [
               IconButton(

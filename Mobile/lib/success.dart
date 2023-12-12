@@ -9,54 +9,65 @@ class SuccessScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Stack(
-            children: [
-              Center(
-                  child: Image.asset(
-                'assets/success.png',
-                width: 300,
-              )),
-              Padding(
-                padding: const EdgeInsets.only(left: 138.0, top: 100),
-                child: ClipOval(
-
-                  child: Container(
-                    color: AppColors.white,
-                    child: Padding(
-                      padding: const EdgeInsets.all(15.0),
-                      child: Image.asset('assets/nuParent.png', width: 50, height: 50,),
+      body: Container(
+        decoration: const BoxDecoration(
+              gradient: RadialGradient(
+            colors: [
+              Color.fromARGB(255, 245, 251, 255),
+              AppColors.tileprimaryblue
+            ],
+            radius: .5, // Adjust the radius based on your preference
+            center: Alignment(0.2, -.6),
+          )),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Stack(
+              children: [
+                Center(
+                    child: Image.asset(
+                  'assets/success.png',
+                  width: 300,
+                )),
+                Padding(
+                  padding: const EdgeInsets.only(left: 138.0, top: 100),
+                  child: ClipOval(
+        
+                    child: Container(
+                      color: AppColors.white,
+                      child: Padding(
+                        padding: const EdgeInsets.all(15.0),
+                        child: Image.asset('assets/nuParent.png', width: 50, height: 50,),
+                      ),
                     ),
                   ),
                 ),
-              ),
-            ],
-          ),
-          const Text(
-            'Registration Successfully',
-            style: TextStyle(fontSize: 24, fontWeight: FontWeight.w600),
-          ),
-          Text(
-            'Welcome to nuParent.',
-            style: GoogleFonts.sansita(textStyle:const TextStyle(fontSize: 32, fontWeight: FontWeight.w600, color: AppColors.primaryColor) ),
-          ),
-          const SizedBox(
-            height: 20,
-          ),
-          GestureDetector(
-            onTap: () {
-              Navigator.pushReplacement(context,
-                  MaterialPageRoute(builder: (context) => const LoginScreen()));
-            },
-            child: const Text(
-              'Back to Login',
-              style: TextStyle(fontSize: 20, color: AppColors.primaryColor),
+              ],
             ),
-          )
-        ],
+            const Text(
+              'Registration Successfully',
+              style: TextStyle(fontSize: 24, fontWeight: FontWeight.w600),
+            ),
+            Text(
+              'Welcome to nuParent.',
+              style: GoogleFonts.sansita(textStyle:const TextStyle(fontSize: 32, fontWeight: FontWeight.w600, color: AppColors.primaryColor) ),
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+            GestureDetector(
+              onTap: () {
+                Navigator.pushReplacement(context,
+                    MaterialPageRoute(builder: (context) => const LoginScreen()));
+              },
+              child: const Text(
+                'Back to Login',
+                style: TextStyle(fontSize: 20, color: AppColors.primaryColor, fontWeight: FontWeight.w500),
+              ),
+            )
+          ],
+        ),
       ),
     );
   }
