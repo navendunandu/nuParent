@@ -239,7 +239,7 @@ const UploadVideos = () => {
                                 }
                             </Select>
                         </FormControl>
-                        <TextField id="outlined-basic" label="Video Title" variant="outlined" value={videoTitle} onChange={(event) => {
+                        <TextField id="outlined-basic" autoComplete='off' label="Video Title" variant="outlined" value={videoTitle} onChange={(event) => {
                                 setVideoTitle(event.target.value);
                                 setVideoTitleError(false); // Clear error when video title is entered
                             }}

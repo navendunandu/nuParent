@@ -129,6 +129,7 @@ const Brushing = () => {
                                     id="demo-simple-select"
                                     value={age}
                                     label="Age"
+
                                     onChange={(event) => { setAge(event.target.value); setError(''); }}
                                 >
                                     {ageData.map((doc, key) => (
@@ -141,6 +142,7 @@ const Brushing = () => {
                                 onChange={(event) => { setBrushing(event.target.value); setError(''); }}
                                 label="Brushing Details"
                                 variant="outlined"
+                                autoComplete='off'
                                 value={brushing}
                             />
                             <Button variant="contained" sx={{ width: 150 }} type="submit">

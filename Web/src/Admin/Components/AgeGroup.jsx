@@ -99,7 +99,7 @@ const AgeGroup = () => {
                     >
                         <Container maxWidth="sm">
                             <Stack spacing={2} direction="row">
-                                <TextField id="outlined-basic" label="Age" variant="outlined" value={age} onChange={(e) => { setAge(e.target.value); setError(''); }} />
+                                <TextField id="outlined-basic" label="Age" autoComplete='off' variant="outlined" value={age} onChange={(e) => { setAge(e.target.value); setError(''); }} />
                                 <Button variant="contained" sx={{ width: 150 }} type='submit' >Submit</Button>
                             </Stack>
                             {error && <Typography color="error">{error}</Typography>}
