@@ -6,28 +6,43 @@ import { Button, Stack, TextField, Typography } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { useNavigate } from "react-router-dom";
 import Logo from '../../../assets/nuParent.png'
+import { db } from '../../../config/firebase';
+import {  collection, getDocs } from 'firebase/firestore';
 
 
 
 const Login = () => {
 
 
-  const [email, setEmail] = useState('')
+  const [email, setEmail] = useState('admin@gmail.com')
   const [password, setPassword] = useState('admin')
-   const navigate = useNavigate()
+  const [data, setData] = useState('')
+  const navigate = useNavigate()
 
 
   const Check = () => {
-    if (email === 'admin@gmail.com' && password === 'admin') {
-       navigate('../Admin/')
+    if (email === data.email && password === data.password) {
+      navigate('../Admin/')
+    }
+    else{
+      alert('Invalid email or password. Please check your credentials and try again.');
     }
   }
 
-    useEffect(() => {
-      setEmail('admin@gmail.com')
-      setPassword('admin')
-    }, [])
- 
+  const loadAdminDatas = async () => {
+    try {
+      const querySnapshot = await getDocs(collection(db, "admin"));
+      const adminDatas = querySnapshot.docs.map((doc, index) => ({ id: doc.id, index: index + 1, ...doc.data() }));
+      setData(adminDatas[0])
+    } catch (error) {
+      console.error('Error getting documents: ', error);
+    }
+  };
+
+  useEffect(() => {
+    loadAdminDatas()
+  }, [])
+
   return (
     <Box
       sx={{
@@ -41,9 +56,9 @@ const Login = () => {
       }}
     >
 
-      <Paper elevation={3} sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight:'100% ' }}>
-        <Box sx={{ width: '50%', m: 2, display:'flex', justifyContent:'center' }} >
-         <img src={Logo} width={300}  alt=''/>
+      <Paper elevation={3} sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '100% ' }}>
+        <Box sx={{ width: '50%', m: 2, display: 'flex', justifyContent: 'center' }} >
+          <img src={Logo} width={300} alt='' />
         </Box>
         <Box sx={{ width: '50%', m: 2, display: 'flex', justifyContent: 'center' }} >
           <Box>
@@ -62,8 +77,8 @@ const Login = () => {
               noValidate
               autoComplete="off"
             >
-              <TextField id="outlined-basic" label="Email" variant="outlined" value={'admin@gmail.com'} />
-              <TextField id="outlined-basic" label="Password" variant="outlined" value={'admin'} />
+              <TextField id="outlined-basic" label="Email" variant="outlined" value={email}  onChange={(event) => setEmail(event.target.value)} />
+              <TextField id="outlined-basic"  type="password" label="Password" variant="outlined" value={password}  onChange={(event) => setPassword(event.target.value)} />
               <Stack spacing={2} direction="row">
                 <Button variant="contained" sx={{ width: 180, height: 45 }} onClick={Check}>Login</Button>
               </Stack>

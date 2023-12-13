@@ -175,8 +175,8 @@ const Reminder = () => {
                                     }
                             </Select>
                         </FormControl>
-                        <TextField id="outlined-basic" value={duration} label="Enter Duration" variant="outlined" onChange={(event) => {setDuration(event.target.value);setError(''); }} />
-                        <TextField id="outlined-basic" value={reminder} label="Enter Type Name" variant="outlined"  onChange={(event) => {setReminder(event.target.value);setError(''); }}   />
+                        <TextField id="outlined-basic" autoComplete='off' value={duration} label="Enter Duration" variant="outlined" onChange={(event) => {setDuration(event.target.value);setError(''); }} />
+                        <TextField id="outlined-basic" autoComplete='off' value={reminder} label="Enter Type Name" variant="outlined"  onChange={(event) => {setReminder(event.target.value);setError(''); }}   />
 
                         <Button variant="contained" sx={{ width: 150 }} onClick={addReminder}>Submit</Button>
                     </Stack>

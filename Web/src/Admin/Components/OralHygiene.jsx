@@ -169,7 +169,7 @@ const OralHygiene = () => {
                                 }
                             </Select>
                         </FormControl>
-                        <TextField onChange={(event) => { setOralHygiene(event.target.value); setError(''); }} id="outlined-basic" label="Oral Hygiene Details" variant="outlined" />
+                        <TextField onChange={(event) => { setOralHygiene(event.target.value); setError(''); }} id="outlined-basic" autoComplete='off' value={oralHygiene} label="Oral Hygiene Details" variant="outlined" />
 
                         <Button variant="contained" sx={{ width: 150 }} onClick={addOralHygiene}>Submit</Button>
                     </Stack>

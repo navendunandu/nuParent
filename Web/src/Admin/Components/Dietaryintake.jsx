@@ -177,6 +177,7 @@ const Dietaryintake = () => {
               label="Dietary Intake Details"
               onChange={(event) => {setDietaryintake(event.target.value);setFormError('');}}
               variant="outlined"
+              autoComplete='off'
             />
             <Button variant="contained" sx={{ width: 150 }} type="submit">
               Submit

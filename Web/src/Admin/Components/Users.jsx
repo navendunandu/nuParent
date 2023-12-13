@@ -1,67 +1,79 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { DataGrid } from '@mui/x-data-grid';
-import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Typography } from '@mui/material';
-import DeleteIcon from '@mui/icons-material/Delete';
 
+import {Typography} from '@mui/material'
+import { db } from '../../config/firebase';
+import { collection, getDocs } from 'firebase/firestore';
 
 const Users = () => {
 
-    const [open, setOpen] = useState(false);
+    const [userData, setUserData] = useState([]);
 
-    const handleClickOpen = () => {
-        setOpen(true);
+
+    const loadUsers = async () => {
+        try {
+            const querySnapshot = await getDocs(collection(db, "users"));
+            const userDatas = querySnapshot.docs.map((doc, index) => ({ id: doc.id, index: index + 1, ...doc.data() }));
+            setUserData(userDatas);
+        } catch (error) {
+            console.error('Error getting documents: ', error);
+        }
     };
 
-    const handleClose = () => {
-        setOpen(false);
-    };
+    useEffect(() => {
+        loadUsers();
+    }, []);
+
 
 
     const columns = [
-        { field: 'SL.NO', headerName: 'SL.NO', width: 70 },
-        { field: 'Name', headerName: 'NAME', width: 130 },
-        { field: 'Gender', headerName: 'GENDER', width: 130 },
+        { field: 'index', headerName: 'ID', flex: 1 },
+        {
+            field: 'name',
+            headerName: 'NAME',
+            flex: 3,
+            renderCell: (params) => {
+                const { prefix, name } = params.row;
+                return (
+                    <div>
+                        {prefix && <span>{prefix}. </span>}
+                        {name}
+                    </div>
+                );
+            },
+        },
+        { field: 'gender', headerName: 'GENDER', flex: 3 },
         {
             field: 'email',
             headerName: 'EMAIL',
-            width: 140,
+            flex: 3,
+            sortable: false,
+
         },
+        {
+            field: 'dateOfBirth',
+            headerName: 'Date Of Birth',
+            flex: 3,
+        },
+        {
+            field: 'address',
+            headerName: 'ADDRESS',
+            flex: 3,
+            sortable: false,
+
+        },
+
         {
             field: 'phone',
             headerName: 'PHONE NUMBER',
             description: 'This column has a value getter and is not sortable.',
             sortable: false,
-            width: 180,
-
+            flex: 4,
         },
-        {
-            field: "action",
-            headerName: "Action",
-            width: 350,
-            renderCell: (params) => {
-                return (
-                    <>
-                        <DeleteIcon
-                            className="divListDelete"
-                            onClick={() => handleClickOpen(params)}
-                        />
-                    </>
-                );
-            },
-        },
+      
     ];
 
-    const rows = [
-        { id: 1, lastName: 'Snow', firstName: 'Jon', age: 35 },
-        { id: 2, lastName: 'Lannister', firstName: 'Cersei', age: 42 },
-        { id: 3, lastName: 'Lannister', firstName: 'Jaime', age: 45 },
-        { id: 4, lastName: 'Stark', firstName: 'Arya', age: 16 },
-        { id: 5, lastName: 'Targaryen', firstName: 'Daenerys', age: null },
-        { id: 6, lastName: 'Melisandre', firstName: null, age: 150 },
-        { id: 7, lastName: 'Clifford', firstName: 'Ferrara', age: 44 },
-        { id: 8, lastName: 'Frances', firstName: 'Rossini', age: 36 },
-        { id: 9, lastName: 'Roxie', firstName: 'Harvey', age: 65 },
-    ];
+
 
 
     return (
@@ -72,7 +84,7 @@ const Users = () => {
                 </Typography>
                 <div style={{ height: 400, width: '100%' }}>
                     <DataGrid
-                        rows={rows}
+                        rows={userData}
                         columns={columns}
                         initialState={{
                             pagination: {
@@ -83,27 +95,6 @@ const Users = () => {
                     />
                 </div>
             </div>
-            <Dialog
-                open={open}
-                onClose={handleClose}
-                aria-labelledby="alert-dialog-title"
-                aria-describedby="alert-dialog-description"
-            >
-                <DialogTitle id="alert-dialog-title">
-                    {"Confirm Delete"}
-                </DialogTitle>
-                <DialogContent>
-                    <DialogContentText id="alert-dialog-description">
-                        Are you sure to delete this user permanenently
-                    </DialogContentText>
-                </DialogContent>
-                <DialogActions>
-                    <Button onClick={handleClose}>Disagree</Button>
-                    <Button onClick={handleClose} autoFocus>
-                        Agree
-                    </Button>
-                </DialogActions>
-            </Dialog>
         </>
     )
 }
