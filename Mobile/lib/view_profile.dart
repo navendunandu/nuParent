@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:nu_parent/Components/appbar.dart';
 import 'package:nu_parent/main.dart';
 
 class ViewProfile extends StatefulWidget {
@@ -12,23 +13,16 @@ class _ViewProfileState extends State<ViewProfile> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        leading: IconButton(
-          onPressed: () {
-            Navigator.pop(context);
-          },
-          icon: const Icon(Icons.arrow_back_ios_new), //Back Icon
-        ),
-      ),
       body: Container(
         height: double.infinity,
         decoration: const BoxDecoration(
             image: DecorationImage(
-                image: AssetImage('assets/Vector2.png'),
-                fit: BoxFit.cover,
-                alignment: Alignment.bottomCenter)),
+                image: AssetImage('assets/Vector-1.png'),
+                 fit: BoxFit.scaleDown, alignment: Alignment.bottomCenter,
+               )),
         child: Column(
           children: [
+            const CustomAppBar(),
             Padding(
               padding: const EdgeInsets.only(left: 25.0, right: 25.0),
               child: Column(
@@ -42,21 +36,33 @@ class _ViewProfileState extends State<ViewProfile> {
                             fontSize: 24, fontWeight: FontWeight.w500),
                       ),
                       ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.white, // Set background color
+                          foregroundColor:
+                              AppColors.primaryColor, // Set text color
+                          side: const BorderSide(
+                              color:
+                                  AppColors.primaryColor), // Add black border
+                        ),
                         onPressed: () {},
-                        // style: const ButtonStyle(backgroundColor: AppColors.white),
                         child: const Text('Edit'),
-                      )
+                      ),
                     ],
                   ),
                   Row(
                     children: [
                       ElevatedButton.icon(
-                        style: const ButtonStyle(
-                          backgroundColor: MaterialStatePropertyAll(AppColors.white)
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.white,
+                          foregroundColor: AppColors.primaryColor,
+                          elevation: 0.0, // Disable elevation
                         ),
-                          onPressed: () {},
-                          icon: const Icon(Icons.person_add_alt_1_outlined),
-                          label: const Text('Add another profile'))
+                        onPressed: () {},
+                        icon: const Icon(Icons.person_add_alt_1_outlined,
+                            color: AppColors.primaryColor),
+                        label: const Text('Add another profile',
+                            style: TextStyle(color: AppColors.primaryColor)),
+                      ),
                     ],
                   ),
                 ],
@@ -67,7 +73,7 @@ class _ViewProfileState extends State<ViewProfile> {
             ),
             Container(
               height: 180,
-              decoration: BoxDecoration(color: Colors.blue[100]),
+              decoration: const BoxDecoration(color: Color.fromARGB(255, 220, 231, 253)),
               child: Padding(
                 padding: const EdgeInsets.only(left: 25.0, right: 25.0),
                 child: Row(
@@ -113,7 +119,7 @@ class _ViewProfileState extends State<ViewProfile> {
                       width: 10,
                     ),
                     const Text(
-                      'Cia Anumod',
+                      'Ciaa Anumod',
                       style: TextStyle(
                           fontSize: 22,
                           fontWeight: FontWeight.w500,
@@ -130,9 +136,9 @@ class _ViewProfileState extends State<ViewProfile> {
                 ),
               ),
             ),
-                    const SizedBox(
-                      height: 20,
-                    ),
+            const SizedBox(
+              height: 20,
+            ),
             const Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:nu_parent/Components/appbar.dart';
 import 'package:nu_parent/Reminder.dart';
 import 'package:nu_parent/howtovideos.dart';
 import 'package:nu_parent/main.dart';
@@ -19,101 +20,153 @@ class SettingsScreen extends StatelessWidget {
                )),
         child: ListView(
           children: [
+            const CustomAppBar(),
             const SizedBox(
-                height: 140,
+                height: 80,
                 child: Center(
                     child: Text(
                   'Settings',
                   style: TextStyle(
                       fontSize: 26,
                       fontWeight: FontWeight.w500,
-                      color: AppColors.darkblue),
+                      color: AppColors.primaryColor),
                 ))),
-            ListTile(
-              contentPadding: const EdgeInsets.all(2),
-              tileColor: AppColors.tileprimaryblue,
-              title: const Text(
-                "Child's Details",
-                textAlign: TextAlign.center,
-              ),
-              onTap: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => const ViewProfile()));
+
+            GestureDetector(
+              onTap: (){
+                Navigator.push(context, MaterialPageRoute(builder: (context)=>const ViewProfile()));
               },
-            ),
-            ListTile(
-              contentPadding: const EdgeInsets.all(2),
-              tileColor: AppColors.tilesecondaryblue,
-              title: const Text(
-                "How to Videos",
-                textAlign: TextAlign.center,
+              child: Container(
+                padding: const EdgeInsets.only(top: 20, bottom: 20),
+                decoration: const BoxDecoration(
+                  color: Color.fromARGB(255, 83, 128, 196)
+                ),
+                child: const Text(
+                  "Edit Child's Details",
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.w500
+                  ),
+                  textAlign: TextAlign.center,
+                ),
               ),
-              onTap: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => const HowToVideos()));
-              },
             ),
-            ListTile(
-              contentPadding: const EdgeInsets.all(2),
-              tileColor: AppColors.tileprimaryblue,
-              title: const Text(
+
+            GestureDetector(
+              onTap: (){
+                
+              },
+              child: Container(
+                padding: const EdgeInsets.only(top: 20, bottom: 20),
+                decoration: const BoxDecoration(
+                  color: Color.fromARGB(255, 220, 231, 253)
+                ),
+                child: const Text(
+                  "",
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.w500
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+              ),
+            ),
+
+            GestureDetector(
+              onTap: (){
+                Navigator.push(context, MaterialPageRoute(builder: (context)=>const HowToVideos()));
+              },
+              child: Container(
+                padding: const EdgeInsets.only(top: 20, bottom: 20),
+                decoration: const BoxDecoration(
+                  color: Color.fromARGB(255, 83, 128, 196)
+                ),
+                child: const Text(
+                  "How to Videos",
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.w500
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+              ),
+            ),
+           
+            Container(
+              padding: const EdgeInsets.only(top: 20, bottom: 20),
+              decoration: const BoxDecoration(
+                color: Color.fromARGB(255, 220, 231, 253)
+              ),
+              child: const Text(
                 "Reminders",
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.w500
+                ),
                 textAlign: TextAlign.center,
               ),
-              onTap: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => const Reminder()));
-              },
             ),
-            ListTile(
-              contentPadding: const EdgeInsets.all(2),
-              tileColor: AppColors.tilesecondaryblue,
-              title: const Text(
-                "FAQs",
+            
+            Container(
+              padding: const EdgeInsets.only(top: 20, bottom: 20),
+              decoration: const BoxDecoration(
+                color: Color.fromARGB(255, 83, 128, 196)
+              ),
+              child: const Text(
+                "Timers",
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.w500
+                ),
                 textAlign: TextAlign.center,
               ),
-              onTap: () {},
             ),
-            ListTile(
-              contentPadding: const EdgeInsets.all(2),
-              tileColor: AppColors.tileprimaryblue,
-              title: const Text(
+           
+           Container(
+              padding: const EdgeInsets.only(top: 20, bottom: 20),
+              decoration: const BoxDecoration(
+                color: Color.fromARGB(255, 220, 231, 253)
+              ),
+              child: const Text(
                 "Contact",
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.w500
+                ),
                 textAlign: TextAlign.center,
               ),
-              onTap: () {},
             ),
-            ListTile(
-              contentPadding: const EdgeInsets.all(2),
-              tileColor: AppColors.tilesecondaryblue,
-              title: const Text(
+            
+            Container(
+              padding: const EdgeInsets.only(top: 20, bottom: 20),
+              decoration: const BoxDecoration(
+                color: Color.fromARGB(255, 83, 128, 196)
+              ),
+              child: const Text(
                 "Share",
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.w500
+                ),
                 textAlign: TextAlign.center,
               ),
-              onTap: () {},
             ),
-            ListTile(
-              contentPadding: const EdgeInsets.all(2),
-              tileColor: AppColors.tileprimaryblue,
-              title: const Text(
-                "Legal",
+           
+           Container(
+              padding: const EdgeInsets.only(top: 20, bottom: 20),
+              decoration: const BoxDecoration(
+                color: Color.fromARGB(255, 220, 231, 253)
+              ),
+              child: const Text(
+                "Rate the app",
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.w500
+                ),
                 textAlign: TextAlign.center,
               ),
-              onTap: () {},
             ),
-            ListTile(
-              contentPadding: const EdgeInsets.all(2),
-              tileColor: AppColors.tilesecondaryblue,
-              title: const Text(
-                "Rate",
-                textAlign: TextAlign.center,
-              ),
-              onTap: () {},
-            )
+            
           ],
         ),
       ),
