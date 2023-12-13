@@ -57,7 +57,7 @@ class _RegistrationChildState extends State<RegistrationChild> {
                   gradient: RadialGradient(
                 colors: [
                   Color.fromARGB(255, 245, 251, 255),
-                  AppColors.tileprimaryblue
+                  Color.fromARGB(255, 175, 203, 244),
                 ],
                 radius: .5, // Adjust the radius based on your preference
                 center: Alignment(0.2, -.6),
@@ -66,7 +66,7 @@ class _RegistrationChildState extends State<RegistrationChild> {
                   child: Column(
                 children: [
                   const CustomTopBar(
-                      showBackIcon: false, showNotificationButton: false),
+                      showBackIcon: true, showNotificationButton: false),
                   Form(
                     child: Padding(
                       padding: const EdgeInsets.only(left: 20.0, right: 20.0),

@@ -18,7 +18,7 @@ class AppColors {
   static const black = Colors.black;
   static const green = Color.fromARGB(255, 0, 176, 6);
   static const lightpink = Color.fromARGB(255, 253,244,244);
-  static const lightblue = Color.fromARGB(255, 53, 206, 233);
+  static const lightblue = Color.fromARGB(255, 222, 231, 246);
   static const whiteblue= Color.fromARGB(255, 207, 221, 233);
   static const darkblue = Color.fromARGB(255, 13, 83, 188);
   static const tileprimaryblue = Color.fromARGB(255, 187, 222, 251);

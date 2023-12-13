@@ -31,7 +31,7 @@ class _ChildProfileState extends State<ChildDashboard> {
             child: Container(
               decoration: const BoxDecoration(
                 shape: BoxShape.circle,
-                color: AppColors.darkblue,
+                color: AppColors.primaryColor,
               ),
               child: IconButton(
                 icon: const Icon(
@@ -82,9 +82,9 @@ class _ChildProfileState extends State<ChildDashboard> {
                       ),
                     ],
                     shape: BoxShape.circle,
-                    color: Color.fromARGB(255, 200, 230, 255),
+                    color: Color.fromARGB(255, 34 , 78, 147),
                   ),
-                ),
+                ),  
               ),
               Positioned(
                 left: 250, top: 5,
@@ -101,15 +101,15 @@ class _ChildProfileState extends State<ChildDashboard> {
                       ),
                     ],
                     shape: BoxShape.circle,
-                    color: Color.fromARGB(255, 0, 60, 110),
+                    color: Color.fromARGB(255, 90, 148, 201),
                   ),
                 ),
               ),
               Positioned(
-                left: 345, top: 5,
+                left: 325, top: 75,
                 child: Container(
-                  width:40,
-                  height:40,
+                  width:25,
+                  height:25,
                   decoration: const BoxDecoration(
                     boxShadow: [
                       BoxShadow(
@@ -120,7 +120,7 @@ class _ChildProfileState extends State<ChildDashboard> {
                       ),
                     ],
                     shape: BoxShape.circle,
-                    color: Color.fromARGB(196, 136, 202, 255),
+                    color: Color.fromARGB(150, 255, 231, 231),
                   ),
                 ),
               ),
@@ -139,7 +139,7 @@ class _ChildProfileState extends State<ChildDashboard> {
                       ),
                     ],
                     shape: BoxShape.circle,
-                    color: Color.fromARGB(255, 0, 122, 223),
+                    color: Color.fromARGB(255, 55, 92, 154),
                   ),
                 ),
               ),
@@ -158,7 +158,7 @@ class _ChildProfileState extends State<ChildDashboard> {
                       ),
                     ],
                     shape: BoxShape.circle,
-                    color: Color.fromARGB(255, 0, 122, 223),
+                    color: AppColors.primaryColor,
                   ),
                 ),
               ),
@@ -176,14 +176,14 @@ class _ChildProfileState extends State<ChildDashboard> {
                               'Ciaa Anumod',
                               style: TextStyle(
                                   fontSize: 32,
-                                  fontWeight: FontWeight.w500,
-                                  color: AppColors.white),
+                                  fontWeight: FontWeight.w700,
+                                  color: AppColors.primaryColor),
                             ),
                             IconButton(
                                 onPressed: () {},
                                 icon: const Icon(
                                   Icons.keyboard_arrow_down_outlined,
-                                  color: AppColors.white,
+                                  color: AppColors.primaryColor,
                                 ))
                           ],
                         ),
@@ -191,7 +191,7 @@ class _ChildProfileState extends State<ChildDashboard> {
                           'Girl, 6 years',
                           style: TextStyle(
                               fontSize: 20,
-                              color: AppColors.white,
+                              color: AppColors.primaryColor,
                               fontWeight: FontWeight.w500),
                         )
                       ],
@@ -215,7 +215,7 @@ class _ChildProfileState extends State<ChildDashboard> {
                   height: 150,
                   width: 150,
                   decoration: BoxDecoration(
-                      color: AppColors.lightblue,
+                      color: AppColors.primaryColor,
                       borderRadius: const BorderRadius.all(Radius.circular(10)),
                       boxShadow: [
                         BoxShadow(
@@ -243,7 +243,7 @@ class _ChildProfileState extends State<ChildDashboard> {
                   height: 150,
                   width: 150,
                   decoration: BoxDecoration(
-                      color: AppColors.lightblue,
+                      color: AppColors.primaryColor,
                       borderRadius: const BorderRadius.all(Radius.circular(10)),
                       boxShadow: [
                         BoxShadow(
@@ -279,7 +279,7 @@ class _ChildProfileState extends State<ChildDashboard> {
                   height: 150,
                   width: 150,
                   decoration: BoxDecoration(
-                      color: AppColors.lightblue,
+                      color: AppColors.primaryColor,
                       borderRadius: const BorderRadius.all(Radius.circular(10)),
                       boxShadow: [
                         BoxShadow(
@@ -308,7 +308,7 @@ class _ChildProfileState extends State<ChildDashboard> {
                   height: 150,
                   width: 150,
                   decoration: BoxDecoration(
-                      color: AppColors.lightblue,
+                      color: AppColors.primaryColor,
                       borderRadius: const BorderRadius.all(Radius.circular(10)),
                       boxShadow: [
                         BoxShadow(

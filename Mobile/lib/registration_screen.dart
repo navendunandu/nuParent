@@ -6,6 +6,7 @@ import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:intl/intl.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:nu_parent/Components/appbar.dart';
+import 'package:nu_parent/child_registration.dart';
 import 'package:nu_parent/login_screen.dart';
 import 'dart:io';
 import 'package:nu_parent/main.dart';
@@ -93,7 +94,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
     Future.delayed(const Duration(seconds: 2), () {
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => const LoginScreen()),
+        MaterialPageRoute(builder: (context) => const RegistrationChild()),
       );
     });
       }
@@ -153,7 +154,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
               gradient: RadialGradient(
             colors: [
               Color.fromARGB(255, 245, 251, 255),
-              AppColors.tileprimaryblue
+              Color.fromARGB(255, 175, 203, 244),
             ],
             radius: .5, // Adjust the radius based on your preference
             center: Alignment(0.2, -.6),

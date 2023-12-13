@@ -17,7 +17,7 @@ class CustomTopBar extends StatelessWidget implements PreferredSizeWidget {
     return Column(
       children: [
         Padding(
-          padding: const EdgeInsets.fromLTRB(18, 30, 18, 1),
+          padding: const EdgeInsets.fromLTRB(18, 40, 18, 1),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
