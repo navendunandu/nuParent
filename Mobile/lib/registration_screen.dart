@@ -6,13 +6,13 @@ import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:intl/intl.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:nu_parent/Components/appbar.dart';
-import 'package:nu_parent/child_registration.dart';
+import 'package:nu_parent/login_screen.dart';
 import 'dart:io';
 import 'package:nu_parent/main.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 class RegistrationScreen extends StatefulWidget {
-  const RegistrationScreen({super.key});
+  const RegistrationScreen({Key? key}) : super(key: key);
 
   @override
   State<RegistrationScreen> createState() => _RegistrationScreenState();
@@ -74,9 +74,74 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   String? selectedPrefix;
   List<String> prefix = ['Mr', 'Mrs', 'Ms'];
 
-  Future<void> _registerUser() async {
-    
+ Future<void> _registerUser() async {
+    try {
+      UserCredential userCredential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
+        email: _emailController.text,
+        password: _passController.text,
+      );
+
+      if (userCredential != null) {
+        await _storeUserData(userCredential.user!.uid);
+         Fluttertoast.showToast(
+      msg: "Regsitration Successfull",
+      toastLength: Toast.LENGTH_SHORT,
+      gravity: ToastGravity.BOTTOM,
+      backgroundColor: Colors.green,
+      textColor: Colors.white,
+    );
+    Future.delayed(const Duration(seconds: 2), () {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => const LoginScreen()),
+      );
+    });
+      }
+    } catch (e) {
+      print("Error registering user: $e");
+      // Handle error, show message or take appropriate action
+    }
   }
+
+  Future<void> _storeUserData(String userId) async {
+    try {
+      await FirebaseFirestore.instance.collection('users').doc(userId).set({
+        'name': _nameController.text,
+        'email': _emailController.text,
+        'phone': _phoneController.text,
+        'dateOfBirth': _dateController.text,
+        'prefix': _prefix,
+        'gender': _selectedGender,
+        'address': _addressController.text,
+        // Add more fields as needed
+      });
+
+      await _uploadImage(userId);
+    } catch (e) {
+      print("Error storing user data: $e");
+      // Handle error, show message or take appropriate action
+    }
+  }
+
+  Future<void> _uploadImage(String userId) async {
+    try {
+      if (_selectedImage != null) {
+        Reference ref = FirebaseStorage.instance.ref().child('user_images/$userId.jpg');
+        UploadTask uploadTask = ref.putFile(File(_selectedImage!.path));
+        TaskSnapshot taskSnapshot = await uploadTask.whenComplete(() => null);
+
+        String imageUrl = await taskSnapshot.ref.getDownloadURL();
+
+        await FirebaseFirestore.instance.collection('users').doc(userId).update({
+          'imageUrl': imageUrl,
+        });
+      }
+    } catch (e) {
+      print("Error uploading image: $e");
+      // Handle error, show message or take appropriate action
+    }
+  }
+
 
   @override
   Widget build(BuildContext context) {

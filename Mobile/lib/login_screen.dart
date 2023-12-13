@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_signin_button/flutter_signin_button.dart';
 import 'package:nu_parent/child_dashboard.dart';
 import 'package:nu_parent/main.dart';
 import 'package:nu_parent/registration_screen.dart';
-import 'package:nu_parent/services/auth_services.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -185,57 +183,57 @@ class _LoginScreenState extends State<LoginScreen> {
                 ],
               ),
             ),
-            const SizedBox(
-              height: 20,
-            ),
-            const Padding(
-              padding: EdgeInsets.fromLTRB(40.0, 0, 40.0, 0),
-              child: Center(
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: Divider(
-                        color: AppColors.black,
-                        thickness: .5,
-                      ),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.fromLTRB(15.0, 0, 15.0, 0),
-                      child: Text('OR'),
-                    ),
-                    Expanded(
-                      child: Divider(
-                        color: AppColors.black,
-                        thickness: .5,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(25.0, 0, 25.0, 0),
-              child: Row(
-                children: [
-                  Expanded(
-                    child: SignInButton(
-                      Buttons.Google,
-                      padding: const EdgeInsets.fromLTRB(40.0, 10, 40.0, 10),
-                      text: "Sign in with Google",
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(30.0)),
-                      onPressed: () => AuthService().signInWithGoogle(),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            const SizedBox(
-              height: 20,
-            ),
+            // const SizedBox(
+            //   height: 20,
+            // ),
+            // const Padding(
+            //   padding: EdgeInsets.fromLTRB(40.0, 0, 40.0, 0),
+            //   child: Center(
+            //     child: Row(
+            //       children: [
+            //         Expanded(
+            //           child: Divider(
+            //             color: AppColors.black,
+            //             thickness: .5,
+            //           ),
+            //         ),
+            //         Padding(
+            //           padding: EdgeInsets.fromLTRB(15.0, 0, 15.0, 0),
+            //           child: Text('OR'),
+            //         ),
+            //         Expanded(
+            //           child: Divider(
+            //             color: AppColors.black,
+            //             thickness: .5,
+            //           ),
+            //         ),
+            //       ],
+            //     ),
+            //   ),
+            // ),
+            // const SizedBox(
+            //   height: 20,
+            // ),
+            // Padding(
+            //   padding: const EdgeInsets.fromLTRB(25.0, 0, 25.0, 0),
+            //   child: Row(
+            //     children: [
+            //       Expanded(
+            //         child: SignInButton(
+            //           Buttons.Google,
+            //           padding: const EdgeInsets.fromLTRB(40.0, 10, 40.0, 10),
+            //           text: "Sign in with Google",
+            //           shape: RoundedRectangleBorder(
+            //               borderRadius: BorderRadius.circular(30.0)),
+            //           onPressed: () => AuthService().signInWithGoogle(),
+            //         ),
+            //       ),
+            //     ],
+            //   ),
+            // ),
+            // const SizedBox(
+            //   height: 20,
+            // ),
           ],
         )),
       ]),
