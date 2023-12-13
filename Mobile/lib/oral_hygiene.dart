@@ -35,10 +35,11 @@ class _OralHygieneState extends State<OralHygiene> {
       body: Container(
         height: double.infinity,
         decoration: const BoxDecoration(
+          color: AppColors.white,
             image: DecorationImage(
-                image: AssetImage('assets/Vector2.png'),
-                fit: BoxFit.cover,
-                alignment: Alignment.bottomCenter)),
+                image: AssetImage('assets/Vector-1.png'),
+                 fit: BoxFit.scaleDown, alignment: Alignment.bottomCenter,
+               )),
         child: Padding(
           padding: const EdgeInsets.only(left: 25.0, right: 25.0),
           child: Column(
@@ -63,7 +64,7 @@ class _OralHygieneState extends State<OralHygiene> {
                       height: 150,
                       width: 150,
                       decoration: BoxDecoration(
-                          color: AppColors.lightblue,
+                          color: AppColors.primaryColor,
                           borderRadius:
                               const BorderRadius.all(Radius.circular(10)),
                           boxShadow: [
@@ -99,7 +100,7 @@ class _OralHygieneState extends State<OralHygiene> {
                     height: 150,
                     width: 150,
                     decoration: BoxDecoration(
-                        color: AppColors.lightblue,
+                        color: AppColors.primaryColor,
                         borderRadius:
                             const BorderRadius.all(Radius.circular(10)),
                         boxShadow: [
@@ -144,7 +145,7 @@ class _OralHygieneState extends State<OralHygiene> {
                       height: 150,
                       width: 150,
                       decoration: BoxDecoration(
-                          color: AppColors.lightblue,
+                          color: AppColors.primaryColor,
                           borderRadius:
                               const BorderRadius.all(Radius.circular(10)),
                           boxShadow: [
@@ -181,7 +182,7 @@ class _OralHygieneState extends State<OralHygiene> {
                     height: 150,
                     width: 150,
                     decoration: BoxDecoration(
-                        color: AppColors.lightblue,
+                        color: AppColors.primaryColor,
                         borderRadius:
                             const BorderRadius.all(Radius.circular(10)),
                         boxShadow: [

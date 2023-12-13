@@ -24,46 +24,32 @@ class _DietaryIntakeState extends State<DietaryIntake> {
           IconButton(
               onPressed: () {}, icon: const Icon(Icons.more_vert_rounded)),
         ],
+        title: const Center(
+          child: Text(
+            "Your Child’s Dietary Intake",
+            style: TextStyle(
+                color: AppColors.primaryColor,
+                fontWeight: FontWeight.w500,
+                fontSize: 20),
+          ),
+        ),
       ),
       body: Container(
         height: double.infinity,
         decoration: const BoxDecoration(
+          color: AppColors.white,
             image: DecorationImage(
-                image: AssetImage('assets/Vector2.png'),
-                fit: BoxFit.cover,
-                alignment: Alignment.bottomCenter)),
+          image: AssetImage('assets/Vector-1.png'),
+          fit: BoxFit.scaleDown,
+          alignment: Alignment.bottomCenter,
+        )),
         child: Padding(
           padding: const EdgeInsets.only(left: 25.0, right: 25.0),
           child: Column(
             children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  const Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'Your Child’s',
-                        style: TextStyle(
-                            color: AppColors.darkblue,
-                            fontWeight: FontWeight.w500,
-                            fontSize: 20),
-                      ),
-                      Text(
-                        'Dietary Intake',
-                        style: TextStyle(
-                            color: AppColors.darkblue,
-                            fontWeight: FontWeight.w500,
-                            fontSize: 20),
-                      ),
-                    ],
-                  ),
-                  Image.asset(
+              Image.asset(
                     'assets/Eating.png',
-                    width: 200,
                   ),
-                ],
-              ),
               const SizedBox(
                 height: 20,
               ),
@@ -75,11 +61,11 @@ class _DietaryIntakeState extends State<DietaryIntake> {
                           builder: (context) => const ExpectingMothers()));
                 },
                 child: Container(
-                  height: 100,
+                  height: 80,
                   width: double.infinity,
                   decoration: BoxDecoration(
-                      color: AppColors.lightblue,
-                      borderRadius: const BorderRadius.all(Radius.circular(10)),
+                      color: AppColors.primaryColor,
+                      borderRadius: const BorderRadius.all(Radius.circular(25)),
                       boxShadow: [
                         BoxShadow(
                           color: Colors.black.withOpacity(0.2),
@@ -103,11 +89,11 @@ class _DietaryIntakeState extends State<DietaryIntake> {
                 height: 20,
               ),
               Container(
-                height: 100,
+                height: 80,
                 width: double.infinity,
                 decoration: BoxDecoration(
-                    color: AppColors.lightblue,
-                    borderRadius: const BorderRadius.all(Radius.circular(10)),
+                    color: AppColors.primaryColor,
+                    borderRadius: const BorderRadius.all(Radius.circular(25)),
                     boxShadow: [
                       BoxShadow(
                         color: Colors.black.withOpacity(0.2),
@@ -130,11 +116,11 @@ class _DietaryIntakeState extends State<DietaryIntake> {
                 height: 20,
               ),
               Container(
-                height: 100,
+                height: 80,
                 width: double.infinity,
                 decoration: BoxDecoration(
-                    color: AppColors.lightblue,
-                    borderRadius: const BorderRadius.all(Radius.circular(10)),
+                    color: AppColors.primaryColor,
+                    borderRadius: const BorderRadius.all(Radius.circular(25)),
                     boxShadow: [
                       BoxShadow(
                         color: Colors.black.withOpacity(0.2),
@@ -157,11 +143,11 @@ class _DietaryIntakeState extends State<DietaryIntake> {
                 height: 20,
               ),
               Container(
-                height: 100,
+                height: 80,
                 width: double.infinity,
                 decoration: BoxDecoration(
-                    color: AppColors.lightblue,
-                    borderRadius: const BorderRadius.all(Radius.circular(10)),
+                    color: AppColors.primaryColor,
+                    borderRadius: const BorderRadius.all(Radius.circular(25)),
                     boxShadow: [
                       BoxShadow(
                         color: Colors.black.withOpacity(0.2),

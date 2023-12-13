@@ -16,9 +16,9 @@ class _BrushingInstructionState extends State<BrushingInstruction> {
         height: double.infinity,
         decoration: const BoxDecoration(
             image: DecorationImage(
-                image: AssetImage('assets/Vector3.png'),
-                fit: BoxFit.cover,
-                alignment: Alignment.topCenter)),
+                image: AssetImage('assets/Vector-2.png'),
+                 fit: BoxFit.scaleDown, alignment: Alignment.topCenter,
+               )),
         child: Column(
           children: [
             Padding(
@@ -74,7 +74,7 @@ class _BrushingInstructionState extends State<BrushingInstruction> {
                       style: TextStyle(
                           fontSize: 22,
                           fontWeight: FontWeight.bold,
-                          color: AppColors.darkblue),
+                          color: AppColors.primaryColor),
                     ),
                     const SizedBox(
                       height: 20,
@@ -86,7 +86,7 @@ class _BrushingInstructionState extends State<BrushingInstruction> {
                           height: 150,
                           width: 150,
                           decoration: BoxDecoration(
-                              color: AppColors.lightblue,
+                              color: AppColors.primaryColor,
                               borderRadius:
                                   const BorderRadius.all(Radius.circular(10)),
                               boxShadow: [
@@ -111,7 +111,7 @@ class _BrushingInstructionState extends State<BrushingInstruction> {
                           height: 150,
                           width: 150,
                           decoration: BoxDecoration(
-                              color: AppColors.lightblue,
+                              color: AppColors.primaryColor,
                               borderRadius:
                                   const BorderRadius.all(Radius.circular(10)),
                               boxShadow: [
@@ -147,7 +147,7 @@ class _BrushingInstructionState extends State<BrushingInstruction> {
                             height: 150,
                             width: 150,
                             decoration: BoxDecoration(
-                                color: AppColors.lightblue,
+                                color: AppColors.primaryColor,
                                 borderRadius:
                                     const BorderRadius.all(Radius.circular(10)),
                                 boxShadow: [
@@ -173,7 +173,7 @@ class _BrushingInstructionState extends State<BrushingInstruction> {
                           height: 150,
                           width: 150,
                           decoration: BoxDecoration(
-                              color: AppColors.lightblue,
+                              color: AppColors.primaryColor,
                               borderRadius:
                                   const BorderRadius.all(Radius.circular(10)),
                               boxShadow: [
