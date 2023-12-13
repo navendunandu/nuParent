@@ -1,23 +1,24 @@
 import React, { useEffect, useState } from 'react'
 import { DataGrid } from '@mui/x-data-grid';
-import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Typography } from '@mui/material';
-import DeleteIcon from '@mui/icons-material/Delete';
+// import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Typography } from '@mui/material';
+// import DeleteIcon from '@mui/icons-material/Delete';
+import {Typography} from '@mui/material'
 import { db } from '../../config/firebase';
 import { collection, getDocs } from 'firebase/firestore';
 
 const Users = () => {
 
-    const [open, setOpen] = useState(false);
+    // const [open, setOpen] = useState(false);
     const [userData, setUserData] = useState([]);
 
 
-    const handleClickOpen = () => {
-        setOpen(true);
-    };
+    // const handleClickOpen = () => {
+    //     setOpen(true);
+    // };
 
-    const handleClose = () => {
-        setOpen(false);
-    };
+    // const handleClose = () => {
+    //     setOpen(false);
+    // };
 
     const loadUsers = async () => {
         try {
@@ -79,21 +80,21 @@ const Users = () => {
             sortable: false,
             flex: 4,
         },
-        {
-            field: "action",
-            headerName: "Action",
-            flex:2,
-            renderCell: (params) => {
-                return (
-                    <>
-                        <DeleteIcon
-                            className="divListDelete"
-                            onClick={() => handleClickOpen(params)}
-                        />
-                    </>
-                );
-            },
-        },
+        // {
+        //     field: "action",
+        //     headerName: "Action",
+        //     flex:2,
+        //     renderCell: (params) => {
+        //         return (
+        //             <>
+        //                 <DeleteIcon
+        //                     className="divListDelete"
+        //                     onClick={() => handleClickOpen(params)}
+        //                 />
+        //             </>
+        //         );
+        //     },
+        // },
     ];
 
 
@@ -118,7 +119,7 @@ const Users = () => {
                     />
                 </div>
             </div>
-            <Dialog
+            {/* <Dialog
                 open={open}
                 onClose={handleClose}
                 aria-labelledby="alert-dialog-title"
@@ -138,7 +139,7 @@ const Users = () => {
                         Agree
                     </Button>
                 </DialogActions>
-            </Dialog>
+            </Dialog> */}
         </>
     )
 }
