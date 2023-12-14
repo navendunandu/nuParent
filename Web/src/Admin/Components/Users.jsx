@@ -52,7 +52,7 @@ const Users = () => {
         },
         {
             field: 'dateOfBirth',
-            headerName: 'Date Of Birth',
+            headerName: 'DOB',
             flex: 3,
         },
         {
