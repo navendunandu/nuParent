@@ -3,6 +3,7 @@ import 'package:nu_parent/Components/appbar.dart';
 import 'package:nu_parent/Reminder.dart';
 import 'package:nu_parent/howtovideos.dart';
 import 'package:nu_parent/main.dart';
+import 'package:nu_parent/timer.dart';
 import 'package:nu_parent/view_profile.dart';
 // import 'package:nu_parent/main.dart';
 
@@ -92,36 +93,46 @@ class SettingsScreen extends StatelessWidget {
               ),
             ),
            
-            Container(
-              padding: const EdgeInsets.only(top: 20, bottom: 20),
-              decoration: const BoxDecoration(
-                color: Color.fromARGB(255, 220, 231, 253)
-              ),
-              child: const Text(
-                "Reminders",
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.w500
+            GestureDetector(
+              onTap: (){
+                Navigator.push(context, MaterialPageRoute(builder: ((context) => const Reminder())
+                ));
+              },
+              child: Container(
+                padding: const EdgeInsets.only(top: 20, bottom: 20),
+                decoration: const BoxDecoration(
+                  color: Color.fromARGB(255, 220, 231, 253)
                 ),
-                textAlign: TextAlign.center,
+                child: const Text(
+                  "Reminders",
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.w500
+                  ),
+                  textAlign: TextAlign.center,
+                ),
               ),
             ),
             
-            Container(
-              padding: const EdgeInsets.only(top: 20, bottom: 20),
-              decoration: const BoxDecoration(
-                color: Color.fromARGB(255, 83, 128, 196)
-              ),
-              child: const Text(
-                "Timers",
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.w500
+           GestureDetector(
+              onTap: (){
+                Navigator.push(context, MaterialPageRoute(builder: (context)=>const CountdownPage()));
+              },
+              child: Container(
+                padding: const EdgeInsets.only(top: 20, bottom: 20),
+                decoration: const BoxDecoration(
+                  color: Color.fromARGB(255, 83, 128, 196)
                 ),
-                textAlign: TextAlign.center,
+                child: const Text(
+                  "Timers",
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.w500
+                  ),
+                  textAlign: TextAlign.center,
+                ),
               ),
             ),
-           
            Container(
               padding: const EdgeInsets.only(top: 20, bottom: 20),
               decoration: const BoxDecoration(
