@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:nu_parent/Components/appbar.dart';
-import 'package:nu_parent/Reminder.dart';
+import 'package:nu_parent/reminder.dart';
 import 'package:nu_parent/howtovideos.dart';
 import 'package:nu_parent/main.dart';
 import 'package:nu_parent/timer.dart';

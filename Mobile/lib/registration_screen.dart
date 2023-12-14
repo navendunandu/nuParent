@@ -7,7 +7,7 @@ import 'package:intl/intl.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:nu_parent/Components/appbar.dart';
 import 'package:nu_parent/child_registration.dart';
-import 'package:nu_parent/login_screen.dart';
+// import 'package:nu_parent/login_screen.dart';
 import 'dart:io';
 import 'package:nu_parent/main.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -34,7 +34,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   String? _selectedGender = '';
 
   bool _obscureText = true;
-  bool _isChecked = false;
+  // bool _isChecked = false;
   void _togglePasswordVisibility() {
     setState(() {
       _obscureText = !_obscureText;
@@ -444,23 +444,29 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                           height: 20,
                         ),
                         Center(
-                          child: ElevatedButton(
-                            onPressed: () {
-                              _registerUser();
-                            },
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: AppColors.primaryColor,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10.0),
+                          child: Row(
+                            children: [
+                              Expanded(
+                                child: ElevatedButton(
+                                  onPressed: () {
+                                    _registerUser();
+                                  },
+                                  style: ElevatedButton.styleFrom(
+                                    backgroundColor: AppColors.primaryColor,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(10.0),
+                                    ),
+                                    padding: const EdgeInsets.fromLTRB(
+                                        10.0, 15, 10.0, 15),
+                                  ),
+                                  child: const Text(
+                                    'Register',
+                                    style: TextStyle(
+                                        fontSize: 20, color: AppColors.white),
+                                  ),
+                                ),
                               ),
-                              padding: const EdgeInsets.fromLTRB(
-                                  138.0, 15, 138.0, 15),
-                            ),
-                            child: const Text(
-                              'Register',
-                              style: TextStyle(
-                                  fontSize: 20, color: AppColors.white),
-                            ),
+                            ],
                           ),
                         ),
                         const SizedBox(

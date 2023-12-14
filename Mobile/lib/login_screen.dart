@@ -162,11 +162,10 @@ class _LoginScreenState extends State<LoginScreen> {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) =>
-                                    const ChildDashboard()));
+                                builder: (context) => const ChildDashboard()));
                       },
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Color.fromARGB(255, 0, 30, 80),
+                        backgroundColor: const Color.fromARGB(255, 0, 30, 80),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(30.0),
                         ),
@@ -175,65 +174,16 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                       child: const Text(
                         'Login',
-                        style:
-                            TextStyle(fontSize: 20, color: AppColors.white),
+                        style: TextStyle(fontSize: 20, color: AppColors.white),
                       ),
                     ),
                   ),
                 ],
               ),
             ),
-            // const SizedBox(
-            //   height: 20,
-            // ),
-            // const Padding(
-            //   padding: EdgeInsets.fromLTRB(40.0, 0, 40.0, 0),
-            //   child: Center(
-            //     child: Row(
-            //       children: [
-            //         Expanded(
-            //           child: Divider(
-            //             color: AppColors.black,
-            //             thickness: .5,
-            //           ),
-            //         ),
-            //         Padding(
-            //           padding: EdgeInsets.fromLTRB(15.0, 0, 15.0, 0),
-            //           child: Text('OR'),
-            //         ),
-            //         Expanded(
-            //           child: Divider(
-            //             color: AppColors.black,
-            //             thickness: .5,
-            //           ),
-            //         ),
-            //       ],
-            //     ),
-            //   ),
-            // ),
-            // const SizedBox(
-            //   height: 20,
-            // ),
-            // Padding(
-            //   padding: const EdgeInsets.fromLTRB(25.0, 0, 25.0, 0),
-            //   child: Row(
-            //     children: [
-            //       Expanded(
-            //         child: SignInButton(
-            //           Buttons.Google,
-            //           padding: const EdgeInsets.fromLTRB(40.0, 10, 40.0, 10),
-            //           text: "Sign in with Google",
-            //           shape: RoundedRectangleBorder(
-            //               borderRadius: BorderRadius.circular(30.0)),
-            //           onPressed: () => AuthService().signInWithGoogle(),
-            //         ),
-            //       ),
-            //     ],
-            //   ),
-            // ),
-            // const SizedBox(
-            //   height: 20,
-            // ),
+            const SizedBox(
+              height: 10,
+            )
           ],
         )),
       ]),

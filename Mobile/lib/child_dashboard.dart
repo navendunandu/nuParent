@@ -77,27 +77,28 @@ class _ChildProfileState extends State<ChildDashboard> {
                       BoxShadow(
                         color: Color.fromARGB(65, 0, 0, 0),
                         spreadRadius: 2,
-                        blurRadius: 5,    
-                        offset: Offset(0, 0), 
+                        blurRadius: 5,
+                        offset: Offset(0, 0),
                       ),
                     ],
                     shape: BoxShape.circle,
-                    color: Color.fromARGB(255, 34 , 78, 147),
+                    color: Color.fromARGB(255, 34, 78, 147),
                   ),
-                ),  
+                ),
               ),
               Positioned(
-                left: 250, top: 5,
+                left: 250,
+                top: 5,
                 child: Container(
                   width: 100,
                   height: 100,
                   decoration: const BoxDecoration(
                     boxShadow: [
                       BoxShadow(
-                        color: Color.fromARGB(65, 0, 0, 0), 
-                        spreadRadius: 2,  
-                        blurRadius: 5,    
-                        offset: Offset(0, 0), 
+                        color: Color.fromARGB(65, 0, 0, 0),
+                        spreadRadius: 2,
+                        blurRadius: 5,
+                        offset: Offset(0, 0),
                       ),
                     ],
                     shape: BoxShape.circle,
@@ -106,17 +107,18 @@ class _ChildProfileState extends State<ChildDashboard> {
                 ),
               ),
               Positioned(
-                left: 325, top: 75,
+                left: 325,
+                top: 75,
                 child: Container(
-                  width:25,
-                  height:25,
+                  width: 25,
+                  height: 25,
                   decoration: const BoxDecoration(
                     boxShadow: [
                       BoxShadow(
-                        color: Color.fromARGB(65, 0, 0, 0), 
-                        spreadRadius: 2,  
-                        blurRadius: 5,    
-                        offset: Offset(0, 0), 
+                        color: Color.fromARGB(65, 0, 0, 0),
+                        spreadRadius: 2,
+                        blurRadius: 5,
+                        offset: Offset(0, 0),
                       ),
                     ],
                     shape: BoxShape.circle,
@@ -125,17 +127,18 @@ class _ChildProfileState extends State<ChildDashboard> {
                 ),
               ),
               Positioned(
-                left: 300, top: 110,
+                left: 300,
+                top: 110,
                 child: Container(
-                  width:12,
-                  height:12,
+                  width: 12,
+                  height: 12,
                   decoration: const BoxDecoration(
                     boxShadow: [
                       BoxShadow(
-                        color: Color.fromARGB(65, 0, 0, 0), 
-                        spreadRadius: 2,  
-                        blurRadius: 5,    
-                        offset: Offset(0, 0), 
+                        color: Color.fromARGB(65, 0, 0, 0),
+                        spreadRadius: 2,
+                        blurRadius: 5,
+                        offset: Offset(0, 0),
                       ),
                     ],
                     shape: BoxShape.circle,
@@ -144,17 +147,18 @@ class _ChildProfileState extends State<ChildDashboard> {
                 ),
               ),
               Positioned(
-                left: 320, top: 150,
+                left: 320,
+                top: 150,
                 child: Container(
-                  width:50,
-                  height:50,
+                  width: 50,
+                  height: 50,
                   decoration: const BoxDecoration(
                     boxShadow: [
                       BoxShadow(
-                        color: Color.fromARGB(65, 0, 0, 0), 
-                        spreadRadius: 2,  
-                        blurRadius: 5,    
-                        offset: Offset(0, 0), 
+                        color: Color.fromARGB(65, 0, 0, 0),
+                        spreadRadius: 2,
+                        blurRadius: 5,
+                        offset: Offset(0, 0),
                       ),
                     ],
                     shape: BoxShape.circle,
@@ -208,8 +212,11 @@ class _ChildProfileState extends State<ChildDashboard> {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               GestureDetector(
-                onTap: (){
-                  Navigator.push(context, MaterialPageRoute(builder: (context)=>const OralHygiene()));
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const OralHygiene()));
                 },
                 child: Container(
                   height: 150,
@@ -226,18 +233,24 @@ class _ChildProfileState extends State<ChildDashboard> {
                         )
                       ]),
                   child: const Center(
-                      child: Text(
-                    'Oral hygiene',
-                    style: TextStyle(
-                        color: AppColors.white,
-                        fontWeight: FontWeight.w500,
-                        fontSize: 18),
+                      child: Padding(
+                    padding: EdgeInsets.all(15.0),
+                    child: Text(
+                      'Oral hygiene',
+                      style: TextStyle(
+                          color: AppColors.white,
+                          fontWeight: FontWeight.w500,
+                          fontSize: 18),
+                    ),
                   )),
                 ),
               ),
               GestureDetector(
-                onTap: (){
-                  Navigator.push(context, MaterialPageRoute(builder: (context)=> const DietaryIntake()));
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const DietaryIntake()));
                 },
                 child: Container(
                   height: 150,
@@ -254,12 +267,15 @@ class _ChildProfileState extends State<ChildDashboard> {
                         )
                       ]),
                   child: const Center(
-                      child: Text(
-                    'Dietary intake',
-                    style: TextStyle(
-                        color: AppColors.white,
-                        fontWeight: FontWeight.w500,
-                        fontSize: 18),
+                      child: Padding(
+                    padding: EdgeInsets.all(15.0),
+                    child: Text(
+                      'Dietary intake',
+                      style: TextStyle(
+                          color: AppColors.white,
+                          fontWeight: FontWeight.w500,
+                          fontSize: 18),
+                    ),
                   )),
                 ),
               ),
@@ -272,8 +288,11 @@ class _ChildProfileState extends State<ChildDashboard> {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               GestureDetector(
-                onTap: (){
-                  Navigator.push(context, MaterialPageRoute(builder: (context)=> const BrushingInstruction()));
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const BrushingInstruction()));
                 },
                 child: Container(
                   height: 150,
@@ -290,19 +309,25 @@ class _ChildProfileState extends State<ChildDashboard> {
                         )
                       ]),
                   child: const Center(
-                      child: Text(
-                    'Brushing instructions',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                        color: AppColors.white,
-                        fontWeight: FontWeight.w500,
-                        fontSize: 18),
+                      child: Padding(
+                    padding: EdgeInsets.all(15.0),
+                    child: Text(
+                      'Brushing instructions',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                          color: AppColors.white,
+                          fontWeight: FontWeight.w500,
+                          fontSize: 18),
+                    ),
                   )),
                 ),
               ),
               GestureDetector(
-                onTap: (){
-                  Navigator.push(context, MaterialPageRoute(builder: (context)=> const DentalVisit()));
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const DentalVisit()));
                 },
                 child: Container(
                   height: 150,
@@ -319,16 +344,22 @@ class _ChildProfileState extends State<ChildDashboard> {
                         )
                       ]),
                   child: const Center(
-                      child: Text(
-                    'Dental visits',
-                    style: TextStyle(
-                        color: AppColors.white,
-                        fontWeight: FontWeight.w500,
-                        fontSize: 18),
+                      child: Padding(
+                    padding: EdgeInsets.all(15.0),
+                    child: Text(
+                      'Dental visits',
+                      style: TextStyle(
+                          color: AppColors.white,
+                          fontWeight: FontWeight.w500,
+                          fontSize: 18),
+                    ),
                   )),
                 ),
               ),
             ],
+          ),
+          const SizedBox(
+            height: 10,
           )
         ],
       ),
