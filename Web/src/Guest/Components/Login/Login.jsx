@@ -40,10 +40,10 @@ const Login = () => {
   return (
     <Box className="BoxContainer">
       <Paper elevation={0} className="PaperContainer">
-        <Box sx={{ width: '500px', m: 2, display: 'flex', justifyContent: 'center' }} >
+        <Box sx={{ width: '500px', m: 2, display: 'flex', justifyContent: 'center' }}  className="smallBox">
           <img src={Logo} width={300} alt='' />
         </Box>
-        <Box sx={{ width: '500px', m: 2, display: 'flex', justifyContent: 'center' }} >
+        <Box sx={{ width: '500px', m: 2, display: 'flex', justifyContent: 'center' }} className="smallBox">
           <Box>
             <Typography sx={{ display: 'flex', justifyContent: 'center' }} variant='h4'>Login</Typography>
             <hr />
@@ -57,11 +57,12 @@ const Login = () => {
               noValidate
               autoComplete="off"
             >
-              <TextField id="outlined-basic" label="Email" variant="outlined" value={email} onChange={(event) => setEmail(event.target.value)} />
+              <TextField id="outlined-basic" label="Email" variant="outlined" value={email} onChange={(event) => setEmail(event.target.value)}  />
               <TextField id="outlined-basic" type="password" label="Password" variant="outlined" value={password} onChange={(event) => setPassword(event.target.value)} />
               <Stack spacing={2} direction="row">
                 <Button type="submit" variant="contained" sx={{ width: 180, height: 45 }}>Login</Button>
               </Stack>
+             
             </Box>
           </Box>
         </Box>
