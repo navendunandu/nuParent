@@ -7,6 +7,7 @@ import 'package:intl/intl.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:nu_parent/Components/appbar.dart';
 import 'package:nu_parent/child_registration.dart';
+import 'package:nu_parent/childprofile_pop.dart';
 // import 'package:nu_parent/login_screen.dart';
 import 'dart:io';
 import 'package:nu_parent/main.dart';
@@ -76,6 +77,10 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   List<String> prefix = ['Mr', 'Mrs', 'Ms'];
 
  Future<void> _registerUser() async {
+  Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => const ChildProfilePop()),
+      );
     try {
       UserCredential userCredential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
         email: _emailController.text,
