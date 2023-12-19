@@ -65,6 +65,7 @@ class _CountdownPageState extends State<CountdownPage>
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 255, 255, 255),
       appBar: AppBar(
+        backgroundColor: AppColors.white,
         leading: IconButton(
           onPressed: () {
             Navigator.pop(context);
@@ -99,9 +100,8 @@ class _CountdownPageState extends State<CountdownPage>
                       Container(
                         padding: const EdgeInsets.fromLTRB(50, 10, 50, 10),
                         decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(30),
-                          color: AppColors.white
-                        ),
+                            borderRadius: BorderRadius.circular(30),
+                            color: AppColors.white),
                         child: const Text(
                           'Brushing Timer',
                           style: TextStyle(
@@ -135,7 +135,8 @@ class _CountdownPageState extends State<CountdownPage>
                                     builder: (context) => Container(
                                       height: 300,
                                       child: CupertinoTimerPicker(
-                                        initialTimerDuration: controller.duration!,
+                                        initialTimerDuration:
+                                            controller.duration!,
                                         onTimerDurationChanged: (time) {
                                           setState(() {
                                             controller.duration = time;
@@ -166,40 +167,65 @@ class _CountdownPageState extends State<CountdownPage>
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            GestureDetector(
-                              onTap: () {
-                                if (controller.isAnimating) {
-                                  controller.stop();
+                            Container(
+                              width:
+                                  50,
+                              height: 50,
+                              decoration: const BoxDecoration(
+                                shape: BoxShape.circle,
+                                color: Colors
+                                    .white,
+                              ),
+                              child: IconButton(
+                                onPressed: () {
+                                  if (controller.isAnimating) {
+                                    controller.stop();
+                                    setState(() {
+                                      isPlaying = false;
+                                    });
+                                  } else {
+                                    controller.reverse(
+                                        from: controller.value == 0
+                                            ? 1.0
+                                            : controller.value);
+                                    setState(() {
+                                      isPlaying = true;
+                                    });
+                                  }
+                                },
+                                icon: Icon(
+                                  isPlaying == true
+                                      ? Icons.pause
+                                      : Icons.play_arrow,
+                                  color: AppColors.primaryColor, 
+                                ),
+                              ),
+                            ),
+                            const SizedBox(
+                              width: 10,
+                            ),
+                            Container(
+                              width:
+                                  50,
+                              height: 50,
+                              decoration: const BoxDecoration(
+                                shape: BoxShape.circle,
+                                color: Colors
+                                    .white, 
+                              ),
+                              child: IconButton(
+                                onPressed: () {
+                                  controller.reset();
                                   setState(() {
                                     isPlaying = false;
                                   });
-                                } else {
-                                  controller.reverse(
-                                      from: controller.value == 0
-                                          ? 1.0
-                                          : controller.value);
-                                  setState(() {
-                                    isPlaying = true;
-                                  });
-                                }
-                              },
-                              child: RoundButton(
-                                icon: isPlaying == true
-                                    ? Icons.pause
-                                    : Icons.play_arrow,
+                                },
+                                icon: const Icon(
+                                  Icons.stop,
+                                  color: AppColors.primaryColor,
+                                ),
                               ),
-                            ),
-                            GestureDetector(
-                              onTap: () {
-                                controller.reset();
-                                setState(() {
-                                  isPlaying = false;
-                                });
-                              },
-                              child: const RoundButton(
-                                icon: Icons.stop, 
-                              ),
-                            ),
+                            )
                           ],
                         ),
                       )
@@ -211,16 +237,29 @@ class _CountdownPageState extends State<CountdownPage>
             const SizedBox(height: 20),
             Container(
               decoration: BoxDecoration(
-                  color: AppColors.lightblue,
-                  borderRadius: BorderRadius.circular(20),
-                ),
-              child: Padding(
-                padding: const EdgeInsets.all(15.0),
+                color: AppColors.lightblue,
+                borderRadius: BorderRadius.circular(20),
+              ),
+              child: const Padding(
+                padding: EdgeInsets.fromLTRB(30, 10, 30, 10),
                 child: Column(
                   children: [
-                    Text('Include a reward system that gives points, tokens or stars each time the child brushes their teeth. '),
-                    Text('when children brushes for 7 days a week some reward. '),
-                    Text('or incorporate songs for 2 minutes to encourage the right length of brushing.')
+                    Text(
+                        'Include a reward system that gives points, tokens or stars each time the child brushes their teeth.', style: TextStyle(
+                          color: AppColors.primaryColor,
+                          fontWeight: FontWeight.w500
+                        ),),
+                    Text(
+                        'when children brushes for 7 days a week some reward.',
+                        style: TextStyle(
+                          color: AppColors.primaryColor
+                        ),
+                        ),
+                    Text(
+                        'or incorporate songs for 2 minutes to encourage the right length of brushing.',
+                        style: TextStyle(
+                          color: AppColors.primaryColor)
+                          )
                   ],
                 ),
               ),
