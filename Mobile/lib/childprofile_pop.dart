@@ -41,8 +41,8 @@ class _ChildProfilePopState extends State<ChildProfilePop> {
         ),
         child: Column(
           children: [
-            const CustomTopBar(
-                showBackIcon: false, showNotificationButton: true),
+            CustomTopBar(
+                showBackIcon: false, showNotificationButton: false, docId: _receivedDocId),
             Stack(
               children: [
                 Image.asset('assets/FamilyBrushing.jpg'),
@@ -86,7 +86,8 @@ class _ChildProfilePopState extends State<ChildProfilePop> {
                         Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => const RegistrationChild()));
+                                builder: (context) =>  RegistrationChild(
+                                    docId: _receivedDocId)));
                       },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: AppColors.primaryColor,

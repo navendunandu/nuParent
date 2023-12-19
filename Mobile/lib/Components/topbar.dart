@@ -4,13 +4,18 @@ import 'package:nu_parent/main.dart';
 class CustomTopBar extends StatelessWidget implements PreferredSizeWidget {
   final bool showBackIcon;
   final bool showNotificationButton;
-  const CustomTopBar(
-      {Key? key, this.showBackIcon = true, this.showNotificationButton = true})
+  final String docId;
+  String name="";
+  String image = 'assets/dummy-profile-pic.png';
+  
+  CustomTopBar(
+      {Key? key, required this.docId, this.showBackIcon = true, this.showNotificationButton = true})
       : super(key: key);
 
   @override
   Size get preferredSize =>
       showBackIcon ? const Size.fromHeight(110) : const Size.fromHeight(80);
+
 
   @override
   Widget build(BuildContext context) {
@@ -60,16 +65,13 @@ class CustomTopBar extends StatelessWidget implements PreferredSizeWidget {
                     color: showNotificationButton ? AppColors.whiteblue : null,
                     borderRadius: BorderRadius.circular(8.0)),
                 child: showNotificationButton
-                    ? const Padding(
-                        padding: EdgeInsets.all(8.0),
-                        child: Icon(Icons.notifications),
-                      )
-                    : GestureDetector(
+                    ? GestureDetector(
                         onTap: () {},
                         child: const Text(
                           'Skip',
                         ),
-                      ),
+                      )
+                    : null,
               ),
             ],
           ),

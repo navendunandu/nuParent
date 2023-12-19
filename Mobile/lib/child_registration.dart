@@ -5,15 +5,31 @@ import 'package:intl/intl.dart';
 import 'package:nu_parent/Components/topbar.dart';
 import 'package:nu_parent/main.dart';
 import 'package:nu_parent/success.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class RegistrationChild extends StatefulWidget {
-  const RegistrationChild({super.key});
+  final String docId;
+  const RegistrationChild({Key? key, required this.docId}) : super(key: key);
 
   @override
   State<RegistrationChild> createState() => _RegistrationChildState();
 }
 
 class _RegistrationChildState extends State<RegistrationChild> {
+  late String _receivedDocId;
+
+  @override
+  void initState() {
+    super.initState();
+    _receivedDocId = widget.docId;
+    print(_receivedDocId);
+  }
+
+  final _nameController = TextEditingController();
+  final _addressController = TextEditingController();
   final _dateController = TextEditingController();
   XFile? _selectedImage;
   String? _imageUrl;
@@ -46,6 +62,62 @@ class _RegistrationChildState extends State<RegistrationChild> {
     }
   }
 
+  Future<void> _registerChild() async {
+    print('Its Working');
+    try {
+      DocumentReference childRef =
+          await FirebaseFirestore.instance.collection('child').add({
+        'name': _nameController.text,
+        'dateOfBirth': _dateController.text,
+        'gender': selectedGender,
+        'address': _addressController.text,
+        'userId': _receivedDocId,
+        // Add more fields as needed
+      });
+
+      String docId = childRef.id;
+
+      await _uploadImage(docId);
+
+      Fluttertoast.showToast(
+        msg: "Regsitration Successfull",
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM,
+        backgroundColor: Colors.green,
+        textColor: Colors.white,
+      );
+
+      Navigator.pushReplacement(context,
+          MaterialPageRoute(builder: (context) => const SuccessScreen()));
+    } catch (e) {
+      print("Error registering child: $e");
+      // Handle error, show message or take appropriate action
+    }
+  }
+
+  Future<void> _uploadImage(String childId) async {
+    try {
+      if (_selectedImage != null) {
+        Reference ref =
+            FirebaseStorage.instance.ref().child('child_images/$childId.jpg');
+        UploadTask uploadTask = ref.putFile(File(_selectedImage!.path));
+        TaskSnapshot taskSnapshot = await uploadTask.whenComplete(() => null);
+
+        String imageUrl = await taskSnapshot.ref.getDownloadURL();
+
+        await FirebaseFirestore.instance
+            .collection('child')
+            .doc(childId)
+            .update({
+          'imageUrl': imageUrl,
+        });
+      }
+    } catch (e) {
+      print("Error uploading image: $e");
+      // Handle error, show message or take appropriate action
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -65,8 +137,8 @@ class _RegistrationChildState extends State<RegistrationChild> {
               child: SingleChildScrollView(
                   child: Column(
                 children: [
-                  const CustomTopBar(
-                      showBackIcon: true, showNotificationButton: false),
+                  CustomTopBar(
+                      showBackIcon: true, showNotificationButton: false, docId: _receivedDocId),
                   Form(
                     child: Padding(
                       padding: const EdgeInsets.only(left: 20.0, right: 20.0),
@@ -149,6 +221,7 @@ class _RegistrationChildState extends State<RegistrationChild> {
                                 borderSide: BorderSide.none,
                               ),
                             ),
+                            controller: _nameController,
                           ),
                           const SizedBox(
                             height: 20,
@@ -246,19 +319,16 @@ class _RegistrationChildState extends State<RegistrationChild> {
                                 borderSide: BorderSide.none,
                               ),
                             ),
+                            controller: _addressController,
                           ),
                           const SizedBox(
                             height: 20,
                           ),
                           Center(
                             child: ElevatedButton(
-                              onPressed: () {
-                                Navigator.pushReplacement(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            const SuccessScreen()));
-                              },
+                              onPressed: ()  {
+                                    _registerChild();
+                                  },
                               style: ElevatedButton.styleFrom(
                                 backgroundColor: AppColors.primaryColor,
                                 shape: RoundedRectangleBorder(

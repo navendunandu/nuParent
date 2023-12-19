@@ -25,9 +25,9 @@ class _LoginScreenState extends State<LoginScreen> {
     });
   }
 
-  Future<void> saveUserInfoToLocalDatabase(String email) async {
+  Future<void> saveUserInfoToLocalDatabase(String userId) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setString('user_email', email);
+    prefs.setString('uid', userId);
   }
 
   Future<void> _login(BuildContext context) async {
@@ -44,7 +44,11 @@ class _LoginScreenState extends State<LoginScreen> {
         if (userCredential.user != null) {
           if (_isChecked) {
             // Save user info to shared preferences
-            await saveUserInfoToLocalDatabase(_emailController.text.trim());
+            
+        String userId = userCredential.user?.uid ?? '';
+        print('User ID: $userId');
+
+            await saveUserInfoToLocalDatabase(userId);
           }
 
           Navigator.pushReplacement(

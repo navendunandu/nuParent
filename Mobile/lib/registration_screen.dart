@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -6,9 +8,7 @@ import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:intl/intl.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:nu_parent/Components/appbar.dart';
-import 'package:nu_parent/child_registration.dart';
 import 'package:nu_parent/childprofile_pop.dart';
-// import 'package:nu_parent/login_screen.dart';
 import 'dart:io';
 import 'package:nu_parent/main.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -54,51 +54,47 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   }
 
   void _selectDate() async {
-  final DateTime currentDate = DateTime.now();
-  final DateTime lastDate = currentDate.subtract(const Duration(days: 6570)); // 6570 days is approximately 18 years
+    final DateTime currentDate = DateTime.now();
+    final DateTime lastDate = currentDate.subtract(
+        const Duration(days: 6570)); // 6570 days is approximately 18 years
 
-  DateTime? pickedDate = await showDatePicker(
-    context: context,
-    initialDate: _selectedDate ?? lastDate, // Use lastDate if _selectedDate is null
-    firstDate: DateTime(1900, 1, 1),
-    lastDate: lastDate,
-  );
+    DateTime? pickedDate = await showDatePicker(
+      context: context,
+      initialDate:
+          _selectedDate ?? lastDate, // Use lastDate if _selectedDate is null
+      firstDate: DateTime(1900, 1, 1),
+      lastDate: lastDate,
+    );
 
-  if (pickedDate != null) {
-    setState(() {
-      _selectedDate = pickedDate;
-      _dateController.text = DateFormat('dd-MM-yyyy').format(pickedDate);
-      print(_dateController.text);
-    });
+    if (pickedDate != null) {
+      setState(() {
+        _selectedDate = pickedDate;
+        _dateController.text = DateFormat('dd-MM-yyyy').format(pickedDate);
+        print(_dateController.text);
+      });
+    }
   }
-}
 
   String? selectedPrefix;
   List<String> prefix = ['Mr', 'Mrs', 'Ms'];
 
- Future<void> _registerUser() async {
-
+  Future<void> _registerUser() async {
     try {
-      UserCredential userCredential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
+      UserCredential userCredential =
+          await FirebaseAuth.instance.createUserWithEmailAndPassword(
         email: _emailController.text,
         password: _passController.text,
       );
 
       if (userCredential != null) {
         await _storeUserData(userCredential.user!.uid);
-         Fluttertoast.showToast(
-      msg: "Regsitration Successfull",
-      toastLength: Toast.LENGTH_SHORT,
-      gravity: ToastGravity.BOTTOM,
-      backgroundColor: Colors.green,
-      textColor: Colors.white,
-    );
-    Future.delayed(const Duration(seconds: 2), () {
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => const RegistrationChild()),
-      );
-    });
+        Fluttertoast.showToast(
+          msg: "Regsitration Successfull",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          backgroundColor: Colors.green,
+          textColor: Colors.white,
+        );
       }
     } catch (e) {
       print("Error registering user: $e");
@@ -108,26 +104,28 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
 
   Future<void> _storeUserData(String userId) async {
     try {
-       DocumentReference userRef = await FirebaseFirestore.instance.collection('users').add({
-      'name': _nameController.text,
-      'email': _emailController.text,
-      'phone': _phoneController.text,
-      'dateOfBirth': _dateController.text,
-      'prefix': _prefix,
-      'gender': _selectedGender,
-      'address': _addressController.text,
-      // Add more fields as needed
-    });
+      DocumentReference userRef =
+          await FirebaseFirestore.instance.collection('users').add({
+        'name': _nameController.text,
+        'email': _emailController.text,
+        'phone': _phoneController.text,
+        'dateOfBirth': _dateController.text,
+        'prefix': _prefix,
+        'gender': _selectedGender,
+        'address': _addressController.text,
+        // Add more fields as needed
+      });
 
-    String docId = userRef.id; // Get the document ID
+      String docId = userRef.id; // Get the document ID
 
-    await _uploadImage(docId);
+      await _uploadImage(docId);
 
-    // Navigate to a new page with the document ID
-    Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(builder: (context) => ChildProfilePop(docId: docId)),
-    );
+      // Navigate to a new page with the document ID
+      // ignore: use_build_context_synchronously
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => ChildProfilePop(docId: docId)),
+      );
     } catch (e) {
       print("Error storing user data: $e");
       // Handle error, show message or take appropriate action
@@ -137,13 +135,17 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   Future<void> _uploadImage(String userId) async {
     try {
       if (_selectedImage != null) {
-        Reference ref = FirebaseStorage.instance.ref().child('user_images/$userId.jpg');
+        Reference ref =
+            FirebaseStorage.instance.ref().child('user_images/$userId.jpg');
         UploadTask uploadTask = ref.putFile(File(_selectedImage!.path));
         TaskSnapshot taskSnapshot = await uploadTask.whenComplete(() => null);
 
         String imageUrl = await taskSnapshot.ref.getDownloadURL();
 
-        await FirebaseFirestore.instance.collection('users').doc(userId).update({
+        await FirebaseFirestore.instance
+            .collection('users')
+            .doc(userId)
+            .update({
           'imageUrl': imageUrl,
         });
       }
@@ -152,7 +154,6 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
       // Handle error, show message or take appropriate action
     }
   }
-
 
   @override
   Widget build(BuildContext context) {
