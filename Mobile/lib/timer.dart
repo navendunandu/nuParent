@@ -27,8 +27,59 @@ class _CountdownPageState extends State<CountdownPage>
 
   void notify() {
     if (countText == '0:00:00') {
-      FlutterRingtonePlayer.playNotification();
+      startBeepSound();
+      showStopSoundDialog(context); // Pass the context to showStopSoundDialog
     }
+  }
+
+  void showStopSoundDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      barrierDismissible: true, // Add this line
+      builder: (BuildContext context) {
+        return StatefulBuilder(
+          builder: (BuildContext context, StateSetter setState) {
+            return GestureDetector(
+              onTap: () {
+                Navigator.of(context).pop(); // Close the dialog on outside tap
+              },
+              child: AlertDialog(
+                title: Text('Times Up!'),
+                content: Text('Do you want to stop the sound?'),
+                actions: <Widget>[
+                  TextButton(
+                    onPressed: () {
+                      stopBeepSound(
+                          context); // Pass the context to stopBeepSound
+                    },
+                    child: Text('Cancel Sound'),
+                  ),
+                ],
+              ),
+            );
+          },
+        );
+      },
+    );
+  }
+
+  void startBeepSound() {
+    FlutterRingtonePlayer.playAlarm();
+  }
+
+  void playBombingSound() {
+    FlutterRingtonePlayer.playAlarm();
+
+    // Schedule the stop action after 3 seconds using a delayed future
+    Future.delayed(const Duration(seconds: 3), () {
+      FlutterRingtonePlayer.stop();
+    });
+  }
+
+  void stopBeepSound(BuildContext context) {
+    FlutterRingtonePlayer.stop();
+    Navigator.of(context, rootNavigator: true)
+        .pop(); // Close the dialog using the root navigator
   }
 
   @override
@@ -36,7 +87,7 @@ class _CountdownPageState extends State<CountdownPage>
     super.initState();
     controller = AnimationController(
       vsync: this,
-      duration: const Duration(seconds: 60),
+      duration: const Duration(seconds: 10),
     );
 
     controller.addListener(() {
@@ -168,13 +219,11 @@ class _CountdownPageState extends State<CountdownPage>
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Container(
-                              width:
-                                  50,
+                              width: 50,
                               height: 50,
                               decoration: const BoxDecoration(
                                 shape: BoxShape.circle,
-                                color: Colors
-                                    .white,
+                                color: Colors.white,
                               ),
                               child: IconButton(
                                 onPressed: () {
@@ -197,7 +246,7 @@ class _CountdownPageState extends State<CountdownPage>
                                   isPlaying == true
                                       ? Icons.pause
                                       : Icons.play_arrow,
-                                  color: AppColors.primaryColor, 
+                                  color: AppColors.primaryColor,
                                 ),
                               ),
                             ),
@@ -205,13 +254,11 @@ class _CountdownPageState extends State<CountdownPage>
                               width: 10,
                             ),
                             Container(
-                              width:
-                                  50,
+                              width: 50,
                               height: 50,
                               decoration: const BoxDecoration(
                                 shape: BoxShape.circle,
-                                color: Colors
-                                    .white, 
+                                color: Colors.white,
                               ),
                               child: IconButton(
                                 onPressed: () {
@@ -245,21 +292,18 @@ class _CountdownPageState extends State<CountdownPage>
                 child: Column(
                   children: [
                     Text(
-                        'Include a reward system that gives points, tokens or stars each time the child brushes their teeth.', style: TextStyle(
+                      'Include a reward system that gives points, tokens or stars each time the child brushes their teeth.',
+                      style: TextStyle(
                           color: AppColors.primaryColor,
-                          fontWeight: FontWeight.w500
-                        ),),
+                          fontWeight: FontWeight.w500),
+                    ),
                     Text(
-                        'when children brushes for 7 days a week some reward.',
-                        style: TextStyle(
-                          color: AppColors.primaryColor
-                        ),
-                        ),
+                      'when children brushes for 7 days a week some reward.',
+                      style: TextStyle(color: AppColors.primaryColor),
+                    ),
                     Text(
                         'or incorporate songs for 2 minutes to encourage the right length of brushing.',
-                        style: TextStyle(
-                          color: AppColors.primaryColor)
-                          )
+                        style: TextStyle(color: AppColors.primaryColor))
                   ],
                 ),
               ),
