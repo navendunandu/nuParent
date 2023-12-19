@@ -151,7 +151,7 @@ const OralHygiene = () => {
                     autoComplete="off"
                 >
 
-                    <Stack spacing={2} direction="row">
+                    <Stack spacing={2} direction="row"  sx={{p:2}}>
                         <FormControl sx={{ minWidth: 120 }}>
                             <InputLabel id="demo-simple-select-label">Age</InputLabel>
                             <Select

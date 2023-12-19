@@ -11,7 +11,7 @@ const Reminder = () => {
     const [open, setOpen] = useState(false);
     const [reminderData, setReminderData] = useState([]);
     const [reminder, setReminder] = useState('');
-    const [duration , setDuration] = useState('');
+    const [duration, setDuration] = useState('');
     const [selectedRow, setSelectedRow] = useState(null);
     const [ageData, setAgeData] = useState([]);
     const [age, setAge] = useState('');
@@ -29,9 +29,9 @@ const Reminder = () => {
     };
 
 
-    
+
     const addReminder = async () => {
-        if (!reminder || !age ||!duration) {
+        if (!reminder || !age || !duration) {
             setError('Both reminder Details and Age  and duration are required');
             return;
         }
@@ -50,7 +50,7 @@ const Reminder = () => {
         try {
             const querySnapshot = await getDocs(collection(db, "reminder"));
             const reminderData = querySnapshot.docs.map((doc, index) => ({ id: doc.id, index: index + 1, ...doc.data() }));
-          
+
 
             const ageGroupsQuerySnapshot = await getDocs(collection(db, "ageGroups"));
             const ageGroupsData = ageGroupsQuerySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
@@ -62,7 +62,7 @@ const Reminder = () => {
                     return { ...reminderDataItem, ageGroup: matchingAgeGroup.age };
                 });
 
-                setReminderData(joinedData);
+            setReminderData(joinedData);
         } catch (error) {
             console.error('Error getting documents: ', error);
         }
@@ -92,7 +92,7 @@ const Reminder = () => {
             console.error('Error getting documents: ', error);
         }
 
-          
+
     };
 
 
@@ -112,19 +112,19 @@ const Reminder = () => {
             headerName: 'Reminder',
             flex: 3
         },
-        
+
         {
             field: 'duration',
             headerName: 'Duration',
             flex: 3
         },
-        
+
         {
             field: 'ageGroup',
             headerName: 'Age Group',
             flex: 3
         },
-       
+
         {
             field: "action",
             headerName: "Action",
@@ -157,7 +157,7 @@ const Reminder = () => {
                     autoComplete="off"
                 >
 
-                    <Stack spacing={2} direction="row">
+                    <Stack spacing={2} direction="row" sx={{p:2}}>
                         <FormControl sx={{ minWidth: 120 }}>
                             <InputLabel id="demo-simple-select-label">Age</InputLabel>
                             <Select
@@ -165,18 +165,18 @@ const Reminder = () => {
                                 id="demo-simple-select"
                                 value={age}
                                 label="Age"
-                                onChange={(event) =>{ setAge(event.target.value);setError(''); }}
-                                >
-                                    {
-                                        ageData.map((doc, key) => (
-                                            <MenuItem key={key} value={doc.id}>{doc.age}</MenuItem>
-    
-                                        ))
-                                    }
+                                onChange={(event) => { setAge(event.target.value); setError(''); }}
+                            >
+                                {
+                                    ageData.map((doc, key) => (
+                                        <MenuItem key={key} value={doc.id}>{doc.age}</MenuItem>
+
+                                    ))
+                                }
                             </Select>
                         </FormControl>
-                        <TextField id="outlined-basic" autoComplete='off' value={duration} label="Enter Duration" variant="outlined" onChange={(event) => {setDuration(event.target.value);setError(''); }} />
-                        <TextField id="outlined-basic" autoComplete='off' value={reminder} label="Enter Type Name" variant="outlined"  onChange={(event) => {setReminder(event.target.value);setError(''); }}   />
+                        <TextField id="outlined-basic" autoComplete='off' value={duration} label="Enter Duration" variant="outlined" onChange={(event) => { setDuration(event.target.value); setError(''); }} />
+                        <TextField id="outlined-basic" autoComplete='off' value={reminder} label="Enter Type Name" variant="outlined" onChange={(event) => { setReminder(event.target.value); setError(''); }} />
 
                         <Button variant="contained" sx={{ width: 150 }} onClick={addReminder}>Submit</Button>
                     </Stack>
