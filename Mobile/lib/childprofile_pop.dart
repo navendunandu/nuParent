@@ -4,13 +4,26 @@ import 'package:nu_parent/child_registration.dart';
 import 'package:nu_parent/main.dart';
 
 class ChildProfilePop extends StatefulWidget {
-  const ChildProfilePop({super.key});
+  final String docId;
+
+  const ChildProfilePop({Key? key, required this.docId}) : super(key: key);
 
   @override
-  State<ChildProfilePop> createState() => _ChildProfilePopState();
+  _ChildProfilePopState createState() => _ChildProfilePopState();
 }
 
 class _ChildProfilePopState extends State<ChildProfilePop> {
+  late String _receivedDocId;
+
+  @override
+  void initState() {
+    super.initState();
+    _receivedDocId = widget.docId;
+    WidgetsBinding.instance!.addPostFrameCallback((_) {
+      print('Document ID: $_receivedDocId'); // Access _receivedDocId after widget is built
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

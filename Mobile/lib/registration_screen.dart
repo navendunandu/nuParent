@@ -55,7 +55,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
 
   void _selectDate() async {
   final DateTime currentDate = DateTime.now();
-  final DateTime lastDate = currentDate.subtract(Duration(days: 6570)); // 6570 days is approximately 18 years
+  final DateTime lastDate = currentDate.subtract(const Duration(days: 6570)); // 6570 days is approximately 18 years
 
   DateTime? pickedDate = await showDatePicker(
     context: context,
@@ -77,10 +77,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   List<String> prefix = ['Mr', 'Mrs', 'Ms'];
 
  Future<void> _registerUser() async {
-  Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => const ChildProfilePop()),
-      );
+
     try {
       UserCredential userCredential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
         email: _emailController.text,
@@ -111,18 +108,26 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
 
   Future<void> _storeUserData(String userId) async {
     try {
-      await FirebaseFirestore.instance.collection('users').doc(userId).set({
-        'name': _nameController.text,
-        'email': _emailController.text,
-        'phone': _phoneController.text,
-        'dateOfBirth': _dateController.text,
-        'prefix': _prefix,
-        'gender': _selectedGender,
-        'address': _addressController.text,
-        // Add more fields as needed
-      });
+       DocumentReference userRef = await FirebaseFirestore.instance.collection('users').add({
+      'name': _nameController.text,
+      'email': _emailController.text,
+      'phone': _phoneController.text,
+      'dateOfBirth': _dateController.text,
+      'prefix': _prefix,
+      'gender': _selectedGender,
+      'address': _addressController.text,
+      // Add more fields as needed
+    });
 
-      await _uploadImage(userId);
+    String docId = userRef.id; // Get the document ID
+
+    await _uploadImage(docId);
+
+    // Navigate to a new page with the document ID
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(builder: (context) => ChildProfilePop(docId: docId)),
+    );
     } catch (e) {
       print("Error storing user data: $e");
       // Handle error, show message or take appropriate action
