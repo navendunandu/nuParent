@@ -19,9 +19,7 @@ class _ChildProfilePopState extends State<ChildProfilePop> {
   void initState() {
     super.initState();
     _receivedDocId = widget.docId;
-    WidgetsBinding.instance!.addPostFrameCallback((_) {
-      print('Document ID: $_receivedDocId'); // Access _receivedDocId after widget is built
-    });
+
   }
 
   @override

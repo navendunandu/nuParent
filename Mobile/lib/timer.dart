@@ -59,12 +59,62 @@ class _CountdownPageState extends State<CountdownPage>
     super.dispose();
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Color(0xfff5fbff),
-      body: Column(
+@override
+Widget build(BuildContext context) {
+  return Scaffold(
+    backgroundColor: Color(0xfff5fbff),
+    body: Padding(
+      padding: const EdgeInsets.all(20.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
+          Text(
+            'Timer',
+            style: TextStyle(
+              fontSize: 24,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          SizedBox(height: 20),
+          Container(
+            width: 200,
+            height: 200,
+            decoration: BoxDecoration(
+              border: Border.all(color: Colors.lightBlue, width: 2),
+              borderRadius: BorderRadius.circular(20),
+            ),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Container(
+                  padding: EdgeInsets.all(10),
+                  color: Colors.white,
+                  child: Text(
+                    'Brushing Timer',
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+                SizedBox(height: 20),
+                Container(
+                  padding: EdgeInsets.all(10),
+                  color: Colors.blue,
+                  child: Text(
+                    'Starting Time Set',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          SizedBox(height: 20),
           Expanded(
             child: Stack(
               alignment: Alignment.center,
@@ -78,6 +128,7 @@ class _CountdownPageState extends State<CountdownPage>
                     strokeWidth: 6,
                   ),
                 ),
+
                 GestureDetector(
                   onTap: () {
                     if (controller.isDismissed) {
@@ -151,8 +202,10 @@ class _CountdownPageState extends State<CountdownPage>
           )
         ],
       ),
-    );
-  }
+    ),
+  );
+}
+
 }
 
 class RoundButton extends StatelessWidget {
