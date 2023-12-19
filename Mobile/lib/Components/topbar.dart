@@ -40,8 +40,8 @@ class _CustomTopBarState extends State<CustomTopBar> {
           final userData = documentSnapshot.data();
           setState(() {
             name = userData?['name'] ?? 'Name not Found';
-            if (userData?['profileImageUrl'] != null) {
-              image = userData?['profileImageUrl'];
+            if (userData?['imageUrl'] != null) {
+              image = userData?['imageUrl'];
             }
           });
         }
