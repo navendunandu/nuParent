@@ -26,9 +26,9 @@ import NotificationsActiveIcon from '@mui/icons-material/NotificationsActive';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import ChildCareIcon from '@mui/icons-material/ChildCare';
 import MoodIcon from '@mui/icons-material/Mood';
-import SoupKitchenIcon from '@mui/icons-material/SoupKitchen';
 import LogoutIcon from '@mui/icons-material/Logout';
 import CleanHandsTwoToneIcon from '@mui/icons-material/CleanHandsTwoTone';
+import DinnerDiningIcon from '@mui/icons-material/DinnerDining'
 
 import { Route, Routes, Link, useLocation, } from 'react-router-dom';
 import { Stack } from '@mui/material';
@@ -132,7 +132,7 @@ const ResponsiveDrawer = (props) => {
           <Link to={'/Admin/Dietaryintake'} className={`sidebar-btn ${location.pathname === '/Admin/Dietaryintake' ? 'active-link' : ''}`} onClick={handleDrawerToggle}>
             <ListItemButton >
               <ListItemIcon>
-                <SoupKitchenIcon className='icon-clr'/>
+                <DinnerDiningIcon className='icon-clr'/>
               </ListItemIcon>
               <ListItemText primary='Dietary Intake' />
             </ListItemButton>
