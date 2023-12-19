@@ -11,7 +11,7 @@ class CountdownPage extends StatefulWidget {
 }
 
 class _CountdownPageState extends State<CountdownPage>
-  with TickerProviderStateMixin {
+    with TickerProviderStateMixin {
   late AnimationController controller;
 
   bool isPlaying = false;
@@ -27,12 +27,8 @@ class _CountdownPageState extends State<CountdownPage>
 
   void notify() {
     if (countText == '0:00:00') {
-      playBombingSound();
+      FlutterRingtonePlayer.playNotification();
     }
-  }
-
-  void playBombingSound() {
-    FlutterRingtonePlayer.playAlarm();
   }
 
   @override
@@ -40,7 +36,7 @@ class _CountdownPageState extends State<CountdownPage>
     super.initState();
     controller = AnimationController(
       vsync: this,
-      duration: const Duration(seconds: 10),
+      duration: const Duration(seconds: 60),
     );
 
     controller.addListener(() {
@@ -103,8 +99,9 @@ class _CountdownPageState extends State<CountdownPage>
                       Container(
                         padding: const EdgeInsets.fromLTRB(50, 10, 50, 10),
                         decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(30),
-                            color: AppColors.white),
+                          borderRadius: BorderRadius.circular(30),
+                          color: AppColors.white
+                        ),
                         child: const Text(
                           'Brushing Timer',
                           style: TextStyle(
@@ -138,8 +135,7 @@ class _CountdownPageState extends State<CountdownPage>
                                     builder: (context) => Container(
                                       height: 300,
                                       child: CupertinoTimerPicker(
-                                        initialTimerDuration:
-                                            controller.duration!,
+                                        initialTimerDuration: controller.duration!,
                                         onTimerDurationChanged: (time) {
                                           setState(() {
                                             controller.duration = time;
@@ -201,7 +197,7 @@ class _CountdownPageState extends State<CountdownPage>
                                 });
                               },
                               child: const RoundButton(
-                                icon: Icons.stop,
+                                icon: Icons.stop, 
                               ),
                             ),
                           ],
@@ -215,19 +211,16 @@ class _CountdownPageState extends State<CountdownPage>
             const SizedBox(height: 20),
             Container(
               decoration: BoxDecoration(
-                color: AppColors.lightblue,
-                borderRadius: BorderRadius.circular(20),
-              ),
-              child: const Padding(
-                padding: EdgeInsets.all(15.0),
+                  color: AppColors.lightblue,
+                  borderRadius: BorderRadius.circular(20),
+                ),
+              child: Padding(
+                padding: const EdgeInsets.all(15.0),
                 child: Column(
                   children: [
-                    Text(
-                        'Include a reward system that gives points, tokens or stars each time the child brushes their teeth. '),
-                    Text(
-                        'when children brushes for 7 days a week some reward. '),
-                    Text(
-                        'or incorporate songs for 2 minutes to encourage the right length of brushing.')
+                    Text('Include a reward system that gives points, tokens or stars each time the child brushes their teeth. '),
+                    Text('when children brushes for 7 days a week some reward. '),
+                    Text('or incorporate songs for 2 minutes to encourage the right length of brushing.')
                   ],
                 ),
               ),
