@@ -20,7 +20,7 @@
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    min-height: 95vh;
+    min-height: 90vh;
   }
   
   .PaperContainer {
@@ -31,6 +31,18 @@
     justify-content: center;
     align-items: center;
   }
+
+  .icon-container{
+    display: flex;
+    justify-content: flex-end;
+    margin-right: 30px;
+  }
+  .icon-play{
+    width: 30px;
+    height: 30px;
+
+  }
+ 
   
   /* Styles for small screens (up to 600px width) */
   @media (max-width: 600px) {
