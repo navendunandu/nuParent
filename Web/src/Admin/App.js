@@ -29,6 +29,8 @@ import MoodIcon from '@mui/icons-material/Mood';
 import LogoutIcon from '@mui/icons-material/Logout';
 import CleanHandsTwoToneIcon from '@mui/icons-material/CleanHandsTwoTone';
 import DinnerDiningIcon from '@mui/icons-material/DinnerDining'
+import { GiToothbrush } from "react-icons/gi";
+
 
 import { Route, Routes, Link, useLocation, } from 'react-router-dom';
 import { Stack } from '@mui/material';
@@ -112,7 +114,7 @@ const ResponsiveDrawer = (props) => {
           <Link to={'/Admin/Brushing'} className={`sidebar-btn ${location.pathname === '/Admin/Brushing' ? 'active-link' : ''}`} onClick={handleDrawerToggle}>
             <ListItemButton >
               <ListItemIcon>
-                <MoodIcon className='icon-clr' />
+                <GiToothbrush className='icon-clr' style={{fontSize:'26px'}} />
               </ListItemIcon>
               <ListItemText primary='Brushing' />
             </ListItemButton>

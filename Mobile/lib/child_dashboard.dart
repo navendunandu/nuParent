@@ -5,6 +5,9 @@ import 'package:nu_parent/dietary_intake.dart';
 import 'package:nu_parent/main.dart';
 import 'package:nu_parent/oral_hygiene.dart';
 import 'package:nu_parent/settings.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:intl/intl.dart';
 
 class ChildDashboard extends StatefulWidget {
   const ChildDashboard({super.key});
@@ -14,6 +17,63 @@ class ChildDashboard extends StatefulWidget {
 }
 
 class _ChildProfileState extends State<ChildDashboard> {
+  String name = 'Loading...';
+  String gender = 'Loading...';
+  String dob = 'Loading...';
+  int age = 0;
+
+  int calculateAge(String dob) {
+    // Parse the date string into a DateTime object
+    DateTime dateOfBirth = DateFormat('dd-MM-yyyy').parse(dob);
+
+    // Get the current date
+    DateTime currentDate = DateTime.now();
+
+    // Calculate the age
+    int age = currentDate.year - dateOfBirth.year;
+
+    // Adjust age based on the month and day
+    if (currentDate.month < dateOfBirth.month ||
+        (currentDate.month == dateOfBirth.month &&
+            currentDate.day < dateOfBirth.day)) {
+      age--;
+    }
+
+    return age;
+  }
+
+  @override
+  Future<void> initState() async {
+    super.initState();
+    final user = FirebaseAuth.instance.currentUser;
+    final userId = user?.uid;
+    try {
+      FirebaseFirestore firestore = FirebaseFirestore.instance;
+      CollectionReference childCollection = firestore.collection('child');
+      DocumentSnapshot childDocument = await childCollection.doc(userId).get();
+
+      if (childDocument.exists) {
+        Map<String, dynamic>? childData =
+            childDocument.data() as Map<String, dynamic>?;
+
+        if (childData != null) {
+          setState(() {
+            name = childData['name'] ?? 'Name not found';
+            gender = childData['gender'] ?? 'Gender not found';
+            dob = childData['dateOfBirth'] ?? 'DOB not found';
+            age = calculateAge(dob);
+          });
+        } else {
+          print('Data is null');
+        }
+      } else {
+        print('Document with userId $userId not found');
+      }
+    } catch (e) {
+      print('Error retrieving child data: $e');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -176,9 +236,9 @@ class _ChildProfileState extends State<ChildDashboard> {
                       children: [
                         Row(
                           children: [
-                            const Text(
-                              'Ciaa Anumod',
-                              style: TextStyle(
+                            Text(
+                              name,
+                              style: const TextStyle(
                                   fontSize: 32,
                                   fontWeight: FontWeight.w700,
                                   color: AppColors.primaryColor),
@@ -191,9 +251,9 @@ class _ChildProfileState extends State<ChildDashboard> {
                                 ))
                           ],
                         ),
-                        const Text(
-                          'Girl, 6 years',
-                          style: TextStyle(
+                        Text(
+                          "$gender, $age years",
+                          style: const TextStyle(
                               fontSize: 20,
                               color: AppColors.primaryColor,
                               fontWeight: FontWeight.w500),

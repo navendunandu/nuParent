@@ -32,6 +32,7 @@ class _CustomTopBarState extends State<CustomTopBar> {
   void initState() {
     super.initState();
     _receivedDocId = widget.docId;
+    print(widget.docId);
     if(_receivedDocId!=""){
       final userDoc =
           FirebaseFirestore.instance.collection('users').doc(_receivedDocId);
@@ -40,8 +41,8 @@ class _CustomTopBarState extends State<CustomTopBar> {
           final userData = documentSnapshot.data();
           setState(() {
             name = userData?['name'] ?? 'Name not Found';
-            if (userData?['profileImageUrl'] != null) {
-              image = userData?['profileImageUrl'];
+            if (userData?['imageUrl'] != null) {
+              image = userData?['imageUrl'];
             }
           });
         }
@@ -67,8 +68,11 @@ class _CustomTopBarState extends State<CustomTopBar> {
                     borderRadius: const BorderRadius.all(Radius.circular(5.0)),
                     child: Stack(
                       children: [
-                        Image.asset(image,
-                            height: 50, fit: BoxFit.cover),
+                        SizedBox(
+                          child: (image != "assets/dummy-profile-pic.png"
+                        ? Image.network(image, height: 50, width: 50, fit: BoxFit.cover)
+                        : Image.asset('assets/dummy-profile-pic.png', height: 50, width: 50, fit: BoxFit.cover)),
+                        ),
                         const Padding(
                           padding: EdgeInsets.only(left: 35, top: 35),
                           child: Icon(
