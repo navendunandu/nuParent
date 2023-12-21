@@ -21,6 +21,8 @@ class _ChildProfileState extends State<ChildDashboard> {
   String gender = 'Loading...';
   String dob = 'Loading...';
   int age = 0;
+  List<Map<String, dynamic>> childDataList = [];
+  int selectedChildIndex = 0;
 
   int calculateAge(String dob) {
     // Parse the date string into a DateTime object
@@ -43,35 +45,45 @@ class _ChildProfileState extends State<ChildDashboard> {
   }
 
   @override
-  Future<void> initState() async {
+  void initState() {
     super.initState();
-    final user = FirebaseAuth.instance.currentUser;
-    final userId = user?.uid;
+    _fetchChildData();
+  }
+
+  Future<void> _fetchChildData() async {
     try {
-      FirebaseFirestore firestore = FirebaseFirestore.instance;
-      CollectionReference childCollection = firestore.collection('child');
-      DocumentSnapshot childDocument = await childCollection.doc(userId).get();
+      final user = FirebaseAuth.instance.currentUser;
+      final userId = user?.uid;
+      final firestore = FirebaseFirestore.instance;
+      final childCollection = firestore.collection('child');
 
-      if (childDocument.exists) {
-        Map<String, dynamic>? childData =
-            childDocument.data() as Map<String, dynamic>?;
-
-        if (childData != null) {
-          setState(() {
-            name = childData['name'] ?? 'Name not found';
-            gender = childData['gender'] ?? 'Gender not found';
-            dob = childData['dateOfBirth'] ?? 'DOB not found';
-            age = calculateAge(dob);
-          });
-        } else {
-          print('Data is null');
+      Query query = childCollection.where('userId', isEqualTo: userId);
+      query.get().then((QuerySnapshot querySnapshot) {
+        childDataList.clear(); // Clear existing data
+        for (DocumentSnapshot documentSnapshot in querySnapshot.docs) {
+          Map<String, dynamic> childData =
+              documentSnapshot.data() as Map<String, dynamic>;
+          childDataList.add(childData);
         }
-      } else {
-        print('Document with userId $userId not found');
-      }
+
+        // Update UI with the first child's data
+        if (childDataList.isNotEmpty) {
+          setState(() {
+            updateUI(0);
+          });
+        }
+      });
     } catch (e) {
       print('Error retrieving child data: $e');
     }
+  }
+
+  void updateUI(int index) {
+    Map<String, dynamic> selectedChild = childDataList[index];
+    name = selectedChild['name'];
+    gender = selectedChild['gender'];
+    dob = selectedChild['dob'];
+    age = calculateAge(dob);
   }
 
   @override
@@ -242,13 +254,30 @@ class _ChildProfileState extends State<ChildDashboard> {
                                   fontSize: 32,
                                   fontWeight: FontWeight.w700,
                                   color: AppColors.primaryColor),
-                            ),
-                            IconButton(
-                                onPressed: () {},
-                                icon: const Icon(
-                                  Icons.keyboard_arrow_down_outlined,
-                                  color: AppColors.primaryColor,
-                                ))
+                            ), //Selected Child's Name
+                            PopupMenuButton<int>(
+                              icon: const Icon(
+                                Icons.keyboard_arrow_down_outlined,
+                                color: AppColors.primaryColor,
+                              ),
+                              itemBuilder: (BuildContext context) {
+                                return List.generate(
+                                  childDataList.length,
+                                  (index) => PopupMenuItem<int>(
+                                    value: index,
+                                    child: ListTile(
+                                      title: Text(childDataList[index]['name']),
+                                    ),
+                                  ),
+                                );
+                              },
+                              onSelected: (int index) {
+                                setState(() {
+                                  selectedChildIndex = index;
+                                  updateUI(index);
+                                });
+                              },
+                            ) // This is where the dropdown of other child
                           ],
                         ),
                         Text(
@@ -257,7 +286,7 @@ class _ChildProfileState extends State<ChildDashboard> {
                               fontSize: 20,
                               color: AppColors.primaryColor,
                               fontWeight: FontWeight.w500),
-                        )
+                        ) //Selected Child's Age and Gender
                       ],
                     )
                   ],
