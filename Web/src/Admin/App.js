@@ -25,16 +25,18 @@ import DashboardIcon from '@mui/icons-material/Dashboard';
 import NotificationsActiveIcon from '@mui/icons-material/NotificationsActive';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import ChildCareIcon from '@mui/icons-material/ChildCare';
-import MoodIcon from '@mui/icons-material/Mood';
 import LogoutIcon from '@mui/icons-material/Logout';
 import CleanHandsTwoToneIcon from '@mui/icons-material/CleanHandsTwoTone';
 import DinnerDiningIcon from '@mui/icons-material/DinnerDining'
 import { GiToothbrush } from "react-icons/gi";
+import { FaTooth } from "react-icons/fa";
+
 
 
 import { Route, Routes, Link, useLocation, } from 'react-router-dom';
 import { Stack } from '@mui/material';
 import Logo from '../assets/nuParent.png'
+import DentalVisit from './Components/DentalVisit';
 
 
 
@@ -140,6 +142,18 @@ const ResponsiveDrawer = (props) => {
             </ListItemButton>
           </Link>
         </ListItem>
+        <ListItem disablePadding className='inner-box'>
+          <Link to={'/Admin/DentalVisit'} className={`sidebar-btn ${location.pathname === '/Admin/DentalVisit' ? 'active-link' : ''}`} onClick={handleDrawerToggle}>
+            <ListItemButton >
+              <ListItemIcon>
+              <FaTooth className='icon-clr' />
+
+              </ListItemIcon>
+              <ListItemText primary='Dental Visit' />
+            </ListItemButton>
+          </Link>
+        </ListItem>
+
         <ListItem disablePadding className='inner-box'>
           <Link to={'../'} className={`sidebar-btn `} onClick={handleDrawerToggle}>
             <ListItemButton >
@@ -257,6 +271,7 @@ const ResponsiveDrawer = (props) => {
           <Route path='/Brushing' element={<Brushing />} />
           <Route path='/OralHygiene' element={<OralHygiene />} />
           <Route path='/Dietaryintake' element={<Dietaryintake />} />
+          <Route path='/DentalVisit' element={<DentalVisit />} />
         </Routes>
 
 
