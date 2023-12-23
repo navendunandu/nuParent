@@ -44,65 +44,36 @@ class _ChildProfileState extends State<ChildDashboard> {
     return age;
   }
 
+  List<Map<String, dynamic>> ChildDocs = [];
+
   @override
   void initState() {
     super.initState();
-  }
+    final user = FirebaseAuth.instance.currentUser;
+    final userId = user?.uid;
+    final firestore = FirebaseFirestore.instance;
+    final childCollection = firestore.collection('child');
 
-  FutureBuilder<List<Map<String, dynamic>>> _buildChildDataFuture() {
-    return FutureBuilder(
-      future: _fetchChildData(),
-      builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.done) {
-          if (snapshot.hasData && snapshot.data!.isNotEmpty) {
-            childDataList = snapshot.data as List<Map<String, dynamic>>;
-            updateUI(0);
-          }
-        }
-        return Container(
-          alignment: Alignment.center,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Image.asset(
-                'assets/Logo.png', // Replace with the path to your logo
-                height: 100,
-              ),
-              const SizedBox(height: 16),
-              const CircularProgressIndicator(),
-            ],
-          ),
-        );
-      },
-    );
-  }
+// Query the collection with the where condition
+    final query = childCollection.where('userId', isEqualTo: userId);
 
-  Future<List<Map<String, dynamic>>> _fetchChildData() async {
-    try {
-      final user = FirebaseAuth.instance.currentUser;
-      final userId = user?.uid;
-      final firestore = FirebaseFirestore.instance;
-      final childCollection = firestore.collection('child');
+ query.get().then((QuerySnapshot querySnapshot) {
+    querySnapshot.docs.forEach((DocumentSnapshot document) {
+      // Access the data in each document
+      print('${document.id} => ${document.data()}');
 
-      Query query = childCollection.where('userId', isEqualTo: userId);
-      QuerySnapshot querySnapshot = await query.get();
-
-      return querySnapshot.docs
-          .map((DocumentSnapshot documentSnapshot) =>
-              documentSnapshot.data() as Map<String, dynamic>)
-          .toList();
-    } catch (e) {
-      print('Error retrieving child data: $e');
-      return [];
-    }
-  }
-
-  void updateUI(int index) {
-    Map<String, dynamic> selectedChild = childDataList[index];
-    name = selectedChild['name'];
-    gender = selectedChild['gender'];
-    dob = selectedChild['dob'];
-    age = calculateAge(dob);
+      // Explicitly cast document.data() to Map<String, dynamic>
+      Map<String, dynamic> documentData = document.data() as Map<String, dynamic>;
+      
+      ChildDocs.add(documentData);
+      print('Children Details');
+      ChildDocs.forEach((map) {
+  print('Name: ${map['name']}');
+});
+    });
+  }).catchError((error) {
+    print('Error getting documents: $error');
+  });
   }
 
   @override
@@ -267,36 +238,15 @@ class _ChildProfileState extends State<ChildDashboard> {
                       children: [
                         Row(
                           children: [
-                            Text(
-                              name,
-                              style: const TextStyle(
-                                  fontSize: 32,
-                                  fontWeight: FontWeight.w700,
-                                  color: AppColors.primaryColor),
-                            ), //Selected Child's Name
-                            PopupMenuButton<int>(
-                              icon: const Icon(
-                                Icons.keyboard_arrow_down_outlined,
-                                color: AppColors.primaryColor,
-                              ),
-                              itemBuilder: (BuildContext context) {
-                                return List.generate(
-                                  childDataList.length,
-                                  (index) => PopupMenuItem<int>(
-                                    value: index,
-                                    child: ListTile(
-                                      title: Text(childDataList[index]['name']),
-                                    ),
-                                  ),
-                                );
-                              },
-                              onSelected: (int index) {
-                                setState(() {
-                                  selectedChildIndex = index;
-                                  updateUI(index);
-                                });
-                              },
-                            ) // This is where the dropdown of other child
+                            // Text(
+                            //   name,
+                            //   style: const TextStyle(
+                            //       fontSize: 32,
+                            //       fontWeight: FontWeight.w700,
+                            //       color: AppColors.primaryColor),
+                            // ),
+                            // for (Map<String, dynamic> document in ChildDocs)
+                            //   Text(document['dateOfBirth']),
                           ],
                         ),
                         Text(
