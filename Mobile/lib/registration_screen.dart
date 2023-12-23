@@ -124,7 +124,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
       // ignore: use_build_context_synchronously
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => ChildProfilePop(docId: docId)),
+        MaterialPageRoute(builder: (context) => ChildProfilePop(docId: userId)),
       );
     } catch (e) {
       print("Error storing user data: $e");

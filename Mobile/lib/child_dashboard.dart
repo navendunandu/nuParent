@@ -47,10 +47,37 @@ class _ChildProfileState extends State<ChildDashboard> {
   @override
   void initState() {
     super.initState();
-    _fetchChildData();
   }
 
-  Future<void> _fetchChildData() async {
+  FutureBuilder<List<Map<String, dynamic>>> _buildChildDataFuture() {
+    return FutureBuilder(
+      future: _fetchChildData(),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.done) {
+          if (snapshot.hasData && snapshot.data!.isNotEmpty) {
+            childDataList = snapshot.data as List<Map<String, dynamic>>;
+            updateUI(0);
+          }
+        }
+        return Container(
+          alignment: Alignment.center,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Image.asset(
+                'assets/Logo.png', // Replace with the path to your logo
+                height: 100,
+              ),
+              const SizedBox(height: 16),
+              const CircularProgressIndicator(),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  Future<List<Map<String, dynamic>>> _fetchChildData() async {
     try {
       final user = FirebaseAuth.instance.currentUser;
       final userId = user?.uid;
@@ -58,23 +85,15 @@ class _ChildProfileState extends State<ChildDashboard> {
       final childCollection = firestore.collection('child');
 
       Query query = childCollection.where('userId', isEqualTo: userId);
-      query.get().then((QuerySnapshot querySnapshot) {
-        childDataList.clear(); // Clear existing data
-        for (DocumentSnapshot documentSnapshot in querySnapshot.docs) {
-          Map<String, dynamic> childData =
-              documentSnapshot.data() as Map<String, dynamic>;
-          childDataList.add(childData);
-        }
+      QuerySnapshot querySnapshot = await query.get();
 
-        // Update UI with the first child's data
-        if (childDataList.isNotEmpty) {
-          setState(() {
-            updateUI(0);
-          });
-        }
-      });
+      return querySnapshot.docs
+          .map((DocumentSnapshot documentSnapshot) =>
+              documentSnapshot.data() as Map<String, dynamic>)
+          .toList();
     } catch (e) {
       print('Error retrieving child data: $e');
+      return [];
     }
   }
 
