@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:nu_parent/Components/appbar.dart';
 import 'package:nu_parent/main.dart';
 import 'package:nu_parent/oral_hygiene_babies.dart';
 import 'package:nu_parent/oral_hygiene_children.dart';
@@ -15,36 +16,27 @@ class _OralHygieneState extends State<OralHygiene> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        leading: IconButton(
-          onPressed: () {
-            Navigator.pop(context);
-          },
-          icon: const Icon(Icons.arrow_back_ios_new),
-        ),
-        title: const Center(
-            child: Text(
-          'Oral Hygiene',
-          textAlign: TextAlign.center,
-          style:
-              TextStyle(color: AppColors.darkblue, fontWeight: FontWeight.w500),
-        )),
-        actions: [
-          IconButton(
-              onPressed: () {}, icon: const Icon(Icons.more_vert_rounded)),
-        ],
-      ),
       body: Container(
         height: double.infinity,
         decoration: const BoxDecoration(
-          color: AppColors.white,
+            color: AppColors.white,
             image: DecorationImage(
-                image: AssetImage('assets/Vector-1.png'),
-                 fit: BoxFit.scaleDown, alignment: Alignment.bottomCenter,
-               )),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
+              image: AssetImage('assets/Vector-1.png'),
+              fit: BoxFit.scaleDown,
+              alignment: Alignment.bottomCenter,
+            )),
+        child: ListView(
           children: [
+            const CustomAppBar(),
+            const Center(
+              child: Text(
+                "Oral Hygiene",
+                style: TextStyle(
+                    color: AppColors.primaryColor,
+                    fontWeight: FontWeight.w500,
+                    fontSize: 20),
+              ),
+            ),
             Center(
                 child: Image.asset(
               'assets/HappyTeeths.png',
@@ -58,7 +50,10 @@ class _OralHygieneState extends State<OralHygiene> {
               children: [
                 GestureDetector(
                   onTap: () {
-                    Navigator.push(context, MaterialPageRoute(builder: (context)=>const OralHygieneBabies()));
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const OralHygieneBabies()));
                   },
                   child: Container(
                     height: 150,
@@ -100,8 +95,12 @@ class _OralHygieneState extends State<OralHygiene> {
                   ),
                 ),
                 GestureDetector(
-                  onTap: (){
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => const OralHygieneChildren(),));
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const OralHygieneChildren(),
+                        ));
                   },
                   child: Container(
                     height: 150,
@@ -149,7 +148,11 @@ class _OralHygieneState extends State<OralHygiene> {
               children: [
                 GestureDetector(
                   onTap: () {
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => const PregnantMothersParents(),));
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const PregnantMothersParents(),
+                        ));
                   },
                   child: Container(
                     height: 150,
@@ -193,8 +196,7 @@ class _OralHygieneState extends State<OralHygiene> {
                   width: 150,
                   decoration: BoxDecoration(
                       color: AppColors.primaryColor,
-                      borderRadius:
-                          const BorderRadius.all(Radius.circular(10)),
+                      borderRadius: const BorderRadius.all(Radius.circular(10)),
                       boxShadow: [
                         BoxShadow(
                           color: Colors.black.withOpacity(0.2),
