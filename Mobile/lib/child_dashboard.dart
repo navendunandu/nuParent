@@ -120,10 +120,10 @@ class _ChildProfileState extends State<ChildDashboard> {
     }
   }
 
- void _childChange(String selectedChildId) {
-  print('Selected child ID: $selectedChildId');
-  // Add your logic here
-}
+  void _childChange(String selectedChildId) {
+    print('Selected child ID: $selectedChildId');
+    // Add your logic here
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -295,17 +295,20 @@ class _ChildProfileState extends State<ChildDashboard> {
                                   color: AppColors.primaryColor),
                             ),
                             PopupMenuButton<String>(
-  icon: const Icon(Icons.keyboard_arrow_down_rounded),
-  onSelected: _childChange, // Remove the parentheses
-  itemBuilder: (BuildContext context) {
-    return ChildDocs.map((Map<String, dynamic> child) {
-      return PopupMenuItem<String>(
-        value: child['id'],
-        child: Text(child['name']),
-      );
-    }).toList();
-  },
-),
+                              icon:
+                                  const Icon(Icons.keyboard_arrow_down_rounded),
+                              onSelected:
+                                  _childChange, // Remove the parentheses
+                              itemBuilder: (BuildContext context) {
+                                return ChildDocs.map(
+                                    (Map<String, dynamic> child) {
+                                  return PopupMenuItem<String>(
+                                    value: child['id'],
+                                    child: Text(child['name']),
+                                  );
+                                }).toList();
+                              },
+                            ),
                           ],
                         ),
                         Text(

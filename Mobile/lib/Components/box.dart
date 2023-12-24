@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:nu_parent/main.dart';
+import 'package:flutter_tts/flutter_tts.dart';
 
-class BoxList extends StatelessWidget {
+class BoxList extends StatefulWidget {
   final List<Map<String, dynamic>> dentalVList;
 
   const BoxList({
@@ -10,23 +11,37 @@ class BoxList extends StatelessWidget {
   }) : super(key: key);
 
   @override
+  State<BoxList> createState() => _BoxListState();
+}
+
+class _BoxListState extends State<BoxList> {
+  FlutterTts flutterTts = FlutterTts();
+
+  @override
   Widget build(BuildContext context) {
     return Column(
-      children: dentalVList.map((map) {
+      children: widget.dentalVList.map((map) {
         final text = map['text'] as String;
-        return Box(text: text);
+        return Box(flutterTts: flutterTts, text: text);
       }).toList(),
     );
   }
 }
 
 class Box extends StatelessWidget {
+  final FlutterTts flutterTts;
   final String text;
 
   const Box({
     Key? key,
+    required this.flutterTts,
     required this.text,
   }) : super(key: key);
+
+  Future speak(String stext) async {
+    await flutterTts.setLanguage("en-US");
+    await flutterTts.speak(stext);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -51,11 +66,13 @@ class Box extends StatelessWidget {
               Expanded(
                 child: Text(text),
               ),
-              const Padding(
+              Padding(
                 padding: EdgeInsets.all(8.0),
-                child: Icon(
-                  Icons.volume_up_rounded,
-                  size: 34,
+                child: IconButton(
+                  onPressed: () {
+                    speak(text);
+                  },
+                  icon: Icon(Icons.volume_up_rounded),
                 ),
               )
             ],

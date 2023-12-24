@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_tts/flutter_tts.dart';
 import 'package:nu_parent/Components/box.dart';
 import 'package:nu_parent/main.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -13,6 +14,7 @@ class DentalVisit extends StatefulWidget {
 
 class _DentalVisitState extends State<DentalVisit> {
   late Future<List<Map<String, dynamic>>> _dentalVListFuture;
+   FlutterTts flutterTts = FlutterTts();
 
   
 
@@ -124,13 +126,13 @@ class _DentalVisitState extends State<DentalVisit> {
                           final text =
                               dataList[index]['dentalvisit'] as String? ??
                                   'Default Text';
-                          return Box(text: text);
+                          return Box(text: text,flutterTts: flutterTts,);
                         } else if (index == 1) {
                           // Display the second item from dataList
                           final text =
                               dataList[index]['dentalvisit'] as String? ??
                                   'Default Text';
-                          return Box(text: text,);
+                          return Box(text: text,flutterTts: flutterTts,);
                         } else if (index == 2) {
                           // Display specific text after the first 2 items
                           return const Column(
@@ -172,7 +174,7 @@ class _DentalVisitState extends State<DentalVisit> {
                                   'Default Text';
                           return Column(
                             children: [
-                              Box(text: text),
+                              Box(text: text,flutterTts: flutterTts,),
                             ],
                           );
                         }
