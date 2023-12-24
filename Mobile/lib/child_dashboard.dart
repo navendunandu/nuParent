@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'package:flutter/material.dart';
 import 'package:nu_parent/brushing_instruction.dart';
 import 'package:nu_parent/dental_visit.dart';
@@ -17,31 +19,52 @@ class ChildDashboard extends StatefulWidget {
 }
 
 class _ChildProfileState extends State<ChildDashboard> {
-  String name = 'Loading...';
-  String gender = 'Loading...';
-  String dob = 'Loading...';
-  int age = 0;
+  String? id;
+  String name = '';
+  String gender = '';
+  String dob = '';
+  int? childAge;
+  int? childMonth;
   List<Map<String, dynamic>> childDataList = [];
   int selectedChildIndex = 0;
 
-  int calculateAge(String dob) {
-    // Parse the date string into a DateTime object
-    DateTime dateOfBirth = DateFormat('dd-MM-yyyy').parse(dob);
+  void calculateAge(String dateOfBirth) {
+    try {
+      // Parse the date of birth string into a DateTime object
+      DateTime birthDate = DateFormat("dd-MM-yyyy").parse(dateOfBirth);
 
-    // Get the current date
-    DateTime currentDate = DateTime.now();
+      // Get the current date
+      DateTime currentDate = DateTime.now();
 
-    // Calculate the age
-    int age = currentDate.year - dateOfBirth.year;
+      print('Current Date: $currentDate');
+      print('DOB: $birthDate');
+      print('Current Month: ${currentDate.month}');
+      print('Birth Month: ${birthDate.month}');
 
-    // Adjust age based on the month and day
-    if (currentDate.month < dateOfBirth.month ||
-        (currentDate.month == dateOfBirth.month &&
-            currentDate.day < dateOfBirth.day)) {
-      age--;
+      int birthMonth = currentDate.month - birthDate.month;
+
+      // Calculate the difference between the current date and the birth date
+      int age = currentDate.year - birthDate.year;
+
+      print('Calculated Birth Month: $birthMonth');
+
+      // Adjust the age if the birthday hasn't happened yet this year
+
+      if (currentDate.month < birthDate.month ||
+          (currentDate.month == birthDate.month &&
+              currentDate.day < birthDate.day)) {
+        age--;
+      }
+
+      print('Calculated Age: $age');
+      setState(() {
+        childAge = age;
+        childMonth = birthMonth;
+      });
+    } catch (e) {
+      // Handle any errors that might occur during parsing
+      print("Error parsing date of birth: $e");
     }
-
-    return age;
   }
 
   List<Map<String, dynamic>> ChildDocs = [];
@@ -57,24 +80,50 @@ class _ChildProfileState extends State<ChildDashboard> {
 // Query the collection with the where condition
     final query = childCollection.where('userId', isEqualTo: userId);
 
- query.get().then((QuerySnapshot querySnapshot) {
-    querySnapshot.docs.forEach((DocumentSnapshot document) {
-      // Access the data in each document
-      print('${document.id} => ${document.data()}');
+    query.get().then((QuerySnapshot querySnapshot) {
+      querySnapshot.docs.forEach((DocumentSnapshot document) {
+        // Access the data in each document
+        print('${document.id} => ${document.data()}');
 
-      // Explicitly cast document.data() to Map<String, dynamic>
-      Map<String, dynamic> documentData = document.data() as Map<String, dynamic>;
-      
-      ChildDocs.add(documentData);
-      print('Children Details');
-      ChildDocs.forEach((map) {
-  print('Name: ${map['name']}');
-});
+        // Explicitly cast document.data() to Map<String, dynamic>
+        Map<String, dynamic> documentData =
+            document.data() as Map<String, dynamic>;
+
+        if (name.isEmpty) {
+          // Store the first item's 'name' field in the variable
+          id = documentData['id'];
+          name = documentData['name'];
+          gender = documentData['gender'];
+          dob = documentData['dateOfBirth'];
+          calculateAge(dob);
+        }
+        ChildDocs.add(documentData);
+        print('Name: $name');
+        print('Gender: $gender');
+        print('Age: $childAge');
+      });
+    }).catchError((error) {
+      print('Error getting documents: $error');
     });
-  }).catchError((error) {
-    print('Error getting documents: $error');
-  });
   }
+// ChildDocs.add(documentData);
+  // print('Children Details');
+  // ChildDocs.forEach((map) {
+  //   print('Name: ${map['name']}');
+  // });
+
+  String displayAge() {
+    if (childAge == 0) {
+      return "$childMonth months";
+    } else {
+      return "$childAge years";
+    }
+  }
+
+ void _childChange(String selectedChildId) {
+  print('Selected child ID: $selectedChildId');
+  // Add your logic here
+}
 
   @override
   Widget build(BuildContext context) {
@@ -238,24 +287,34 @@ class _ChildProfileState extends State<ChildDashboard> {
                       children: [
                         Row(
                           children: [
-                            // Text(
-                            //   name,
-                            //   style: const TextStyle(
-                            //       fontSize: 32,
-                            //       fontWeight: FontWeight.w700,
-                            //       color: AppColors.primaryColor),
-                            // ),
-                            // for (Map<String, dynamic> document in ChildDocs)
-                            //   Text(document['dateOfBirth']),
+                            Text(
+                              name,
+                              style: const TextStyle(
+                                  fontSize: 32,
+                                  fontWeight: FontWeight.w700,
+                                  color: AppColors.primaryColor),
+                            ),
+                            PopupMenuButton<String>(
+  icon: const Icon(Icons.keyboard_arrow_down_rounded),
+  onSelected: _childChange, // Remove the parentheses
+  itemBuilder: (BuildContext context) {
+    return ChildDocs.map((Map<String, dynamic> child) {
+      return PopupMenuItem<String>(
+        value: child['id'],
+        child: Text(child['name']),
+      );
+    }).toList();
+  },
+),
                           ],
                         ),
                         Text(
-                          "$gender, $age years",
+                          "$gender, ${displayAge()}",
                           style: const TextStyle(
                               fontSize: 20,
                               color: AppColors.primaryColor,
                               fontWeight: FontWeight.w500),
-                        ) //Selected Child's Age and Gender
+                        )
                       ],
                     )
                   ],
