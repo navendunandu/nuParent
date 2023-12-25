@@ -87,7 +87,7 @@ class _ChildProfilePopState extends State<ChildProfilePop> {
                             context,
                             MaterialPageRoute(
                                 builder: (context) =>  RegistrationChild(
-                                    docId: _receivedDocId)));
+                                    docId: _receivedDocId, action: 'REGISTER',)));
                       },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: AppColors.primaryColor,

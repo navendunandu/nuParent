@@ -174,6 +174,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
             children: [
               const CustomAppBar(),
               Form(
+                key: _formKey,
                 child: Padding(
                   padding: const EdgeInsets.only(left: 20.0, right: 20.0),
                   child: SingleChildScrollView(

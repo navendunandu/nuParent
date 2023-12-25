@@ -6,13 +6,15 @@ import 'package:nu_parent/Components/topbar.dart';
 import 'package:nu_parent/main.dart';
 import 'package:nu_parent/success.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+// import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:nu_parent/view_profile.dart';
 
 class RegistrationChild extends StatefulWidget {
   final String docId;
-  const RegistrationChild({Key? key, required this.docId}) : super(key: key);
+  final String action;
+  const RegistrationChild({Key? key, required this.docId, required this.action}) : super(key: key);
 
   @override
   State<RegistrationChild> createState() => _RegistrationChildState();
@@ -63,7 +65,6 @@ class _RegistrationChildState extends State<RegistrationChild> {
   }
 
   Future<void> _registerChild() async {
-    print('Its Working');
     try {
       DocumentReference childRef =
           await FirebaseFirestore.instance.collection('child').add({
@@ -87,8 +88,16 @@ class _RegistrationChildState extends State<RegistrationChild> {
         textColor: Colors.white,
       );
 
-      Navigator.pushReplacement(context,
+      if(widget.action=='ADD')
+      {
+        Navigator.pushReplacement(context,
+          MaterialPageRoute(builder: (context) => const ViewProfile()));
+      }
+      else{
+        Navigator.pushReplacement(context,
           MaterialPageRoute(builder: (context) => const SuccessScreen()));
+      }
+      
     } catch (e) {
       print("Error registering child: $e");
       // Handle error, show message or take appropriate action

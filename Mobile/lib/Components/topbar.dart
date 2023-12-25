@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:nu_parent/main.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 
 class CustomTopBar extends StatefulWidget implements PreferredSizeWidget {
   final bool showBackIcon;
@@ -36,20 +34,21 @@ class _CustomTopBarState extends State<CustomTopBar> {
     if(_receivedDocId!=""){
       final userDoc =
           FirebaseFirestore.instance.collection('users').doc(_receivedDocId);
-       userDoc.get().then((documentSnapshot){
-        if (documentSnapshot.exists){
-          final userData = documentSnapshot.data();
-          setState(() {
-            name = userData?['name'] ?? 'Name not Found';
-            if (userData?['imageUrl'] != null) {
-              image = userData?['imageUrl'];
-            }
-          });
-        }
-       }).catchError((error) {
-        // Handle any potential errors
-        print('Error retrieving user data: $error');
-      });
+       userDoc.get().then((documentSnapshot) {
+  if (documentSnapshot.exists) {
+    final userData = documentSnapshot.data();
+    setState(() {
+      name = userData?['name'] ?? 'Name not Found';
+      if (userData?['imageUrl'] != null) {
+        image = userData?['imageUrl'];
+      }
+    });
+  }
+}).catchError((error) {
+  // Handle any potential errors
+  print('Error retrieving user data: $error');
+});
+
     }
   }
 
