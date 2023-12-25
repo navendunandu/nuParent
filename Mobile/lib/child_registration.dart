@@ -27,7 +27,7 @@ class _RegistrationChildState extends State<RegistrationChild> {
   void initState() {
     super.initState();
     _receivedDocId = widget.docId;
-    print(_receivedDocId);
+    // print(_receivedDocId);
   }
 
   final _nameController = TextEditingController();

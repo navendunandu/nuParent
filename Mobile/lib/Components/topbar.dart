@@ -34,21 +34,20 @@ class _CustomTopBarState extends State<CustomTopBar> {
     if(_receivedDocId!=""){
       final userDoc =
           FirebaseFirestore.instance.collection('users').doc(_receivedDocId);
-       userDoc.get().then((documentSnapshot) {
-  if (documentSnapshot.exists) {
-    final userData = documentSnapshot.data();
-    setState(() {
-      name = userData?['name'] ?? 'Name not Found';
-      if (userData?['imageUrl'] != null) {
-        image = userData?['imageUrl'];
-      }
-    });
-  }
-}).catchError((error) {
-  // Handle any potential errors
-  print('Error retrieving user data: $error');
-});
-
+       userDoc.get().then((documentSnapshot){
+        if (documentSnapshot.exists){
+          final userData = documentSnapshot.data();
+          setState(() {
+            name = userData?['name'] ?? 'Name not Found';
+            if (userData?['imageUrl'] != null) {
+              image = userData?['imageUrl'];
+            }
+          });
+        }
+       }).catchError((error) {
+        // Handle any potential errors
+        print('Error retrieving user data: $error');
+      });
     }
   }
 

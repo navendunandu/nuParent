@@ -104,8 +104,8 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
 
   Future<void> _storeUserData(String userId) async {
     try {
-      DocumentReference userRef =
-          await FirebaseFirestore.instance.collection('users').add({
+      final FirebaseFirestore firestore = FirebaseFirestore.instance;
+          await firestore.collection('users').doc(userId).set({
         'name': _nameController.text,
         'email': _emailController.text,
         'phone': _phoneController.text,
@@ -116,9 +116,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
         // Add more fields as needed
       });
 
-      String docId = userRef.id; // Get the document ID
-
-      await _uploadImage(docId);
+      await _uploadImage(userId);
 
       // Navigate to a new page with the document ID
       // ignore: use_build_context_synchronously
@@ -172,7 +170,10 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
           )),
           child: Column(
             children: [
-              const CustomAppBar(),
+              const Padding(
+                padding: EdgeInsets.only(top: 30),
+                child: CustomAppBar(),
+              ),
               Form(
                 key: _formKey,
                 child: Padding(
