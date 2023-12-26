@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:nu_parent/Components/appbar.dart';
 import 'package:nu_parent/child_registration.dart';
+import 'package:nu_parent/edit_profile.dart';
 import 'package:nu_parent/main.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -14,7 +15,7 @@ class ViewProfile extends StatefulWidget {
 }
 
 class _ViewProfileState extends State<ViewProfile> {
-  String? id;
+  String? id = '';
   String name = '';
   String gender = '';
   String dob = '';
@@ -81,15 +82,19 @@ class _ViewProfileState extends State<ViewProfile> {
       // You might want to throw an error or handle it as needed
       rethrow;
     }
-
+    ChildDocs.clear();
     querySnapshot.docs.forEach((DocumentSnapshot document) {
+      
       // Access the data in each document
       // print('${document.id} => ${document.data()}');
+      if(id==''){
+        id = document.id;
+        print('ID: ${document.id}');
+      }
       Map<String, dynamic> documentData =
           document.data() as Map<String, dynamic>;
 
       if (name.isEmpty) {
-        id = documentData['id'];
         name = documentData['name'];
         gender = documentData['gender'];
         dob = documentData['dateOfBirth'];
@@ -97,7 +102,7 @@ class _ViewProfileState extends State<ViewProfile> {
         calculateAge(dob);
       }
       ChildDocs.add(documentData);
-      // print('Name: $name');
+      
     });
   }
 
@@ -182,7 +187,9 @@ class _ViewProfileState extends State<ViewProfile> {
                         side: const BorderSide(
                             color: AppColors.primaryColor), // Add black border
                       ),
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.push(context, MaterialPageRoute(builder: (context)=> EditProfile(childId: id)));
+                      },
                       child: const Text('Edit'),
                     ),
                   ],

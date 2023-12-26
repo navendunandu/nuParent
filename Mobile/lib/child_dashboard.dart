@@ -79,7 +79,7 @@ class _ChildProfileState extends State<ChildDashboard> {
       // You might want to throw an error or handle it as needed
       rethrow;
     }
-
+    ChildDocs.clear();
     querySnapshot.docs.forEach((DocumentSnapshot document) {
       // Access the data in each document
       // print('${document.id} => ${document.data()}');
