@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:nu_parent/Components/appbar.dart';
+import 'package:nu_parent/dietary_intake_birth.dart';
+import 'package:nu_parent/dietary_intake_one.dart';
+import 'package:nu_parent/dietary_intake_two.dart';
 import 'package:nu_parent/expecting_mothers.dart';
 import 'package:nu_parent/main.dart';
 
@@ -20,7 +23,7 @@ class _DietaryIntakeState extends State<DietaryIntake> {
           color: AppColors.white,
             image: DecorationImage(
           image: AssetImage('assets/Vector-1.png'),
-          fit: BoxFit.scaleDown,
+          fit: BoxFit.cover,
           alignment: Alignment.bottomCenter,
         )),
         child: ListView(
@@ -80,81 +83,96 @@ class _DietaryIntakeState extends State<DietaryIntake> {
                 const SizedBox(
                   height: 20,
                 ),
-                Container(
-                  height: 80,
-                  width: double.infinity,
-                  decoration: BoxDecoration(
-                      color: AppColors.primaryColor,
-                      borderRadius: const BorderRadius.all(Radius.circular(25)),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black.withOpacity(0.2),
-                          spreadRadius: 1,
-                          blurRadius: 5,
-                          offset: const Offset(0, 2),
-                        )
-                      ]),
-                  child: const Center(
-                    child: Text(
-                      'From Birth to the First Year of Age',
-                      style: TextStyle(
-                          color: AppColors.white,
-                          fontWeight: FontWeight.w500,
-                          fontSize: 18),
+                GestureDetector(
+                  onTap: (){
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => const DietaryIntakeBirth(),));
+                  },
+                  child: Container(
+                    height: 80,
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                        color: AppColors.primaryColor,
+                        borderRadius: const BorderRadius.all(Radius.circular(25)),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black.withOpacity(0.2),
+                            spreadRadius: 1,
+                            blurRadius: 5,
+                            offset: const Offset(0, 2),
+                          )
+                        ]),
+                    child: const Center(
+                      child: Text(
+                        'From Birth to the First Year of Age',
+                        style: TextStyle(
+                            color: AppColors.white,
+                            fontWeight: FontWeight.w500,
+                            fontSize: 18),
+                      ),
                     ),
                   ),
                 ),
                 const SizedBox(
                   height: 20,
                 ),
-                Container(
-                  height: 80,
-                  width: double.infinity,
-                  decoration: BoxDecoration(
-                      color: AppColors.primaryColor,
-                      borderRadius: const BorderRadius.all(Radius.circular(25)),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black.withOpacity(0.2),
-                          spreadRadius: 1,
-                          blurRadius: 5,
-                          offset: const Offset(0, 2),
-                        )
-                      ]),
-                  child: const Center(
-                    child: Text(
-                      'First and Second Year of Age',
-                      style: TextStyle(
-                          color: AppColors.white,
-                          fontWeight: FontWeight.w500,
-                          fontSize: 18),
+                GestureDetector(
+                  onTap: (){
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => const DietaryIntakeOne(),));
+                  },
+                  child: Container(
+                    height: 80,
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                        color: AppColors.primaryColor,
+                        borderRadius: const BorderRadius.all(Radius.circular(25)),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black.withOpacity(0.2),
+                            spreadRadius: 1,
+                            blurRadius: 5,
+                            offset: const Offset(0, 2),
+                          )
+                        ]),
+                    child: const Center(
+                      child: Text(
+                        'First and Second Year of Age',
+                        style: TextStyle(
+                            color: AppColors.white,
+                            fontWeight: FontWeight.w500,
+                            fontSize: 18),
+                      ),
                     ),
                   ),
                 ),
                 const SizedBox(
                   height: 20,
                 ),
-                Container(
-                  height: 80,
-                  width: double.infinity,
-                  decoration: BoxDecoration(
-                      color: AppColors.primaryColor,
-                      borderRadius: const BorderRadius.all(Radius.circular(25)),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black.withOpacity(0.2),
-                          spreadRadius: 1,
-                          blurRadius: 5,
-                          offset: const Offset(0, 2),
-                        )
-                      ]),
-                  child: const Center(
-                    child: Text(
-                      'From Two to Six Years of Age',
-                      style: TextStyle(
-                          color: AppColors.white,
-                          fontWeight: FontWeight.w500,
-                          fontSize: 18),
+                GestureDetector(
+                  onTap: (){
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => const DietaryIntakeTwo(),));
+                  },
+                  child: Container(
+                    height: 80,
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                        color: AppColors.primaryColor,
+                        borderRadius: const BorderRadius.all(Radius.circular(25)),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black.withOpacity(0.2),
+                            spreadRadius: 1,
+                            blurRadius: 5,
+                            offset: const Offset(0, 2),
+                          )
+                        ]),
+                    child: const Center(
+                      child: Text(
+                        'From Two to Six Years of Age',
+                        style: TextStyle(
+                            color: AppColors.white,
+                            fontWeight: FontWeight.w500,
+                            fontSize: 18),
+                      ),
                     ),
                   ),
                 ),

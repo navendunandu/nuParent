@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_tts/flutter_tts.dart';
+import 'package:nu_parent/Components/appbar.dart';
 import 'package:nu_parent/Components/box.dart';
 import 'package:nu_parent/main.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -11,12 +12,9 @@ class DentalVisit extends StatefulWidget {
   State<DentalVisit> createState() => _DentalVisitState();
 }
 
-
 class _DentalVisitState extends State<DentalVisit> {
   late Future<List<Map<String, dynamic>>> _dentalVListFuture;
-   FlutterTts flutterTts = FlutterTts();
-
-  
+  FlutterTts flutterTts = FlutterTts();
 
   @override
   void initState() {
@@ -48,31 +46,6 @@ class _DentalVisitState extends State<DentalVisit> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        leading: IconButton(
-          onPressed: () {
-            Navigator.pop(context);
-          },
-          icon: const Icon(Icons.arrow_back_ios_new),
-        ),
-        title: const Center(
-          child: Text(
-            'Dental visits',
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              color: AppColors.primaryColor,
-              fontWeight: FontWeight.w500,
-              fontSize: 18,
-            ),
-          ),
-        ),
-        actions: [
-          IconButton(
-            onPressed: () {},
-            icon: const Icon(Icons.more_vert_rounded),
-          ),
-        ],
-      ),
       body: Container(
         decoration: const BoxDecoration(
           color: AppColors.white,
@@ -84,6 +57,18 @@ class _DentalVisitState extends State<DentalVisit> {
         ),
         child: ListView(
           children: [
+            const CustomAppBar(),
+            const Center(
+              child: Text(
+                'Dental visits',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  color: AppColors.primaryColor,
+                  fontWeight: FontWeight.w500,
+                  fontSize: 18,
+                ),
+              ),
+            ),
             Image.asset('assets/DentistCheck.png'),
             Padding(
               padding: const EdgeInsets.only(left: 10.0, right: 10.0),
@@ -126,13 +111,19 @@ class _DentalVisitState extends State<DentalVisit> {
                           final text =
                               dataList[index]['dentalvisit'] as String? ??
                                   'Default Text';
-                          return Box(text: text,flutterTts: flutterTts,);
+                          return Box(
+                            text: text,
+                            flutterTts: flutterTts,
+                          );
                         } else if (index == 1) {
                           // Display the second item from dataList
                           final text =
                               dataList[index]['dentalvisit'] as String? ??
                                   'Default Text';
-                          return Box(text: text,flutterTts: flutterTts,);
+                          return Box(
+                            text: text,
+                            flutterTts: flutterTts,
+                          );
                         } else if (index == 2) {
                           // Display specific text after the first 2 items
                           return const Column(
@@ -174,7 +165,10 @@ class _DentalVisitState extends State<DentalVisit> {
                                   'Default Text';
                           return Column(
                             children: [
-                              Box(text: text,flutterTts: flutterTts,),
+                              Box(
+                                text: text,
+                                flutterTts: flutterTts,
+                              ),
                             ],
                           );
                         }

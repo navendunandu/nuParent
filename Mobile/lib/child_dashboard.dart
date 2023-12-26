@@ -1,5 +1,3 @@
-
-
 import 'package:flutter/material.dart';
 import 'package:nu_parent/brushing_instruction.dart';
 import 'package:nu_parent/dental_visit.dart';
