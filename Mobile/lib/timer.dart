@@ -32,35 +32,40 @@ class _CountdownPageState extends State<CountdownPage>
     }
   }
 
-  void showStopSoundDialog(BuildContext context) {
+  bool isDialogOpen = false;
+
+void showStopSoundDialog(BuildContext context) {
+  if (!isDialogOpen) {
+    isDialogOpen = true;
     showDialog(
       context: context,
-      barrierDismissible: true, // Add this line
+      barrierDismissible: true,
       builder: (BuildContext context) {
         return StatefulBuilder(
           builder: (BuildContext context, StateSetter setState) {
-            return GestureDetector(
-              onTap: () {
-                Navigator.of(context).pop(); // Close the dialog on outside tap
-              },
-              child: AlertDialog(
-                title: Text('Times Up!'),
-                content: Text('Do you want to stop the sound?'),
-                actions: <Widget>[
-                  TextButton(
-                    onPressed: () => stopBeepSound(
-                        context) // Pass the context to stopBeepSound
-                    ,
-                    child: Text('Cancel Sound'),
-                  ),
-                ],
-              ),
+            return AlertDialog(
+              title: Text('Times Up!'),
+              content: Text('Do you want to stop the sound?'),
+              actions: <Widget>[
+                TextButton(
+                  onPressed: () {
+                    stopBeepSound(context);
+                    Navigator.of(context).pop(); // Close the dialog
+                  },
+                  child: Text('Cancel Sound'),
+                ),
+              ],
             );
           },
         );
       },
-    );
+    ).then((value) {
+      // Reset the flag when the dialog is closed
+      isDialogOpen = false;
+    });
   }
+}
+
 
   void startBeepSound() {
     FlutterRingtonePlayer.playAlarm();
@@ -77,6 +82,9 @@ class _CountdownPageState extends State<CountdownPage>
 
   void stopBeepSound(BuildContext context) {
     FlutterRingtonePlayer.stop();
+    setState(() {
+      controller.duration = const Duration(seconds: 10);
+    });
     // Navigator.of(context, rootNavigator: true)
     //     .pop(); // Close the dialog using the root navigator
     Navigator.pop(context);
