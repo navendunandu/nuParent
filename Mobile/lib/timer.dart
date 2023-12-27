@@ -48,10 +48,9 @@ class _CountdownPageState extends State<CountdownPage>
                 content: Text('Do you want to stop the sound?'),
                 actions: <Widget>[
                   TextButton(
-                    onPressed: () {
-                      stopBeepSound(
-                          context); // Pass the context to stopBeepSound
-                    },
+                    onPressed: () => stopBeepSound(
+                        context) // Pass the context to stopBeepSound
+                    ,
                     child: Text('Cancel Sound'),
                   ),
                 ],
@@ -78,8 +77,9 @@ class _CountdownPageState extends State<CountdownPage>
 
   void stopBeepSound(BuildContext context) {
     FlutterRingtonePlayer.stop();
-    Navigator.of(context, rootNavigator: true)
-        .pop(); // Close the dialog using the root navigator
+    // Navigator.of(context, rootNavigator: true)
+    //     .pop(); // Close the dialog using the root navigator
+    Navigator.pop(context);
   }
 
   @override
