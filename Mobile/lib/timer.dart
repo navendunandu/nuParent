@@ -34,41 +34,40 @@ class _CountdownPageState extends State<CountdownPage>
 
   bool isDialogOpen = false;
 
-void showStopSoundDialog(BuildContext context) {
-  if (!isDialogOpen) {
-    isDialogOpen = true;
-    showDialog(
-      context: context,
-      barrierDismissible: true,
-      builder: (BuildContext context) {
-        return StatefulBuilder(
-          builder: (BuildContext context, StateSetter setState) {
-            return AlertDialog(
-              title: Text('Times Up!'),
-              content: Text('Do you want to stop the sound?'),
-              actions: <Widget>[
-                TextButton(
-                  onPressed: () {
-                    stopBeepSound(context);
-                    Navigator.of(context).pop(); // Close the dialog
-                  },
-                  child: Text('Cancel Sound'),
-                ),
-              ],
-            );
-          },
-        );
-      },
-    ).then((value) {
-      // Reset the flag when the dialog is closed
-      isDialogOpen = false;
-    });
+  void showStopSoundDialog(BuildContext context) {
+    if (!isDialogOpen) {
+      isDialogOpen = true;
+      showDialog(
+        context: context,
+        barrierDismissible: true,
+        builder: (BuildContext context) {
+          return StatefulBuilder(
+            builder: (BuildContext context, StateSetter setState) {
+              return AlertDialog(
+                title: const Text('Times Up!'),
+                content: const Text('Do you want to stop the sound?'),
+                actions: <Widget>[
+                  TextButton(
+                    onPressed: () {
+                      stopBeepSound(context);
+                      Navigator.of(context).pop(); // Close the dialog
+                    },
+                    child: const Text('Cancel Sound'),
+                  ),
+                ],
+              );
+            },
+          );
+        },
+      ).then((value) {
+        // Reset the flag when the dialog is closed
+        isDialogOpen = false;
+      });
+    }
   }
-}
 
-
-  void startBeepSound() {
-    FlutterRingtonePlayer.playAlarm();
+  Future<void> startBeepSound() async {
+    await FlutterRingtonePlayer.playAlarm();
   }
 
   void playBombingSound() {
