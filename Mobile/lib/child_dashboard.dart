@@ -2,8 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:nu_parent/brushing_instruction.dart';
 import 'package:nu_parent/dental_visit.dart';
 import 'package:nu_parent/dietary_intake.dart';
+import 'package:nu_parent/dietary_intake_birth.dart';
+import 'package:nu_parent/dietary_intake_one.dart';
+import 'package:nu_parent/dietary_intake_two.dart';
 import 'package:nu_parent/main.dart';
 import 'package:nu_parent/oral_hygiene.dart';
+import 'package:nu_parent/oral_hygiene_babies.dart';
+import 'package:nu_parent/oral_hygiene_children.dart';
 import 'package:nu_parent/settings.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -32,12 +37,13 @@ class _ChildProfileState extends State<ChildDashboard> {
       // Get the current date
       DateTime currentDate = DateTime.now();
 
-      // print('Current Date: $currentDate');
-      // print('DOB: $birthDate');
-      // print('Current Month: ${currentDate.month}');
-      // print('Birth Month: ${birthDate.month}');
+      print('Current Date: $currentDate');
+      print('DOB: $birthDate');
+      print('Current Month: ${currentDate.month}');
+      print('Birth Month: ${birthDate.month}');
 
       int birthMonth = currentDate.month - birthDate.month;
+      birthMonth = birthMonth.abs();
 
       int age = currentDate.year - birthDate.year;
 
@@ -348,10 +354,22 @@ class _ChildProfileState extends State<ChildDashboard> {
           children: [
             GestureDetector(
               onTap: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => const OralHygiene()));
+                if (childAge! <= 3) {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const OralHygieneBabies()));
+                } else if (childAge! <= 6) {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const OralHygieneChildren()));
+                } else {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const OralHygiene()));
+                }
               },
               child: Container(
                 height: 150,
@@ -382,10 +400,27 @@ class _ChildProfileState extends State<ChildDashboard> {
             ),
             GestureDetector(
               onTap: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => const DietaryIntake()));
+                if (childAge! <= 1) {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const DietaryIntakeBirth()));
+                } else if (childAge! <= 2) {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const DietaryIntakeOne()));
+                } else if (childAge! <= 6) {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const DietaryIntakeTwo()));
+                } else {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const DietaryIntake()));
+                }
               },
               child: Container(
                 height: 150,

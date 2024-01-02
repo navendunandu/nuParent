@@ -25,12 +25,12 @@ class _CountdownPageState extends State<CountdownPage>
 
   double progress = 1.0;
 
-  void notify() {
-    if (countText == '0:00:00') {
-      startBeepSound();
-      showStopSoundDialog(context); // Pass the context to showStopSoundDialog
-    }
+  void notify() async {
+  if (countText == '0:00:00') {
+    await startBeepSound();
+    showStopSoundDialog(context);
   }
+}
 
   bool isDialogOpen = false;
 

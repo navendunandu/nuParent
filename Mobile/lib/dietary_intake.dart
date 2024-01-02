@@ -53,7 +53,7 @@ class _DietaryIntakeState extends State<DietaryIntake> {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => const ExpectingMothers()));
+                            builder: (context) => const ExpectingMother()));
                   },
                   child: Container(
                     height: 80,

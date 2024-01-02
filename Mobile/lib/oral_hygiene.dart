@@ -3,7 +3,8 @@ import 'package:nu_parent/Components/appbar.dart';
 import 'package:nu_parent/main.dart';
 import 'package:nu_parent/oral_hygiene_babies.dart';
 import 'package:nu_parent/oral_hygiene_children.dart';
-import 'package:nu_parent/pregnentmothers_parents.dart';
+import 'package:nu_parent/parent_oral.dart';
+import 'package:nu_parent/pregnent_oral.dart';
 
 class OralHygiene extends StatefulWidget {
   const OralHygiene({super.key});
@@ -151,7 +152,7 @@ class _OralHygieneState extends State<OralHygiene> {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => const PregnantMothersParents(),
+                          builder: (context) => const PregnantOralHygiene(),
                         ));
                   },
                   child: Container(
@@ -191,40 +192,45 @@ class _OralHygieneState extends State<OralHygiene> {
                     ),
                   ),
                 ),
-                Container(
-                  height: 150,
-                  width: 150,
-                  decoration: BoxDecoration(
-                      color: AppColors.primaryColor,
-                      borderRadius: const BorderRadius.all(Radius.circular(10)),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black.withOpacity(0.2),
-                          spreadRadius: 1,
-                          blurRadius: 5,
-                          offset: const Offset(0, 2),
-                        )
-                      ]),
-                  child: const Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        'Parents/',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                            color: AppColors.white,
-                            fontWeight: FontWeight.w500,
-                            fontSize: 18),
-                      ),
-                      Text(
-                        'Carers Oral hygiene',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                            color: AppColors.white,
-                            fontWeight: FontWeight.w500,
-                            fontSize: 18),
-                      ),
-                    ],
+                GestureDetector(
+                  onTap: () {
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => const ParentOralHygiene(),));
+                  },
+                  child: Container(
+                    height: 150,
+                    width: 150,
+                    decoration: BoxDecoration(
+                        color: AppColors.primaryColor,
+                        borderRadius: const BorderRadius.all(Radius.circular(10)),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black.withOpacity(0.2),
+                            spreadRadius: 1,
+                            blurRadius: 5,
+                            offset: const Offset(0, 2),
+                          )
+                        ]),
+                    child: const Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          'Parents/',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                              color: AppColors.white,
+                              fontWeight: FontWeight.w500,
+                              fontSize: 18),
+                        ),
+                        Text(
+                          'Carers Oral hygiene',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                              color: AppColors.white,
+                              fontWeight: FontWeight.w500,
+                              fontSize: 18),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ],

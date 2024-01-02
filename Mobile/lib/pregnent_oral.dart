@@ -5,14 +5,14 @@ import 'package:nu_parent/main.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 
-class DietaryIntakeTwo extends StatefulWidget {
-  const DietaryIntakeTwo({super.key});
+class PregnantOralHygiene extends StatefulWidget {
+  const PregnantOralHygiene({super.key});
 
   @override
-  State<DietaryIntakeTwo> createState() => _DietaryIntakeTwoState();
+  State<PregnantOralHygiene> createState() => _PregnantOralHygieneState();
 }
 
-class _DietaryIntakeTwoState extends State<DietaryIntakeTwo> {
+class _PregnantOralHygieneState extends State<PregnantOralHygiene> {
   String? ageId;
 
   FlutterTts flutterTts = FlutterTts();
@@ -28,7 +28,7 @@ class _DietaryIntakeTwoState extends State<DietaryIntakeTwo> {
       FirebaseFirestore firestore = FirebaseFirestore.instance;
       CollectionReference collectionRef = firestore.collection('ageGroups');
       QuerySnapshot querySnapshot =
-          await collectionRef.where('age', isEqualTo: '2 - 6').get();
+          await collectionRef.where('age', isEqualTo: 'Pregnant Mother').get();
       if (querySnapshot.docs.isNotEmpty) {
         // Access the first (and only) document
         DocumentSnapshot doc = querySnapshot.docs[0];
@@ -36,12 +36,12 @@ class _DietaryIntakeTwoState extends State<DietaryIntakeTwo> {
         // doc.id will give you the document ID
         print('Document ID: ${doc.id}');
       } else {
-        print('No document found with age = 2 - 6');
+        print('No document found with age = 0 - 1');
       }
 
       // Use the extracted age value to query the "oralHygiene" collection
       QuerySnapshot dietary = await FirebaseFirestore.instance
-          .collection('dietaryintake')
+          .collection('oralHygiene')
           .where('age', isEqualTo: ageId)
           .get();
 
@@ -69,7 +69,6 @@ class _DietaryIntakeTwoState extends State<DietaryIntakeTwo> {
       body: Container(
         height: double.infinity,
         decoration: const BoxDecoration(
-            
             color: AppColors.white,
             image: DecorationImage(
               image: AssetImage('assets/Vector-1.png'),
@@ -79,19 +78,55 @@ class _DietaryIntakeTwoState extends State<DietaryIntakeTwo> {
         child: ListView(
           children: [
             const CustomAppBar(),
-            const Padding(
-              padding: EdgeInsets.all(8.0),
-              child: Center(
-                  child: Text(
-                'From Two to Six Years of Age',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                    color: AppColors.darkblue,
-                    fontWeight: FontWeight.w500,
-                    fontSize: 18),
-              )),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                const Flexible(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.only(left: 25),
+                        child: Text(
+                          'Pregnant Mothers Oral Hygiene',
+                          style: TextStyle(
+                            color: AppColors.primaryColor,
+                            fontWeight: FontWeight.w600,
+                            fontSize: 20,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Image.asset(
+                  'assets/PregnentMother.png',
+                  height: 150,
+                ),
+              ],
             ),
-            Image.asset('assets/FamilyEating.jpg'),
+            Padding(
+              padding: const EdgeInsets.all(15.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Text(
+                    'Good Dental Health Is Important When Pregnant',
+                    style: TextStyle(
+                        color: AppColors.primaryColor,
+                        fontWeight: FontWeight.w500),
+                  ),
+                  const SizedBox(
+                    height: 5,
+                  ),
+                  Text(
+                    'When you’re pregnant, you may be more prone to gum disease and cavities, which can affect your baby’s health. Follow these 3 steps to protect your teeth:',
+                    style: TextStyle(
+                        color: Colors.red[700], fontWeight: FontWeight.w500),
+                  )
+                ],
+              ),
+            ),
             Padding(
               padding: const EdgeInsets.only(left: 10.0, right: 10.0),
               child: FutureBuilder<List<Map<String, dynamic>>>(
@@ -128,7 +163,7 @@ class _DietaryIntakeTwoState extends State<DietaryIntakeTwo> {
                       itemCount: dataList.length,
                       itemBuilder: (context, index) {
                         final text =
-                            dataList[index]['dietaryintake'] as String? ??
+                            dataList[index]['oralHygiene'] as String? ??
                                 'Default Text';
                         return Column(
                           children: [
@@ -142,59 +177,6 @@ class _DietaryIntakeTwoState extends State<DietaryIntakeTwo> {
                     );
                   }
                 },
-              ),
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            Padding(
-              padding: const EdgeInsets.only(left: 20, right: 20),
-              child: Container(
-                decoration: BoxDecoration(
-                  color: const Color.fromARGB(255, 123, 149, 193),
-                  borderRadius: BorderRadius.circular(20),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.grey.withOpacity(0.5),
-                      spreadRadius: 2.0,
-                      blurRadius: 4.0,
-                      offset: const Offset(0, 2),
-                    ),
-                  ],
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.all(12),
-                  child: Row(
-                    children: [
-                      const Flexible(
-                        child: Column(
-                          children: [
-                            Text(
-                              'Parenting plays an important role in the transition from milk to solid foods.',
-                              textAlign: TextAlign.center,
-                            ),
-                            SizedBox(height: 5,),
-                            Text(
-                              'Parents influence what the child likes or dislikes, the quality of diet, and overall weight status.',
-                              textAlign: TextAlign.center,
-                            ),
-                          ],
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: IconButton(
-                          onPressed: () {
-                            speak(
-                              'Parenting plays an important role in the transition from milk to solid foods. Parents influence what the child likes or dislikes, the quality of diet, and overall weight status.',
-                            );
-                          },
-                          icon: const Icon(Icons.volume_up_rounded),
-                        ),
-                      )
-                    ],
-                  ),
-                ),
               ),
             ),
             const SizedBox(

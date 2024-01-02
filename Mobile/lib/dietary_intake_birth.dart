@@ -69,17 +69,6 @@ class _DietaryIntakeBirthState extends State<DietaryIntakeBirth> {
       body: Container(
         height: double.infinity,
         decoration: const BoxDecoration(
-            gradient: LinearGradient(
-              colors: [
-                Color.fromARGB(255, 245, 251, 255),
-                Color.fromARGB(255, 175, 203, 244),
-                Color.fromARGB(255, 245, 251, 255),
-              ],
-              stops: [0.1, 0.2, 1.0],
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-              tileMode: TileMode.clamp,
-            ),
             color: AppColors.white,
             image: DecorationImage(
               image: AssetImage('assets/Vector-1.png'),

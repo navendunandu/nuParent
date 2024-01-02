@@ -1,145 +1,94 @@
 import 'package:flutter/material.dart';
 import 'package:nu_parent/main.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:video_player/video_player.dart';
 
-class HowToVideos extends StatefulWidget {
+class HowToVideos extends StatelessWidget {
   const HowToVideos({super.key});
 
-  @override
-  State<HowToVideos> createState() => _HowToVideosState();
-}
-
-class _HowToVideosState extends State<HowToVideos> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: IconButton(
-          onPressed: () {
-            Navigator.pop(context);
-          },
-          icon: const Icon(Icons.arrow_back_ios_new), //Back Icon
-        ),
+        title: Text('Video Screen'),
       ),
-      body: Container(
-        height: double.infinity,
-        decoration: const BoxDecoration(
-            image: DecorationImage(
-          image: AssetImage('assets/Vector-1.png'),
-          fit: BoxFit.scaleDown,
-          alignment: Alignment.bottomCenter,
-        )),
-        child: Padding(
-          padding: const EdgeInsets.only(left: 25.0, right: 25.0),
-          child: SingleChildScrollView(
-            child: Center(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const SizedBox(
-                      width: 300,
-                      child: Text(
-                        'What causes cavities?',
-                        style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
-                            color: AppColors.primaryColor),
-                      )),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  Container(
-                      decoration: BoxDecoration(
-                        borderRadius:
-                            const BorderRadius.all(Radius.circular(10)),
-                        border: Border.all(
-                          color: AppColors.black, // Border color
-                          width: 2.0, // Border width
-                        ),
-                      ),
-                      child: ClipRRect(
-                          borderRadius:
-                              const BorderRadius.all(Radius.circular(10)),
-                          child: Image.asset(
-                            'assets/Cavities.png',
-                            fit: BoxFit.cover,
-                            height: 150,
-                            width: 300,
-                          ))),
-                  const SizedBox(
-                    height: 25,
-                  ),
-                  const SizedBox(
-                      width: 300,
-                      child: Text(
-                        'Parents’ Guide to Tooth brushing for Children ages 0-2 years old',
-                        style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
-                            color: AppColors.primaryColor),
-                      )),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  Container(
-                      decoration: BoxDecoration(
-                        borderRadius:
-                            const BorderRadius.all(Radius.circular(10)),
-                        border: Border.all(
-                          color: AppColors.black, // Border color
-                          width: 2.0, // Border width
-                        ),
-                      ),
-                      child: ClipRRect(
-                          borderRadius:
-                              const BorderRadius.all(Radius.circular(10)),
-                          child: Image.asset(
-                            'assets/Baby.png',
-                            fit: BoxFit.cover,
-                            height: 150,
-                            width: 300,
-                          ))),
-                  const SizedBox(
-                    height: 25,
-                  ),
-                  const SizedBox(
-                      width: 300,
-                      child: Text(
-                        'Parents’ Guide to Toothbrushing and Flossing for Children ages 3-6 years old',
-                        style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
-                            color: AppColors.primaryColor),
-                      )),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  Container(
-                      decoration: BoxDecoration(
-                        borderRadius:
-                            const BorderRadius.all(Radius.circular(10)),
-                        border: Border.all(
-                          color: AppColors.black, // Border color
-                          width: 2.0, // Border width
-                        ),
-                      ),
-                      child: ClipRRect(
-                          borderRadius:
-                              const BorderRadius.all(Radius.circular(10)),
-                          child: Image.asset(
-                            'assets/Brushing.png',
-                            fit: BoxFit.cover,
-                            height: 150,
-                            width: 300,
-                          ))),
-                  const SizedBox(
-                    height: 25,
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ),
+      body: FutureBuilder<List<Map<String, dynamic>>>(
+        future: fetchVideos(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Center(child: CircularProgressIndicator());
+          } else if (snapshot.hasError) {
+            return Center(child: Text('Error: ${snapshot.error}'));
+          } else {
+            List<Map<String, dynamic>> videos = snapshot.data!;
+            return ListView.builder(
+              itemCount: videos.length,
+              itemBuilder: (context, index) {
+                return VideoPlayerWidget(
+                  videoUrl: videos[index]['videoUrl'],
+                  videoTitle: videos[index]['videoTitle'],
+                );
+              },
+            );
+          }
+        },
       ),
     );
+  }
+
+  Future<List<Map<String, dynamic>>> fetchVideos() async {
+    final QuerySnapshot<Map<String, dynamic>> snapshot =
+        await FirebaseFirestore.instance.collection('uploadVideo').get();
+
+    return snapshot.docs.map((DocumentSnapshot<Map<String, dynamic>> doc) {
+      return doc.data()!;
+    }).toList();
+  }
+}
+
+class VideoPlayerWidget extends StatefulWidget {
+  final String videoUrl;
+  final String videoTitle;
+
+  VideoPlayerWidget({required this.videoUrl, required this.videoTitle});
+
+  @override
+  _VideoPlayerWidgetState createState() => _VideoPlayerWidgetState();
+}
+
+class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
+  late VideoPlayerController _controller;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = VideoPlayerController.network(widget.videoUrl)
+      ..initialize().then((_) {
+        setState(() {});
+      });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        AspectRatio(
+          aspectRatio: 16 / 9,
+          child: _controller.value.isInitialized
+              ? VideoPlayer(_controller)
+              : CircularProgressIndicator(),
+        ),
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Text(widget.videoTitle),
+        ),
+      ],
+    );
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
   }
 }
