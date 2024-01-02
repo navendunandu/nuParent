@@ -110,9 +110,30 @@ class _ChildProfileState extends State<ChildDashboard> {
     }
   }
 
-  void _childChange(String selectedChildId) {
-    // print('Selected child ID: $selectedChildId');
+  void _childChange(String? selectedChildId) {
+  if (selectedChildId != null) {
+    Map<String, dynamic>? selectedChild;
+
+    // Find the selected child in ChildDocs
+    for (Map<String, dynamic> child in ChildDocs) {
+      if (child['id'] == selectedChildId) {
+        selectedChild = child;
+        break;
+      }
+    }
+
+    if (selectedChild != null) {
+      setState(() {
+        id = selectedChild?['id'] ?? '';
+        name = selectedChild?['name'] ?? '';
+        gender = selectedChild?['gender'] ?? '';
+        dob = selectedChild?['dateOfBirth'] ?? '';
+        calculateAge(dob);
+      });
+    }
   }
+}
+
 
   @override
   Widget build(BuildContext context) {
@@ -324,6 +345,9 @@ class _ChildProfileState extends State<ChildDashboard> {
                               return ChildDocs.map(
                                   (Map<String, dynamic> child) {
                                 return PopupMenuItem<String>(
+                                  onTap: () {
+                                    _childChange(child['id']);
+                                  },
                                   value: child['id'],
                                   child: Text(child['name']),
                                 );
@@ -534,4 +558,12 @@ class _ChildProfileState extends State<ChildDashboard> {
       ],
     );
   }
+
+  @override
+void dispose() {
+  // Dispose of your animation controllers here
+  super.dispose();
 }
+
+}
+
