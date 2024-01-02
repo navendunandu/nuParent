@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:nu_parent/main.dart';
+// import 'package:nu_parent/main.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:nu_parent/video_player.dart';
 import 'package:video_player/video_player.dart';
+import 'package:chewie/chewie.dart';
 
 class HowToVideos extends StatelessWidget {
   const HowToVideos({super.key});
@@ -57,26 +59,46 @@ class VideoPlayerWidget extends StatefulWidget {
 }
 
 class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
-  late VideoPlayerController _controller;
+  late ChewieController _chewieController;
 
   @override
   void initState() {
     super.initState();
-    _controller = VideoPlayerController.network(widget.videoUrl)
-      ..initialize().then((_) {
-        setState(() {});
-      });
+
+    _chewieController = ChewieController(
+      videoPlayerController: VideoPlayerController.network(widget.videoUrl),
+      autoPlay: true,
+      looping: false,
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        AspectRatio(
-          aspectRatio: 16 / 9,
-          child: _controller.value.isInitialized
-              ? VideoPlayer(_controller)
-              : CircularProgressIndicator(),
+        GestureDetector(
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => FullScreenVideoPlayer(
+                  videoUrl: widget.videoUrl,
+                ),
+              ),
+            );
+          },
+          child: Stack(
+            children: [
+              Chewie(
+                controller: _chewieController,
+              ),
+              Center(
+                child: _chewieController.videoPlayerController.value.isBuffering
+                    ? CircularProgressIndicator()
+                    : SizedBox.shrink(),
+              ),
+            ],
+          ),
         ),
         Padding(
           padding: const EdgeInsets.all(8.0),
@@ -88,7 +110,8 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
 
   @override
   void dispose() {
-    _controller.dispose();
+    _chewieController.dispose();
     super.dispose();
   }
 }
+
