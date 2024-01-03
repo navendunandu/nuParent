@@ -69,7 +69,6 @@ class _ExpectingMotherState extends State<ExpectingMother> {
       body: Container(
         height: double.infinity,
         decoration: const BoxDecoration(
-            
             color: AppColors.white,
             image: DecorationImage(
               image: AssetImage('assets/Vector-1.png'),
@@ -152,9 +151,9 @@ class _ExpectingMotherState extends State<ExpectingMother> {
       ),
     );
   }
+
   @override
   void dispose() {
-    // Stop text playback when the screen is disposed (navigating back)
     flutterTts.stop();
     super.dispose();
   }

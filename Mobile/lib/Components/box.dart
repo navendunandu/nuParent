@@ -90,9 +90,11 @@ class _BoxState extends State<Box> {
                   onPressed: () {
                     speak(widget.text);
                   },
-                  icon: 
-                  
-                  Icon(isPlaying ? Icons.stop_circle_rounded : Icons.volume_up_rounded, color: AppColors.primaryColor),
+                  icon: Icon(
+                      isPlaying
+                          ? Icons.stop_circle_rounded
+                          : Icons.volume_up_rounded,
+                      color: AppColors.primaryColor),
                 ),
               )
             ],

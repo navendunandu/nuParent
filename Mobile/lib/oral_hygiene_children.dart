@@ -195,9 +195,9 @@ class _OralHygieneChildrenState extends State<OralHygieneChildren> {
       ),
     );
   }
+
   @override
   void dispose() {
-    // Stop text playback when the screen is disposed (navigating back)
     flutterTts.stop();
     super.dispose();
   }

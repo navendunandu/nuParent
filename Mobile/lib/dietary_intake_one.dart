@@ -13,7 +13,7 @@ class DietaryIntakeOne extends StatefulWidget {
 }
 
 class _DietaryIntakeOneState extends State<DietaryIntakeOne> {
- String? ageId;
+  String? ageId;
 
   FlutterTts flutterTts = FlutterTts();
   late Future<List<Map<String, dynamic>>> _dietaryIntake;
@@ -69,7 +69,6 @@ class _DietaryIntakeOneState extends State<DietaryIntakeOne> {
       body: Container(
         height: double.infinity,
         decoration: const BoxDecoration(
-            
             color: AppColors.white,
             image: DecorationImage(
               image: AssetImage('assets/Vector-1.png'),
@@ -173,7 +172,9 @@ class _DietaryIntakeOneState extends State<DietaryIntakeOne> {
                               'Parenting plays an important role in the transition from milk to solid foods.',
                               textAlign: TextAlign.center,
                             ),
-                            SizedBox(height: 5,),
+                            SizedBox(
+                              height: 5,
+                            ),
                             Text(
                               'Parents influence what the child likes or dislikes, the quality of diet, and overall weight status.',
                               textAlign: TextAlign.center,
@@ -205,9 +206,9 @@ class _DietaryIntakeOneState extends State<DietaryIntakeOne> {
       ),
     );
   }
+
   @override
   void dispose() {
-    // Stop text playback when the screen is disposed (navigating back)
     flutterTts.stop();
     super.dispose();
   }

@@ -20,31 +20,30 @@ class _DietaryIntakeState extends State<DietaryIntake> {
       body: Container(
         height: double.infinity,
         decoration: const BoxDecoration(
-          color: AppColors.white,
+            color: AppColors.white,
             image: DecorationImage(
-          image: AssetImage('assets/Vector-1.png'),
-          fit: BoxFit.cover,
-          alignment: Alignment.bottomCenter,
-        )),
-        child: ListView(
-          children: [
-            const CustomAppBar(),
-            const Center(
-          child: Text(
-            "Your Child’s Dietary Intake",
-            style: TextStyle(
-                color: AppColors.primaryColor,
-                fontWeight: FontWeight.w500,
-                fontSize: 20),
+              image: AssetImage('assets/Vector-1.png'),
+              fit: BoxFit.cover,
+              alignment: Alignment.bottomCenter,
+            )),
+        child: ListView(children: [
+          const CustomAppBar(),
+          const Center(
+            child: Text(
+              "Your Child’s Dietary Intake",
+              style: TextStyle(
+                  color: AppColors.primaryColor,
+                  fontWeight: FontWeight.w500,
+                  fontSize: 20),
+            ),
           ),
-        ),
-            Padding(
+          Padding(
             padding: const EdgeInsets.only(left: 25.0, right: 25.0),
             child: Column(
               children: [
                 Image.asset(
-                      'assets/Eating.png',
-                    ),
+                  'assets/Eating.png',
+                ),
                 const SizedBox(
                   height: 20,
                 ),
@@ -60,7 +59,8 @@ class _DietaryIntakeState extends State<DietaryIntake> {
                     width: double.infinity,
                     decoration: BoxDecoration(
                         color: AppColors.primaryColor,
-                        borderRadius: const BorderRadius.all(Radius.circular(25)),
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(25)),
                         boxShadow: [
                           BoxShadow(
                             color: Colors.black.withOpacity(0.2),
@@ -84,15 +84,20 @@ class _DietaryIntakeState extends State<DietaryIntake> {
                   height: 20,
                 ),
                 GestureDetector(
-                  onTap: (){
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => const DietaryIntakeBirth(),));
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const DietaryIntakeBirth(),
+                        ));
                   },
                   child: Container(
                     height: 80,
                     width: double.infinity,
                     decoration: BoxDecoration(
                         color: AppColors.primaryColor,
-                        borderRadius: const BorderRadius.all(Radius.circular(25)),
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(25)),
                         boxShadow: [
                           BoxShadow(
                             color: Colors.black.withOpacity(0.2),
@@ -116,15 +121,20 @@ class _DietaryIntakeState extends State<DietaryIntake> {
                   height: 20,
                 ),
                 GestureDetector(
-                  onTap: (){
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => const DietaryIntakeOne(),));
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const DietaryIntakeOne(),
+                        ));
                   },
                   child: Container(
                     height: 80,
                     width: double.infinity,
                     decoration: BoxDecoration(
                         color: AppColors.primaryColor,
-                        borderRadius: const BorderRadius.all(Radius.circular(25)),
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(25)),
                         boxShadow: [
                           BoxShadow(
                             color: Colors.black.withOpacity(0.2),
@@ -148,15 +158,20 @@ class _DietaryIntakeState extends State<DietaryIntake> {
                   height: 20,
                 ),
                 GestureDetector(
-                  onTap: (){
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => const DietaryIntakeTwo(),));
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const DietaryIntakeTwo(),
+                        ));
                   },
                   child: Container(
                     height: 80,
                     width: double.infinity,
                     decoration: BoxDecoration(
                         color: AppColors.primaryColor,
-                        borderRadius: const BorderRadius.all(Radius.circular(25)),
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(25)),
                         boxShadow: [
                           BoxShadow(
                             color: Colors.black.withOpacity(0.2),
@@ -179,8 +194,7 @@ class _DietaryIntakeState extends State<DietaryIntake> {
               ],
             ),
           ),
-          ]
-        ),
+        ]),
       ),
     );
   }

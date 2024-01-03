@@ -11,14 +11,14 @@ class SuccessScreen extends StatelessWidget {
     return Scaffold(
       body: Container(
         decoration: const BoxDecoration(
-              gradient: RadialGradient(
-            colors: [
-              Color.fromARGB(255, 245, 251, 255),
-              AppColors.tileprimaryblue
-            ],
-            radius: .5, // Adjust the radius based on your preference
-            center: Alignment(0.2, -.6),
-          )),
+            gradient: RadialGradient(
+          colors: [
+            Color.fromARGB(255, 245, 251, 255),
+            AppColors.tileprimaryblue
+          ],
+          radius: .5, // Adjust the radius based on your preference
+          center: Alignment(0.2, -.6),
+        )),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -33,12 +33,15 @@ class SuccessScreen extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.only(left: 138.0, top: 100),
                   child: ClipOval(
-        
                     child: Container(
                       color: AppColors.white,
                       child: Padding(
                         padding: const EdgeInsets.all(15.0),
-                        child: Image.asset('assets/nuParent.png', width: 50, height: 50,),
+                        child: Image.asset(
+                          'assets/nuParent.png',
+                          width: 50,
+                          height: 50,
+                        ),
                       ),
                     ),
                   ),
@@ -51,19 +54,28 @@ class SuccessScreen extends StatelessWidget {
             ),
             Text(
               'Welcome to nuParent.',
-              style: GoogleFonts.sansita(textStyle:const TextStyle(fontSize: 32, fontWeight: FontWeight.w600, color: AppColors.primaryColor) ),
+              style: GoogleFonts.sansita(
+                  textStyle: const TextStyle(
+                      fontSize: 32,
+                      fontWeight: FontWeight.w600,
+                      color: AppColors.primaryColor)),
             ),
             const SizedBox(
               height: 20,
             ),
             GestureDetector(
               onTap: () {
-                Navigator.pushReplacement(context,
-                    MaterialPageRoute(builder: (context) => const LoginScreen()));
+                Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const LoginScreen()));
               },
               child: const Text(
                 'Back to Login',
-                style: TextStyle(fontSize: 20, color: AppColors.primaryColor, fontWeight: FontWeight.w500),
+                style: TextStyle(
+                    fontSize: 20,
+                    color: AppColors.primaryColor,
+                    fontWeight: FontWeight.w500),
               ),
             )
           ],

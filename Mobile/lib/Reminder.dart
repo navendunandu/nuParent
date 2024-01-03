@@ -13,7 +13,7 @@ class _ReminderState extends State<Reminder> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-         leading: IconButton(
+        leading: IconButton(
           onPressed: () {
             Navigator.pop(context);
           },
@@ -37,169 +37,184 @@ class _ReminderState extends State<Reminder> {
                   const SizedBox(
                     height: 20,
                   ),
-                  const Text('Reminder', style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: AppColors.primaryColor),),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  Container(
-                    decoration: const BoxDecoration(
-                      borderRadius: BorderRadius.all(Radius.circular(10)),
-                      color: Color.fromARGB(255, 220, 231, 253)
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(25.0),
-                      child: Column(
-                        children: [
-                          const Text('Brushing', style: TextStyle(
-                            fontWeight: FontWeight.w600,
-                            fontSize: 18
-                          ),),
-                          const SizedBox(
-                            height: 10,
-                          ),
-                          Container(
-                            padding: const EdgeInsets.all(15),
-                            decoration: BoxDecoration(
-                              color: AppColors.white,
-                              borderRadius: BorderRadius.circular(25)
-                            ),
-                            child: const Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text('Morning', style: TextStyle(
-                                  fontWeight: FontWeight.w600,
-                                  fontSize: 16
-                                ),),
-                                Text('8:00 AM', style: TextStyle(
-                                  fontWeight: FontWeight.w600,
-                                  fontSize: 16
-                                ),)
-                              ],
-                            ),
-                          ),
-                          const SizedBox(
-                            height: 15,
-                          ),
-                          Container(
-                            padding: const EdgeInsets.all(15),
-                            decoration: BoxDecoration(
-                              color: AppColors.white,
-                              borderRadius: BorderRadius.circular(25)
-                            ),
-                            child: const Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text('Evening', style: TextStyle(
-                                  fontWeight: FontWeight.w600,
-                                  fontSize: 16
-                                ),),
-                                Text('8:00 PM', style: TextStyle(
-                                  fontWeight: FontWeight.w600,
-                                  fontSize: 16
-                                ),)
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                    )
+                  const Text(
+                    'Reminder',
+                    style: TextStyle(
+                        fontSize: 22,
+                        fontWeight: FontWeight.bold,
+                        color: AppColors.primaryColor),
                   ),
                   const SizedBox(
                     height: 20,
                   ),
                   Container(
-                    decoration: const BoxDecoration(
-                      borderRadius: BorderRadius.all(Radius.circular(10)),
-                      color: Color.fromARGB(255, 220, 231, 253)
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(25.0),
-                      child: Column(
-                        children: [
-                          const Text('Toothbrush replacement', style: TextStyle(
-                            fontWeight: FontWeight.w600,
-                            fontSize: 18
-                          ),),
-                          const SizedBox(
-                            height: 10,
-                          ),
-                          Container(
-                            padding: const EdgeInsets.all(15),
-                            decoration: BoxDecoration(
-                              color: AppColors.white,
-                              borderRadius: BorderRadius.circular(25)
+                      decoration: const BoxDecoration(
+                          borderRadius: BorderRadius.all(Radius.circular(10)),
+                          color: Color.fromARGB(255, 220, 231, 253)),
+                      child: Padding(
+                        padding: const EdgeInsets.all(25.0),
+                        child: Column(
+                          children: [
+                            const Text(
+                              'Brushing',
+                              style: TextStyle(
+                                  fontWeight: FontWeight.w600, fontSize: 18),
                             ),
-                            child: const Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text('Every 3 months', style: TextStyle(
-                                  fontWeight: FontWeight.w600,
-                                  fontSize: 16
-                                ),),
-                                Row(
+                            const SizedBox(
+                              height: 10,
+                            ),
+                            Container(
+                              padding: const EdgeInsets.all(15),
+                              decoration: BoxDecoration(
+                                  color: AppColors.white,
+                                  borderRadius: BorderRadius.circular(25)),
+                              child: const Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Icon(Icons.calendar_today_outlined),
-                                  SizedBox(
-                                    width: 10,
+                                  Text(
+                                    'Morning',
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.w600,
+                                        fontSize: 16),
                                   ),
-                                  Icon(Icons.notifications_none_outlined),
+                                  Text(
+                                    '8:00 AM',
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.w600,
+                                        fontSize: 16),
+                                  )
                                 ],
-                              )
-                              ],
+                              ),
                             ),
-                          ),
-                        ],
-                      ),
-                    )
-                  ),
+                            const SizedBox(
+                              height: 15,
+                            ),
+                            Container(
+                              padding: const EdgeInsets.all(15),
+                              decoration: BoxDecoration(
+                                  color: AppColors.white,
+                                  borderRadius: BorderRadius.circular(25)),
+                              child: const Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    'Evening',
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.w600,
+                                        fontSize: 16),
+                                  ),
+                                  Text(
+                                    '8:00 PM',
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.w600,
+                                        fontSize: 16),
+                                  )
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      )),
                   const SizedBox(
                     height: 20,
                   ),
                   Container(
-                    decoration: const BoxDecoration(
-                      borderRadius: BorderRadius.all(Radius.circular(10)),
-                      color: Color.fromARGB(255, 220, 231, 253)
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(25.0),
-                      child: Column(
-                        children: [
-                          const Text('Dental Visits', style: TextStyle(
-                            fontWeight: FontWeight.w600,
-                            fontSize: 18
-                          ),),
-                          const SizedBox(
-                            height: 10,
-                          ),
-                          Container(
-                            padding: const EdgeInsets.all(15),
-                            decoration: BoxDecoration(
-                              color: AppColors.white,
-                              borderRadius: BorderRadius.circular(25)
+                      decoration: const BoxDecoration(
+                          borderRadius: BorderRadius.all(Radius.circular(10)),
+                          color: Color.fromARGB(255, 220, 231, 253)),
+                      child: Padding(
+                        padding: const EdgeInsets.all(25.0),
+                        child: Column(
+                          children: [
+                            const Text(
+                              'Toothbrush replacement',
+                              style: TextStyle(
+                                  fontWeight: FontWeight.w600, fontSize: 18),
                             ),
-                            child: const Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text('Every 6 months', style: TextStyle(
-                                  fontWeight: FontWeight.w600,
-                                  fontSize: 16
-                                ),),
-                                Row(
+                            const SizedBox(
+                              height: 10,
+                            ),
+                            Container(
+                              padding: const EdgeInsets.all(15),
+                              decoration: BoxDecoration(
+                                  color: AppColors.white,
+                                  borderRadius: BorderRadius.circular(25)),
+                              child: const Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Icon(Icons.calendar_today_outlined),
-                                  SizedBox(
-                                    width: 10,
+                                  Text(
+                                    'Every 3 months',
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.w600,
+                                        fontSize: 16),
                                   ),
-                                  Icon(Icons.notifications_none_outlined),
+                                  Row(
+                                    children: [
+                                      Icon(Icons.calendar_today_outlined),
+                                      SizedBox(
+                                        width: 10,
+                                      ),
+                                      Icon(Icons.notifications_none_outlined),
+                                    ],
+                                  )
                                 ],
-                              )
-                              ],
+                              ),
                             ),
-                          ),
-                        ],
-                      ),
-                    )
+                          ],
+                        ),
+                      )),
+                  const SizedBox(
+                    height: 20,
                   ),
+                  Container(
+                      decoration: const BoxDecoration(
+                          borderRadius: BorderRadius.all(Radius.circular(10)),
+                          color: Color.fromARGB(255, 220, 231, 253)),
+                      child: Padding(
+                        padding: const EdgeInsets.all(25.0),
+                        child: Column(
+                          children: [
+                            const Text(
+                              'Dental Visits',
+                              style: TextStyle(
+                                  fontWeight: FontWeight.w600, fontSize: 18),
+                            ),
+                            const SizedBox(
+                              height: 10,
+                            ),
+                            Container(
+                              padding: const EdgeInsets.all(15),
+                              decoration: BoxDecoration(
+                                  color: AppColors.white,
+                                  borderRadius: BorderRadius.circular(25)),
+                              child: const Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    'Every 6 months',
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.w600,
+                                        fontSize: 16),
+                                  ),
+                                  Row(
+                                    children: [
+                                      Icon(Icons.calendar_today_outlined),
+                                      SizedBox(
+                                        width: 10,
+                                      ),
+                                      Icon(Icons.notifications_none_outlined),
+                                    ],
+                                  )
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      )),
                 ],
               ),
             ),

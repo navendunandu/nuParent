@@ -181,7 +181,9 @@ class _DietaryIntakeBirthState extends State<DietaryIntakeBirth> {
                               'Parenting plays an important role in the transition from milk to solid foods.',
                               textAlign: TextAlign.center,
                             ),
-                            SizedBox(height: 5,),
+                            SizedBox(
+                              height: 5,
+                            ),
                             Text(
                               'Parents influence what the child likes or dislikes, the quality of diet, and overall weight status.',
                               textAlign: TextAlign.center,
@@ -213,9 +215,9 @@ class _DietaryIntakeBirthState extends State<DietaryIntakeBirth> {
       ),
     );
   }
+
   @override
   void dispose() {
-    // Stop text playback when the screen is disposed (navigating back)
     flutterTts.stop();
     super.dispose();
   }

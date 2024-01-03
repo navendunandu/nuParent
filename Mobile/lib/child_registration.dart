@@ -14,7 +14,8 @@ import 'package:nu_parent/view_profile.dart';
 class RegistrationChild extends StatefulWidget {
   final String docId;
   final String action;
-  const RegistrationChild({Key? key, required this.docId, required this.action}) : super(key: key);
+  const RegistrationChild({Key? key, required this.docId, required this.action})
+      : super(key: key);
 
   @override
   State<RegistrationChild> createState() => _RegistrationChildState();
@@ -88,16 +89,13 @@ class _RegistrationChildState extends State<RegistrationChild> {
         textColor: Colors.white,
       );
 
-      if(widget.action=='ADD')
-      {
+      if (widget.action == 'ADD') {
         Navigator.pushReplacement(context,
-          MaterialPageRoute(builder: (context) => const ViewProfile()));
-      }
-      else{
+            MaterialPageRoute(builder: (context) => const ViewProfile()));
+      } else {
         Navigator.pushReplacement(context,
-          MaterialPageRoute(builder: (context) => const SuccessScreen()));
+            MaterialPageRoute(builder: (context) => const SuccessScreen()));
       }
-      
     } catch (e) {
       print("Error registering child: $e");
       // Handle error, show message or take appropriate action
@@ -147,7 +145,9 @@ class _RegistrationChildState extends State<RegistrationChild> {
                   child: Column(
                 children: [
                   CustomTopBar(
-                      showBackIcon: true, showNotificationButton: false, docId: _receivedDocId),
+                      showBackIcon: true,
+                      showNotificationButton: false,
+                      docId: _receivedDocId),
                   Form(
                     child: Padding(
                       padding: const EdgeInsets.only(left: 20.0, right: 20.0),
@@ -335,9 +335,9 @@ class _RegistrationChildState extends State<RegistrationChild> {
                           ),
                           Center(
                             child: ElevatedButton(
-                              onPressed: ()  {
-                                    _registerChild();
-                                  },
+                              onPressed: () {
+                                _registerChild();
+                              },
                               style: ElevatedButton.styleFrom(
                                 backgroundColor: AppColors.primaryColor,
                                 shape: RoundedRectangleBorder(

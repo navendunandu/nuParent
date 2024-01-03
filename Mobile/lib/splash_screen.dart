@@ -20,9 +20,11 @@ class _SplashScreenState extends State<SplashScreen> {
     return Scaffold(
       body: Container(
         decoration: const BoxDecoration(
-          color: Colors.white,
-          image: DecorationImage(image: AssetImage('assets/Vector-1.png'), fit: BoxFit.scaleDown, alignment: Alignment.bottomCenter)
-        ),
+            color: Colors.white,
+            image: DecorationImage(
+                image: AssetImage('assets/Vector-1.png'),
+                fit: BoxFit.scaleDown,
+                alignment: Alignment.bottomCenter)),
         child: Center(
           child: ClipOval(
             child: Image.asset(

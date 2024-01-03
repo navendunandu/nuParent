@@ -1,4 +1,3 @@
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -85,6 +84,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
         password: _passController.text,
       );
 
+      // ignore: unnecessary_null_comparison
       if (userCredential != null) {
         await _storeUserData(userCredential.user!.uid);
         Fluttertoast.showToast(
@@ -104,7 +104,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   Future<void> _storeUserData(String userId) async {
     try {
       final FirebaseFirestore firestore = FirebaseFirestore.instance;
-          await firestore.collection('users').doc(userId).set({
+      await firestore.collection('users').doc(userId).set({
         'name': _nameController.text,
         'email': _emailController.text,
         'phone': _phoneController.text,

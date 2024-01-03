@@ -90,8 +90,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     },
                     child: Container(
                       padding: const EdgeInsets.only(top: 10, bottom: 10),
-                      decoration: const BoxDecoration(
-                          color: AppColors.white),
+                      decoration: const BoxDecoration(color: AppColors.white),
                       child: const Text(
                         "Oral Hygiene",
                         style: TextStyle(
@@ -109,8 +108,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     },
                     child: Container(
                       padding: const EdgeInsets.only(top: 10, bottom: 10),
-                      decoration: const BoxDecoration(
-                          color: AppColors.white),
+                      decoration: const BoxDecoration(color: AppColors.white),
                       child: const Text(
                         "Dietary Intake",
                         style: TextStyle(
@@ -124,12 +122,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => const BrushingInstruction()));
+                              builder: (context) =>
+                                  const BrushingInstruction()));
                     },
                     child: Container(
                       padding: const EdgeInsets.only(top: 10, bottom: 10),
-                      decoration: const BoxDecoration(
-                          color: AppColors.white),
+                      decoration: const BoxDecoration(color: AppColors.white),
                       child: const Text(
                         "Brushing Instruction",
                         style: TextStyle(
@@ -147,8 +145,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     },
                     child: Container(
                       padding: const EdgeInsets.only(top: 10, bottom: 10),
-                      decoration: const BoxDecoration(
-                          color: AppColors.white),
+                      decoration: const BoxDecoration(color: AppColors.white),
                       child: const Text(
                         "Dental Visit",
                         style: TextStyle(

@@ -56,11 +56,17 @@ class _ViewProfileState extends State<ViewProfile> {
     }
   }
 
-  void addChild(){
+  void addChild() {
     final user = FirebaseAuth.instance.currentUser;
     final userId = user?.uid;
-    if(userId != null){
-      Navigator.push(context, MaterialPageRoute(builder: (context)=> RegistrationChild(docId: userId, action: 'ADD',)));
+    if (userId != null) {
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => RegistrationChild(
+                    docId: userId,
+                    action: 'ADD',
+                  )));
     }
   }
 
@@ -84,10 +90,9 @@ class _ViewProfileState extends State<ViewProfile> {
     }
     ChildDocs.clear();
     querySnapshot.docs.forEach((DocumentSnapshot document) {
-      
       // Access the data in each document
       // print('${document.id} => ${document.data()}');
-      if(id==''){
+      if (id == '') {
         id = document.id;
         print('ID: ${document.id}');
       }
@@ -102,7 +107,6 @@ class _ViewProfileState extends State<ViewProfile> {
         calculateAge(dob);
       }
       ChildDocs.add(documentData);
-      
     });
   }
 
@@ -188,7 +192,11 @@ class _ViewProfileState extends State<ViewProfile> {
                             color: AppColors.primaryColor), // Add black border
                       ),
                       onPressed: () {
-                        Navigator.push(context, MaterialPageRoute(builder: (context)=> EditProfile(childId: id)));
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) =>
+                                    EditProfile(childId: id)));
                       },
                       child: const Text('Edit'),
                     ),
@@ -233,8 +241,13 @@ class _ViewProfileState extends State<ViewProfile> {
                       borderRadius: BorderRadius.all(Radius.circular(10)),
                     ),
                     child: (image != "assets/dummy-profile-pic.png"
-                        ? Image.network(image,fit: BoxFit.cover, height: 100,)
-                        : Image.asset('assets/dummy-profile-pic.png', height: 100, fit: BoxFit.cover)),
+                        ? Image.network(
+                            image,
+                            fit: BoxFit.cover,
+                            height: 100,
+                          )
+                        : Image.asset('assets/dummy-profile-pic.png',
+                            height: 100, fit: BoxFit.cover)),
                   ),
                   const SizedBox(
                     width: 10,
@@ -247,17 +260,16 @@ class _ViewProfileState extends State<ViewProfile> {
                         color: AppColors.black),
                   ),
                   PopupMenuButton<String>(
-                            icon: const Icon(Icons.keyboard_arrow_down_rounded),
-                            itemBuilder: (BuildContext context) {
-                              return ChildDocs.map(
-                                  (Map<String, dynamic> child) {
-                                return PopupMenuItem<String>(
-                                  value: child['id'],
-                                  child: Text(child['name']),
-                                );
-                              }).toList();
-                            },
-                          ),
+                    icon: const Icon(Icons.keyboard_arrow_down_rounded),
+                    itemBuilder: (BuildContext context) {
+                      return ChildDocs.map((Map<String, dynamic> child) {
+                        return PopupMenuItem<String>(
+                          value: child['id'],
+                          child: Text(child['name']),
+                        );
+                      }).toList();
+                    },
+                  ),
                 ],
               ),
             ),

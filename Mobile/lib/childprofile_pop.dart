@@ -19,7 +19,6 @@ class _ChildProfilePopState extends State<ChildProfilePop> {
   void initState() {
     super.initState();
     _receivedDocId = widget.docId;
-
   }
 
   @override
@@ -42,7 +41,9 @@ class _ChildProfilePopState extends State<ChildProfilePop> {
         child: Column(
           children: [
             CustomTopBar(
-                showBackIcon: false, showNotificationButton: false, docId: _receivedDocId),
+                showBackIcon: false,
+                showNotificationButton: false,
+                docId: _receivedDocId),
             Stack(
               children: [
                 Image.asset('assets/FamilyBrushing.jpg'),
@@ -86,8 +87,10 @@ class _ChildProfilePopState extends State<ChildProfilePop> {
                         Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(
-                                builder: (context) =>  RegistrationChild(
-                                    docId: _receivedDocId, action: 'REGISTER',)));
+                                builder: (context) => RegistrationChild(
+                                      docId: _receivedDocId,
+                                      action: 'REGISTER',
+                                    )));
                       },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: AppColors.primaryColor,

@@ -46,9 +46,9 @@ class _LoginScreenState extends State<LoginScreen> {
         if (userCredential.user != null) {
           if (_isChecked) {
             // Save user info to shared preferences
-            
-        String userId = userCredential.user?.uid ?? '';
-        print('User ID: $userId');
+
+            String userId = userCredential.user?.uid ?? '';
+            print('User ID: $userId');
 
             await saveUserInfoToLocalDatabase(userId);
           }

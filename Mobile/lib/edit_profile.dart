@@ -31,14 +31,13 @@ class _EditProfileState extends State<EditProfile> {
     loadChildData();
   }
 
-void updateSelectedGender(String gender) {
+  void updateSelectedGender(String gender) {
     setState(() {
       selectedGender = gender;
     });
   }
 
   void updateProfile() async {
-
     if (widget.childId != null) {
       final userDoc =
           FirebaseFirestore.instance.collection('child').doc(widget.childId);
@@ -170,119 +169,120 @@ void updateSelectedGender(String gender) {
                   ),
                 ),
                 GestureDetector(
-              onTap: () {
-                _pickImage(); // Open image picker
-              },
-              child: CircleAvatar(
-                radius: 80,
-                backgroundImage: _selectedImage != null
-                    ? FileImage(File(_selectedImage!.path))
-                    : (image != "assets/dummy-profile-pic.png"
-                        ? NetworkImage(image)
-                        : AssetImage('assets/dummy-profile-pic.png') as ImageProvider),
-                child: Icon(Icons.edit),
-              ),
-            ),
+                  onTap: () {
+                    _pickImage(); // Open image picker
+                  },
+                  child: CircleAvatar(
+                    radius: 80,
+                    backgroundImage: _selectedImage != null
+                        ? FileImage(File(_selectedImage!.path))
+                        : (image != "assets/dummy-profile-pic.png"
+                            ? NetworkImage(image)
+                            : AssetImage('assets/dummy-profile-pic.png')
+                                as ImageProvider),
+                    child: Icon(Icons.edit),
+                  ),
+                ),
 
-            SizedBox(height: 20),
-            // Registration Details with Edit Buttons
-            ListTile(
-              title: Text('Name: $name'),
-              trailing: IconButton(
-                icon: Icon(Icons.edit),
-                onPressed: () {
-                  // Handle editing the name field.
-                  nameController.text =
-                      name; // Initialize the field with current value.
-                  showDialog(
-                    context: context,
-                    builder: (BuildContext context) {
-                      return AlertDialog(
-                        title: const Text('Edit Name'),
-                        content: TextField(
-                          controller: nameController,
-                          decoration: InputDecoration(hintText: 'New Name'),
-                        ),
-                        actions: [
-                          TextButton(
-                            onPressed: () {
-                              Navigator.of(context).pop();
-                            },
-                            child: const Text('Cancel'),
-                          ),
-                          TextButton(
-                            onPressed: () {
-                              updateProfile();
-                              Navigator.of(context).pop();
-                            },
-                            child: Text('Save'),
-                          ),
-                        ],
+                SizedBox(height: 20),
+                // Registration Details with Edit Buttons
+                ListTile(
+                  title: Text('Name: $name'),
+                  trailing: IconButton(
+                    icon: Icon(Icons.edit),
+                    onPressed: () {
+                      // Handle editing the name field.
+                      nameController.text =
+                          name; // Initialize the field with current value.
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return AlertDialog(
+                            title: const Text('Edit Name'),
+                            content: TextField(
+                              controller: nameController,
+                              decoration: InputDecoration(hintText: 'New Name'),
+                            ),
+                            actions: [
+                              TextButton(
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                },
+                                child: const Text('Cancel'),
+                              ),
+                              TextButton(
+                                onPressed: () {
+                                  updateProfile();
+                                  Navigator.of(context).pop();
+                                },
+                                child: Text('Save'),
+                              ),
+                            ],
+                          );
+                        },
                       );
                     },
-                  );
-                },
-              ),
-            ),
-            ListTile(
-              title: Text('Address: $address'),
-              trailing: IconButton(
-                icon: Icon(Icons.edit),
-                onPressed: () {
-                  // Handle editing the email field.
-                  addressController.text =
-                      address; // Initialize the field with the current value.
-                  showDialog(
-                    context: context,
-                    builder: (BuildContext context) {
-                      return AlertDialog(
-                        title: Text('Edit Email'),
-                        content: TextField(
-                          controller: addressController,
-                          decoration: InputDecoration(hintText: 'New Email'),
-                        ),
-                        actions: [
-                          TextButton(
-                            onPressed: () {
-                              Navigator.of(context).pop();
-                            },
-                            child: Text('Cancel'),
-                          ),
-                          TextButton(
-                            onPressed: () {
-                              updateProfile();
-                              Navigator.of(context).pop();
-                            },
-                            child: Text('Save'),
-                          ),
-                        ],
+                  ),
+                ),
+                ListTile(
+                  title: Text('Address: $address'),
+                  trailing: IconButton(
+                    icon: Icon(Icons.edit),
+                    onPressed: () {
+                      // Handle editing the email field.
+                      addressController.text =
+                          address; // Initialize the field with the current value.
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return AlertDialog(
+                            title: Text('Edit Email'),
+                            content: TextField(
+                              controller: addressController,
+                              decoration:
+                                  InputDecoration(hintText: 'New Email'),
+                            ),
+                            actions: [
+                              TextButton(
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                },
+                                child: Text('Cancel'),
+                              ),
+                              TextButton(
+                                onPressed: () {
+                                  updateProfile();
+                                  Navigator.of(context).pop();
+                                },
+                                child: Text('Save'),
+                              ),
+                            ],
+                          );
+                        },
                       );
                     },
-                  );
-                },
-              ),
-            ),
-            const SizedBox(height: 20.0),
-            const Padding(
-              padding: EdgeInsets.all(8.0),
-              child: Text(
-                "Gender",
-                style: TextStyle(fontSize: 18.0),
-                textAlign: TextAlign.center,
-              ),
-            ),
-            const SizedBox(height: 10.0),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                buildGenderButton(Icons.male, 'male'), // Male button
-                buildGenderButton(Icons.female, 'female'), // Female button
-                buildGenderButton(Icons.transgender, 'others'), // Female button
-              ],
-            ),
-            const SizedBox(height: 20.0),
-           
-
+                  ),
+                ),
+                const SizedBox(height: 20.0),
+                const Padding(
+                  padding: EdgeInsets.all(8.0),
+                  child: Text(
+                    "Gender",
+                    style: TextStyle(fontSize: 18.0),
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+                const SizedBox(height: 10.0),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    buildGenderButton(Icons.male, 'male'), // Male button
+                    buildGenderButton(Icons.female, 'female'), // Female button
+                    buildGenderButton(
+                        Icons.transgender, 'others'), // Female button
+                  ],
+                ),
+                const SizedBox(height: 20.0),
               ],
             ),
           ))
@@ -291,7 +291,7 @@ void updateSelectedGender(String gender) {
     );
   }
 
-    XFile? _selectedImage;
+  XFile? _selectedImage;
 
   Future<void> _pickImage() async {
     final pickedFile =

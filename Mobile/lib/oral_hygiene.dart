@@ -194,14 +194,19 @@ class _OralHygieneState extends State<OralHygiene> {
                 ),
                 GestureDetector(
                   onTap: () {
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => const ParentOralHygiene(),));
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const ParentOralHygiene(),
+                        ));
                   },
                   child: Container(
                     height: 150,
                     width: 150,
                     decoration: BoxDecoration(
                         color: AppColors.primaryColor,
-                        borderRadius: const BorderRadius.all(Radius.circular(10)),
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(10)),
                         boxShadow: [
                           BoxShadow(
                             color: Colors.black.withOpacity(0.2),

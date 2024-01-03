@@ -25,23 +25,23 @@ class _CustomAppBarState extends State<CustomAppBar> {
                   },
                   icon: const Icon(Icons.arrow_back_ios_new)),
               Container(
-              decoration: const BoxDecoration(
-                shape: BoxShape.circle,
-                color: AppColors.primaryColor,
-              ),
-              child: IconButton(
-                icon: const Icon(
-                  Icons.settings,
-                  color: AppColors.white,
+                decoration: const BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: AppColors.primaryColor,
                 ),
-                onPressed: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const SettingsScreen()));
-                },
+                child: IconButton(
+                  icon: const Icon(
+                    Icons.settings,
+                    color: AppColors.white,
+                  ),
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const SettingsScreen()));
+                  },
+                ),
               ),
-            ),
             ],
           ),
         ],
