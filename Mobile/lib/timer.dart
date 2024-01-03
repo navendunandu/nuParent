@@ -15,6 +15,7 @@ class _CountdownPageState extends State<CountdownPage>
   late AnimationController controller;
 
   bool isPlaying = false;
+  bool soundPlayed = false;
 
   String get countText {
     Duration count = controller.duration! * controller.value;
@@ -26,7 +27,8 @@ class _CountdownPageState extends State<CountdownPage>
   double progress = 1.0;
 
   void notify() async {
-    if (countText == '0:00:00') {
+    if (countText == '0:00:00' && !soundPlayed) {
+      soundPlayed = true; // Set the flag to prevent repeated sound playback
       await startBeepSound();
       showStopSoundDialog(context);
     }
@@ -69,7 +71,6 @@ class _CountdownPageState extends State<CountdownPage>
   Future<void> startBeepSound() async {
     await FlutterRingtonePlayer.playAlarm();
   }
-
   void playBombingSound() {
     FlutterRingtonePlayer.playAlarm();
 
@@ -84,8 +85,7 @@ class _CountdownPageState extends State<CountdownPage>
     setState(() {
       controller.duration = const Duration(seconds: 10);
     });
-    // Navigator.of(context, rootNavigator: true)
-    //     .pop(); // Close the dialog using the root navigator
+    soundPlayed = false; // Reset the flag when stopping the sound
     Navigator.pop(context);
   }
 
