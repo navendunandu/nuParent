@@ -205,4 +205,10 @@ class _DietaryIntakeTwoState extends State<DietaryIntakeTwo> {
       ),
     );
   }
+  @override
+  void dispose() {
+    // Stop text playback when the screen is disposed (navigating back)
+    flutterTts.stop();
+    super.dispose();
+  }
 }

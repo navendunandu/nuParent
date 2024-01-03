@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:nu_parent/brushing_instruction.dart';
 import 'package:nu_parent/dental_visit.dart';
@@ -142,7 +144,7 @@ class _ChildProfileState extends State<ChildDashboard> {
         backgroundColor: AppColors.lightblue,
         leading: IconButton(
           onPressed: () {
-            Navigator.pop(context);
+            exit(0);
           },
           icon: const Icon(Icons.arrow_back_ios_new),
         ),

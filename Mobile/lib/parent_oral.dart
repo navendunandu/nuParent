@@ -179,4 +179,10 @@ class _ParentOralHygieneState extends State<ParentOralHygiene> {
       ),
     );
   }
+  @override
+  void dispose() {
+    // Stop text playback when the screen is disposed (navigating back)
+    flutterTts.stop();
+    super.dispose();
+  }
 }

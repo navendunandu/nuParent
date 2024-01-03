@@ -187,4 +187,10 @@ class _PregnantOralHygieneState extends State<PregnantOralHygiene> {
       ),
     );
   }
+  @override
+  void dispose() {
+    // Stop text playback when the screen is disposed (navigating back)
+    flutterTts.stop();
+    super.dispose();
+  }
 }
