@@ -112,29 +112,18 @@ class _ChildProfileState extends State<ChildDashboard> {
     }
   }
 
-  void _childChange(String? selectedChildId) {
-    if (selectedChildId != null) {
-      Map<String, dynamic>? selectedChild;
+  void _childChange(Map<String, dynamic> selectedChild) {
+    print(selectedChild);
+    
+      setState(() {
+        id = selectedChild['id'] ?? '';
+        name = selectedChild['name'] ?? '';
+        gender = selectedChild['gender'] ?? '';
+        dob = selectedChild['dateOfBirth'] ?? '';
+        calculateAge(dob);
+      });
 
-      // Find the selected child in ChildDocs
-      for (Map<String, dynamic> child in ChildDocs) {
-        if (child['id'] == selectedChildId) {
-          selectedChild = child;
-          break;
-        }
-      }
-
-      if (selectedChild != null) {
-        setState(() {
-          id = selectedChild?['id'] ?? '';
-          name = selectedChild?['name'] ?? '';
-          gender = selectedChild?['gender'] ?? '';
-          dob = selectedChild?['dateOfBirth'] ?? '';
-          calculateAge(dob);
-        });
-      }
     }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -341,13 +330,13 @@ class _ChildProfileState extends State<ChildDashboard> {
                           ),
                           PopupMenuButton<String>(
                             icon: const Icon(Icons.keyboard_arrow_down_rounded),
-                            onSelected: _childChange, // Remove the parentheses
                             itemBuilder: (BuildContext context) {
                               return ChildDocs.map(
                                   (Map<String, dynamic> child) {
                                 return PopupMenuItem<String>(
                                   onTap: () {
-                                    _childChange(child['id']);
+                                    print(child);
+                                    _childChange(child);
                                   },
                                   value: child['id'],
                                   child: Text(child['name']),

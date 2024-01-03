@@ -27,14 +27,17 @@ class _ViewProfileState extends State<ViewProfile> {
   void calculateAge(String dateOfBirth) {
     try {
       DateTime birthDate = DateFormat("dd-MM-yyyy").parse(dateOfBirth);
+
+      // Get the current date
       DateTime currentDate = DateTime.now();
 
-      // print('Current Date: $currentDate');
-      // print('DOB: $birthDate');
-      // print('Current Month: ${currentDate.month}');
-      // print('Birth Month: ${birthDate.month}');
+      print('Current Date: $currentDate');
+      print('DOB: $birthDate');
+      print('Current Month: ${currentDate.month}');
+      print('Birth Month: ${birthDate.month}');
 
       int birthMonth = currentDate.month - birthDate.month;
+      birthMonth = birthMonth.abs();
 
       int age = currentDate.year - birthDate.year;
 
@@ -99,6 +102,9 @@ class _ViewProfileState extends State<ViewProfile> {
       Map<String, dynamic> documentData =
           document.data() as Map<String, dynamic>;
 
+      // Add the 'id' field to documentData
+      documentData['id'] = document.id;
+
       if (name.isEmpty) {
         name = documentData['name'];
         gender = documentData['gender'];
@@ -118,9 +124,18 @@ class _ViewProfileState extends State<ViewProfile> {
     }
   }
 
-  // void _childChange(String selectedChildId) {
-  //   print('Selected child ID: $selectedChildId');
-  // }
+  void _childChange(Map<String, dynamic> selectedChild) {
+    print(selectedChild);
+
+    setState(() {
+      id = selectedChild['id'] ?? '';
+      name = selectedChild['name'] ?? '';
+      gender = selectedChild['gender'] ?? '';
+      dob = selectedChild['dateOfBirth'] ?? '';
+      image = selectedChild['imageUrl'] ?? '';
+      calculateAge(dob);
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -264,6 +279,10 @@ class _ViewProfileState extends State<ViewProfile> {
                     itemBuilder: (BuildContext context) {
                       return ChildDocs.map((Map<String, dynamic> child) {
                         return PopupMenuItem<String>(
+                          onTap: () {
+                            print(child);
+                            _childChange(child);
+                          },
                           value: child['id'],
                           child: Text(child['name']),
                         );
