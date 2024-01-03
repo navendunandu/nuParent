@@ -28,7 +28,7 @@ class _BoxListState extends State<BoxList> {
   }
 }
 
-class Box extends StatelessWidget {
+class Box extends StatefulWidget {
   final FlutterTts flutterTts;
   final String text;
 
@@ -38,9 +38,27 @@ class Box extends StatelessWidget {
     required this.text,
   }) : super(key: key);
 
+  @override
+  _BoxState createState() => _BoxState();
+}
+
+class _BoxState extends State<Box> {
+  bool isPlaying = false;
+
   Future speak(String stext) async {
-    await flutterTts.setLanguage("en-US");
-    await flutterTts.speak(stext);
+    if (isPlaying) {
+      print('Speech Stops');
+      widget.flutterTts.stop(); // Stop playback if currently playing
+      setState(() {
+        isPlaying = false;
+      });
+    } else {
+      await widget.flutterTts.setLanguage("en-US");
+      await widget.flutterTts.speak(stext);
+      setState(() {
+        isPlaying = true;
+      });
+    }
   }
 
   @override
@@ -64,15 +82,15 @@ class Box extends StatelessWidget {
           child: Row(
             children: [
               Expanded(
-                child: Text(text),
+                child: Text(widget.text),
               ),
               Padding(
                 padding: EdgeInsets.all(8.0),
                 child: IconButton(
                   onPressed: () {
-                    speak(text);
+                    speak(widget.text);
                   },
-                  icon: Icon(Icons.volume_up_rounded),
+                  icon: Icon(isPlaying ? Icons.stop : Icons.volume_up_rounded),
                 ),
               )
             ],
