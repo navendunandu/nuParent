@@ -36,32 +36,33 @@ class _ChildProfileState extends State<ChildDashboard> {
     try {
       DateTime birthDate = DateFormat("dd-MM-yyyy").parse(dateOfBirth);
 
-      // Get the current date
       DateTime currentDate = DateTime.now();
+      Duration difference = currentDate.difference(birthDate);
 
-      print('Current Date: $currentDate');
-      print('DOB: $birthDate');
-      print('Current Month: ${currentDate.month}');
-      print('Birth Month: ${birthDate.month}');
-
-      int birthMonth = currentDate.month - birthDate.month;
-      birthMonth = birthMonth.abs();
-
-      int age = currentDate.year - birthDate.year;
-
-      // print('Calculated Birth Month: $birthMonth');
-
-      if (currentDate.month < birthDate.month ||
-          (currentDate.month == birthDate.month &&
-              currentDate.day < birthDate.day)) {
-        age--;
+      if (difference.inDays < 365) {
+        int ageInMonths = (difference.inDays / 30).floor();
+        setState(() {
+          childAge = ageInMonths;
+          childMonth = 0;
+        });
+      } else if (difference.inDays < 365 * 2) {
+        // Less than two years
+        int ageInYears = (difference.inDays / 365).floor();
+        print('Calculated Age: $ageInYears year');
+        setState(() {
+          childAge = ageInYears;
+          childMonth = 0;
+        });
+      } else {
+        // More than two years
+        int ageInYears = (difference.inDays / 365).floor();
+        int ageInMonths = ((difference.inDays % 365) / 30).floor();
+        print('Calculated Age: $ageInYears years and $ageInMonths months');
+        setState(() {
+          childAge = ageInYears;
+          childMonth = ageInMonths;
+        });
       }
-
-      // print('Calculated Age: $age');
-      setState(() {
-        childAge = age;
-        childMonth = birthMonth;
-      });
     } catch (e) {
       print("Error parsing date of birth: $e");
     }
@@ -114,16 +115,15 @@ class _ChildProfileState extends State<ChildDashboard> {
 
   void _childChange(Map<String, dynamic> selectedChild) {
     print(selectedChild);
-    
-      setState(() {
-        id = selectedChild['id'] ?? '';
-        name = selectedChild['name'] ?? '';
-        gender = selectedChild['gender'] ?? '';
-        dob = selectedChild['dateOfBirth'] ?? '';
-        calculateAge(dob);
-      });
 
-    }
+    setState(() {
+      id = selectedChild['id'] ?? '';
+      name = selectedChild['name'] ?? '';
+      gender = selectedChild['gender'] ?? '';
+      dob = selectedChild['dateOfBirth'] ?? '';
+      calculateAge(dob);
+    });
+  }
 
   @override
   Widget build(BuildContext context) {

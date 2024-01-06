@@ -20,40 +20,35 @@ class _ViewProfileState extends State<ViewProfile> {
   String gender = '';
   String dob = '';
   String image = 'assets/dummy-profile-pic.png';
-  int? childAge;
+  String? childAge;
   int? childMonth;
   List<Map<String, dynamic>> childDataList = [];
-
   void calculateAge(String dateOfBirth) {
     try {
       DateTime birthDate = DateFormat("dd-MM-yyyy").parse(dateOfBirth);
-
-      // Get the current date
       DateTime currentDate = DateTime.now();
+      Duration difference = currentDate.difference(birthDate);
 
-      print('Current Date: $currentDate');
-      print('DOB: $birthDate');
-      print('Current Month: ${currentDate.month}');
-      print('Birth Month: ${birthDate.month}');
-
-      int birthMonth = currentDate.month - birthDate.month;
-      birthMonth = birthMonth.abs();
-
-      int age = currentDate.year - birthDate.year;
-
-      // print('Calculated Birth Month: $birthMonth');
-
-      if (currentDate.month < birthDate.month ||
-          (currentDate.month == birthDate.month &&
-              currentDate.day < birthDate.day)) {
-        age--;
+      if (difference.inDays < 365) {
+        int ageInMonths = (difference.inDays / 30).floor();
+        if (ageInMonths < 1) {
+          setState(() {
+            childAge = "${difference.inDays} Days";
+            childMonth = 0;
+          });
+        } else if (ageInMonths > 0 && ageInMonths < 13) {
+          setState(() {
+            childAge = "${ageInMonths} Months";
+            childMonth = 0;
+          });
+        }
+      } else {
+        int ageInYears = (difference.inDays / 365).floor();
+        setState(() {
+          childAge = "${ageInYears} Years"; // Convert int to String
+          childMonth = 0;
+        });
       }
-
-      // print('Calculated Age: $age');
-      setState(() {
-        childAge = age;
-        childMonth = birthMonth;
-      });
     } catch (e) {
       print("Error parsing date of birth: $e");
     }
@@ -114,14 +109,6 @@ class _ViewProfileState extends State<ViewProfile> {
       }
       ChildDocs.add(documentData);
     });
-  }
-
-  String displayAge() {
-    if (childAge == 0) {
-      return "$childMonth months";
-    } else {
-      return "$childAge years";
-    }
   }
 
   void _childChange(Map<String, dynamic> selectedChild) {
@@ -260,9 +247,11 @@ class _ViewProfileState extends State<ViewProfile> {
                             image,
                             fit: BoxFit.cover,
                             height: 100,
+                            width: 80,
                           )
                         : Image.asset('assets/dummy-profile-pic.png',
-                            height: 100, fit: BoxFit.cover)),
+                            height: 100, 
+                            width: 80, fit: BoxFit.cover)),
                   ),
                   const SizedBox(
                     width: 10,
@@ -350,7 +339,7 @@ class _ViewProfileState extends State<ViewProfile> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            displayAge(),
+                            childAge!,
                             style: const TextStyle(
                                 fontWeight: FontWeight.w500, fontSize: 18),
                           ),

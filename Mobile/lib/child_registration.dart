@@ -333,25 +333,29 @@ class _RegistrationChildState extends State<RegistrationChild> {
                           const SizedBox(
                             height: 20,
                           ),
-                          Center(
-                            child: ElevatedButton(
-                              onPressed: () {
-                                _registerChild();
-                              },
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor: AppColors.primaryColor,
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(10.0),
+                          Row(
+                            children: [
+                              Expanded(
+                                child: ElevatedButton(
+                                  onPressed: () {
+                                    _registerChild();
+                                  },
+                                  style: ElevatedButton.styleFrom(
+                                    backgroundColor: AppColors.primaryColor,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(10.0),
+                                    ),
+                                    padding:
+                                        const EdgeInsets.fromLTRB(0, 15, 0, 15),
+                                  ),
+                                  child: const Text(
+                                    'Save',
+                                    style: TextStyle(
+                                        fontSize: 20, color: AppColors.white),
+                                  ),
                                 ),
-                                padding: const EdgeInsets.fromLTRB(
-                                    160.0, 15, 160.0, 15),
                               ),
-                              child: const Text(
-                                'Save',
-                                style: TextStyle(
-                                    fontSize: 20, color: AppColors.white),
-                              ),
-                            ),
+                            ],
                           ),
                         ],
                       ),

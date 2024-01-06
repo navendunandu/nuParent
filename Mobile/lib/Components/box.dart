@@ -31,12 +31,14 @@ class _BoxListState extends State<BoxList> {
 class Box extends StatefulWidget {
   final FlutterTts flutterTts;
   final String text;
+  final Color colour;
 
   const Box({
-    Key? key,
-    required this.flutterTts,
-    required this.text,
-  }) : super(key: key);
+  Key? key,
+  required this.flutterTts,
+  required this.text,
+  this.colour = AppColors.primaryColor, // Use the hexadecimal value of your color
+}) : super(key: key);
 
   @override
   _BoxState createState() => _BoxState();
@@ -48,7 +50,7 @@ class _BoxState extends State<Box> {
   Future speak(String stext) async {
     if (isPlaying) {
       print('Speech Stops');
-      widget.flutterTts.stop(); // Stop playback if currently playing
+      widget.flutterTts.stop(); 
       setState(() {
         isPlaying = false;
       });
@@ -82,7 +84,10 @@ class _BoxState extends State<Box> {
           child: Row(
             children: [
               Expanded(
-                child: Text(widget.text),
+                child: Text(widget.text, style: TextStyle(
+                  color: widget.colour,
+                  fontWeight: FontWeight.w500
+                ),),
               ),
               Padding(
                 padding: EdgeInsets.all(8.0),
@@ -96,7 +101,7 @@ class _BoxState extends State<Box> {
                           : Icons.volume_up_rounded,
                       color: AppColors.primaryColor),
                 ),
-              )
+              ),
             ],
           ),
         ),
