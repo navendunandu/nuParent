@@ -23,6 +23,7 @@ class AppColors {
   static const darkblue = Color.fromARGB(255, 13, 83, 188);
   static const tileprimaryblue = Color.fromARGB(255, 187, 222, 251);
   static const tilesecondaryblue = Color.fromARGB(255, 227, 242, 253);
+  static const red =  Color.fromARGB(255, 187, 29, 29);
 }
 
 class MainApp extends StatelessWidget {

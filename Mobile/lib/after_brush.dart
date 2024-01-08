@@ -62,7 +62,7 @@ class _AfterBrushState extends State<AfterBrush> {
                   return Box(
                     text: items[index],
                     flutterTts: flutterTts,
-                    colour: Colors.red, // Replace with your FlutterTts object
+                    colour: AppColors.red, 
                   );
                 },
               ),

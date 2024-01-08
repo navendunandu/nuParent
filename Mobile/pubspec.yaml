@@ -39,3 +39,7 @@ flutter:
   uses-material-design: true
   assets:
     - assets/
+  fonts:
+    - family: Sansation
+      fonts:
+        - asset: fonts/Sansation_Regular.ttf

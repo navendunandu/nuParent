@@ -31,14 +31,17 @@ class _BoxListState extends State<BoxList> {
 class Box extends StatefulWidget {
   final FlutterTts flutterTts;
   final String text;
+  final String title;
   final Color colour;
 
   const Box({
-  Key? key,
-  required this.flutterTts,
-  required this.text,
-  this.colour = AppColors.primaryColor, // Use the hexadecimal value of your color
-}) : super(key: key);
+    Key? key,
+    required this.flutterTts,
+    required this.text,
+    this.title = '',
+    this.colour =
+        AppColors.primaryColor, // Use the hexadecimal value of your color
+  }) : super(key: key);
 
   @override
   _BoxState createState() => _BoxState();
@@ -50,7 +53,7 @@ class _BoxState extends State<Box> {
   Future speak(String stext) async {
     if (isPlaying) {
       print('Speech Stops');
-      widget.flutterTts.stop(); 
+      widget.flutterTts.stop();
       setState(() {
         isPlaying = false;
       });
@@ -66,7 +69,7 @@ class _BoxState extends State<Box> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(top: 5, bottom: 5),
+      padding: const EdgeInsets.only(top: 8, bottom: 8),
       child: Container(
         decoration: BoxDecoration(
           color: AppColors.lightblue,
@@ -80,27 +83,50 @@ class _BoxState extends State<Box> {
           ],
         ),
         child: Padding(
-          padding: const EdgeInsets.all(12),
+          padding: const EdgeInsets.all(0),
           child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Expanded(
-                child: Text(widget.text, style: TextStyle(
-                  color: widget.colour,
-                  fontWeight: FontWeight.w500
-                ),),
-              ),
-              Padding(
-                padding: EdgeInsets.all(8.0),
-                child: IconButton(
-                  onPressed: () {
-                    speak(widget.text);
-                  },
-                  icon: Icon(
-                      isPlaying
-                          ? Icons.stop_circle_rounded
-                          : Icons.volume_up_rounded,
-                      color: AppColors.primaryColor),
+              Flexible(
+                child: Padding(
+                  padding: const EdgeInsets.fromLTRB(10, 10, 0, 10),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      if (widget.title != '')
+                        Text(
+                          widget.title,
+                          style: const TextStyle(
+                            color: AppColors.primaryColor,
+                            letterSpacing: .5,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                      Text(
+                        widget.text,
+                        style: TextStyle(
+                            color: widget.colour,
+                            letterSpacing: .5,
+                            fontWeight: FontWeight.w600,
+                            height: 1.5),
+                      ),
+                    ],
+                  ),
                 ),
+              ),
+              IconButton(
+                onPressed: () {
+                  if (widget.title == '') {
+                    speak(widget.text);
+                  } else {
+                    speak("${widget.title}. ${widget.text}");
+                  }
+                },
+                icon: Icon(
+                    isPlaying
+                        ? Icons.stop_circle_rounded
+                        : Icons.volume_up_rounded,
+                    color: AppColors.primaryColor),
               ),
             ],
           ),
