@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:nu_parent/Reminder.dart';
 import 'package:nu_parent/main.dart';
 import 'package:nu_parent/Components/appbar.dart';
 import 'package:flutter_tts/flutter_tts.dart';
@@ -15,9 +14,22 @@ class BeforeBrush extends StatefulWidget {
 class _BeforeBrushState extends State<BeforeBrush> {
   FlutterTts flutterTts = FlutterTts();
 
+  bool isPlaying = false;
+
   Future speak(String stext) async {
-    await flutterTts.setLanguage("en-US");
-    await flutterTts.speak(stext);
+    if (isPlaying) {
+      print('Speech Stops');
+      flutterTts.stop();
+      setState(() {
+        isPlaying = false;
+      });
+    } else {
+      await flutterTts.setLanguage("en-US");
+      await flutterTts.speak(stext);
+      setState(() {
+        isPlaying = true;
+      });
+    }
   }
 
   List<Map<String, dynamic>> items1 = [
@@ -39,11 +51,14 @@ class _BeforeBrushState extends State<BeforeBrush> {
   ];
 
   final List<String> item2 = [
-    'You should never store your brush in a closed or airtight container, as bacteria love moisture and will thrive in this environment. Instead, place the brush in a cup or holder in an upright position to ensure that it dries off thoroughly. Avoid putting it in a drawer or cabinet, as well.',
-    'A healthy mouth will require a clean and sanitary toothbrush, and by taking the time to make sure that you are storing yours properly, you can ensure that you are cleaning your teeth as effectively as possible.',
-    'Parents or carers should brush the teeth more than once daily.',
-    'Brush your child’s teeth last thing at night before bed and on 1 other occasion.',
+    'Do not wet the toothbrush before use.',
+    'A healthy mouth will require a clean and sanitary toothbrush, and by taking the time to make sure that you are storing yours properly, you can ensure that you are cleaning your teeth as effectively as possible.Seek advice from a dentist on whether your child would benefit from interdental flossing.',
+    'Floss before brushing. If you floss after brushing, food, plaque, and bacteria will remain in your mouth until you brush again.',
+    'The fluoride in your toothpaste is also better able to protect your teeth when particles are removed first.',
   ];
+
+  final String items3 =
+      'Do not wet the toothbrush before use. A healthy mouth will require a clean and sanitary toothbrush, and by taking the time to make sure that you are storing yours properly, you can ensure that you are cleaning your teeth as effectively as possible.Seek advice from a dentist on whether your child would benefit from interdental flossing. Floss before brushing. If you floss after brushing, food, plaque, and bacteria will remain in your mouth until you brush again. The fluoride in your toothpaste is also better able to protect your teeth when particles are removed first.';
 
   @override
   Widget build(BuildContext context) {
@@ -65,32 +80,20 @@ class _BeforeBrushState extends State<BeforeBrush> {
             ),
             const Center(
               child: Text(
-                'Preparing to Brush',
+                'Before Brushing',
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   color: AppColors.primaryColor,
-                  fontWeight: FontWeight.w500,
+                  fontWeight: FontWeight.w600,
                   fontSize: 18,
                 ),
               ),
             ),
             Padding(
               padding: const EdgeInsets.fromLTRB(50, 10, 50, 10),
-              child: Container(
-                decoration: BoxDecoration(
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withOpacity(0.2),
-                      spreadRadius: 1,
-                      blurRadius: 0,
-                      offset: const Offset(
-                          4, 4), // Adjust the shadow offset as needed
-                    ),
-                  ],
-                ),
-                child: Image.asset(
-                  'assets/MotherChild.png',
-                ),
+              child: Image.asset(
+                'assets/MotherChild.png',
+                height: 200,
               ),
             ),
             const Center(
@@ -98,8 +101,8 @@ class _BeforeBrushState extends State<BeforeBrush> {
                 'How to Choose the Best Toothbrush',
                 textAlign: TextAlign.center,
                 style: TextStyle(
-                  color: AppColors.primaryColor,
-                  fontWeight: FontWeight.w500,
+                  color: AppColors.red,
+                  fontWeight: FontWeight.w600,
                   fontSize: 18,
                 ),
               ),
@@ -141,34 +144,81 @@ class _BeforeBrushState extends State<BeforeBrush> {
               height: 25,
             ),
             Padding(
-              padding: const EdgeInsets.only(left: 10.0, right: 10.0),
-              child: ListView.builder(
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                itemCount: item2.length,
-                itemBuilder: (BuildContext context, int index) {
-                  return Box(
-                    text: item2[index],
-                    flutterTts: flutterTts,
-                    colour: AppColors.red,
-                  );
-                },
+              padding: const EdgeInsets.all(8),
+              child: Container(
+                decoration: BoxDecoration(
+                  color: AppColors.lightblue,
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.grey.withOpacity(0.5),
+                      spreadRadius: 2.0,
+                      blurRadius: 4.0,
+                      offset: const Offset(0, 2),
+                    ),
+                  ],
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(10),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Flexible(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            for (String item in item2)
+                            Padding(
+                              padding: const EdgeInsets.only(top: 7, bottom: 7),
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.fromLTRB(8, 6, 10, 0),
+                                    child: Icon(Icons.circle, size: 12, color: AppColors.red,),
+                                  ),
+                                  // Text('\u2022',style: TextStyle(fontSize: 25, fontWeight: FontWeight.w600, color: AppColors.red)),
+                                  Flexible(child: Text(item,style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600, color: AppColors.red)))
+                                ],
+                              ),
+                            )
+                              // Text(
+                              //   '\u2022 $item', // Unicode character for bullet point
+                              //   style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600, color: AppColors.red),
+                              // ),
+                          ],
+                        ),
+                      ),
+                      IconButton(
+                        onPressed: () {
+                          speak(items3);
+                        },
+                        icon: Icon(
+                          isPlaying
+                              ? Icons.stop_circle_rounded
+                              : Icons.volume_up_rounded,
+                          color: AppColors.primaryColor,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
               ),
             ),
-            const SizedBox(
-              height: 30,
-            ),
-            Center(
-                child: ElevatedButton(
-              onPressed: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => const Reminder()));
-              },
-              child: const Text(
-                'Set Reminder',
-                style: TextStyle(fontSize: 20),
-              ),
-            )),
+            // Padding(
+            //   padding: const EdgeInsets.only(left: 10.0, right: 10.0),
+            //   child: ListView.builder(
+            //     shrinkWrap: true,
+            //     physics: const NeverScrollableScrollPhysics(),
+            //     itemCount: item2.length,
+            //     itemBuilder: (BuildContext context, int index) {
+            //       return Box(
+            //         text: item2[index],
+            //         flutterTts: flutterTts,
+            //         colour: AppColors.red,
+            //       );
+            //     },
+            //   ),
+            // ),
             const SizedBox(
               height: 50,
             ),

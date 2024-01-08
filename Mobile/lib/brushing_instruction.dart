@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:nu_parent/Components/appbar.dart';
 import 'package:nu_parent/after_brush.dart';
+import 'package:nu_parent/before_brush.dart';
 import 'package:nu_parent/main.dart';
 import 'package:nu_parent/prepare_brush.dart';
 
@@ -96,29 +97,34 @@ class _BrushingInstructionState extends State<BrushingInstruction> {
                           )),
                         ),
                       ),
-                      Container(
-                        height: 150,
-                        width: 150,
-                        decoration: BoxDecoration(
-                            color: AppColors.primaryColor,
-                            borderRadius:
-                                const BorderRadius.all(Radius.circular(10)),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.black.withOpacity(0.2),
-                                spreadRadius: 1,
-                                blurRadius: 5,
-                                offset: const Offset(0, 2),
-                              )
-                            ]),
-                        child: const Center(
-                            child: Text(
-                          'Before Brushing',
-                          style: TextStyle(
-                              color: AppColors.white,
-                              fontWeight: FontWeight.w500,
-                              fontSize: 18),
-                        )),
+                      GestureDetector(
+                        onTap: (){
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => const BeforeBrush(),));
+                        },
+                        child: Container(
+                          height: 150,
+                          width: 150,
+                          decoration: BoxDecoration(
+                              color: AppColors.primaryColor,
+                              borderRadius:
+                                  const BorderRadius.all(Radius.circular(10)),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.black.withOpacity(0.2),
+                                  spreadRadius: 1,
+                                  blurRadius: 5,
+                                  offset: const Offset(0, 2),
+                                )
+                              ]),
+                          child: const Center(
+                              child: Text(
+                            'Before Brushing',
+                            style: TextStyle(
+                                color: AppColors.white,
+                                fontWeight: FontWeight.w500,
+                                fontSize: 18),
+                          )),
+                        ),
                       ),
                     ],
                   ),
