@@ -6,7 +6,8 @@ import 'package:nu_parent/main.dart';
 import 'package:nu_parent/prepare_brush.dart';
 
 class BrushingInstruction extends StatefulWidget {
-  const BrushingInstruction({super.key});
+  final int age;
+  const BrushingInstruction({Key? key, this.age=0}) :super(key: key);
 
   @override
   State<BrushingInstruction> createState() => _BrushingInstructionState();
@@ -164,7 +165,7 @@ class _BrushingInstructionState extends State<BrushingInstruction> {
                       ),
                       GestureDetector(
                         onTap: (){
-                          Navigator.push(context, MaterialPageRoute(builder: (context) => const AfterBrush(),));
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => AfterBrush(age: widget.age),));
                         },
                         child: Container(
                           height: 150,

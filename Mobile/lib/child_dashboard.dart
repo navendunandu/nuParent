@@ -28,7 +28,7 @@ class _ChildProfileState extends State<ChildDashboard> {
   String name = '';
   String gender = '';
   String dob = '';
-  int? childAge;
+  late int childAge;
   int? childMonth;
   List<Map<String, dynamic>> childDataList = [];
 
@@ -476,7 +476,7 @@ class _ChildProfileState extends State<ChildDashboard> {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => const BrushingInstruction()));
+                        builder: (context) => BrushingInstruction(age: childAge,)));
               },
               child: Container(
                 height: 150,
