@@ -81,7 +81,7 @@ class _LoginScreenState extends State<LoginScreen> {
             Padding(
               padding: const EdgeInsets.only(top: 50.0),
               child: Image.asset('assets/TeethFamily.jpg',
-                  height: 400, fit: BoxFit.fill),
+                  height: 400, fit: BoxFit.cover),
             ),
             Positioned(
                 top: 20,

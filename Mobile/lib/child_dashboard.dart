@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:nu_parent/brushing_instruction.dart';
+import 'package:nu_parent/childprofile_pop.dart';
 import 'package:nu_parent/dental_visit.dart';
 import 'package:nu_parent/dietary_intake.dart';
 import 'package:nu_parent/dietary_intake_birth.dart';
@@ -71,39 +72,50 @@ class _ChildProfileState extends State<ChildDashboard> {
   List<Map<String, dynamic>> ChildDocs = [];
 
   Future<void> loadChildData() async {
-    final user = FirebaseAuth.instance.currentUser;
-    final userId = user?.uid;
-    final firestore = FirebaseFirestore.instance;
-    final childCollection = firestore.collection('child');
+  final user = FirebaseAuth.instance.currentUser;
+  final userId = user?.uid;
+  final firestore = FirebaseFirestore.instance;
+  final childCollection = firestore.collection('child');
 
-    final query = childCollection.where('userId', isEqualTo: userId);
+  final query = childCollection.where('userId', isEqualTo: userId);
 
-    QuerySnapshot querySnapshot;
-    try {
-      querySnapshot = await query.get();
-    } catch (error) {
-      print('Error getting documents: $error');
-      // You might want to throw an error or handle it as needed
-      rethrow;
-    }
-    ChildDocs.clear();
-    querySnapshot.docs.forEach((DocumentSnapshot document) {
-      // Access the data in each document
-      // print('${document.id} => ${document.data()}');
-      Map<String, dynamic> documentData =
-          document.data() as Map<String, dynamic>;
-
-      if (name.isEmpty) {
-        id = documentData['id'];
-        name = documentData['name'];
-        gender = documentData['gender'];
-        dob = documentData['dateOfBirth'];
-        calculateAge(dob);
-      }
-      ChildDocs.add(documentData);
-      // print('Name: $name');
-    });
+  QuerySnapshot querySnapshot;
+  try {
+    querySnapshot = await query.get();
+  } catch (error) {
+    print('Error getting documents: $error');
+    // You might want to throw an error or handle it as needed
+    rethrow;
   }
+  
+  if (querySnapshot.docs.isEmpty) {
+    // Redirect to a new page because there is no data
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(builder: (context) => ChildProfilePop(docId: user!.uid)), // Replace 'NoChildDataPage' with the actual new page widget
+    );
+    return;
+  }
+
+  ChildDocs.clear();
+  querySnapshot.docs.forEach((DocumentSnapshot document) {
+    // Access the data in each document
+    // print('${document.id} => ${document.data()}');
+    Map<String, dynamic> documentData =
+        document.data() as Map<String, dynamic>;
+
+    if (name.isEmpty) {
+      id = documentData['id'];
+      name = documentData['name'];
+      gender = documentData['gender'];
+      dob = documentData['dateOfBirth'];
+      calculateAge(dob);
+    }
+    ChildDocs.add(documentData);
+    // print('Name: $name');
+  });
+}
+
 
   String displayAge() {
     if (childAge == 0) {
@@ -160,41 +172,47 @@ class _ChildProfileState extends State<ChildDashboard> {
           ),
         ],
       ),
-      body: FutureBuilder(
-        future: loadChildData(),
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            // Return a loading indicator while data is being fetched
-            return Container(
-              alignment: Alignment.center,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Image.asset(
-                    'assets/Logo.png', // Replace with the path to your logo
-                    height: 150,
-                  ),
-                  const SizedBox(height: 40),
-                  const CircularProgressIndicator(),
-                ],
-              ),
-            );
-          } else if (snapshot.hasError) {
-            // Handle the error if loading fails
-            return Center(
-              child: Text('Error loading data: ${snapshot.error}'),
-            );
-          } else {
-            // Data has been successfully loaded, display the main content
-            return buildMainContent();
-          }
-        },
+      body: RefreshIndicator(
+        onRefresh: () async {
+        // Implement the logic to reload data here
+        await loadChildData();
+      },
+        child: FutureBuilder(
+          future: loadChildData(),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              // Return a loading indicator while data is being fetched
+              return Container(
+                alignment: Alignment.center,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Image.asset(
+                      'assets/Logo.png', // Replace with the path to your logo
+                      height: 150,
+                    ),
+                    const SizedBox(height: 40),
+                    const CircularProgressIndicator(),
+                  ],
+                ),
+              );
+            } else if (snapshot.hasError) {
+              // Handle the error if loading fails
+              return Center(
+                child: Text('Error loading data: ${snapshot.error}'),
+              );
+            } else {
+              // Data has been successfully loaded, display the main content
+              return buildMainContent();
+            }
+          },
+        ),
       ),
     );
   }
 
   Widget buildMainContent() {
-    return Column(
+    return ListView(
       children: [
         Container(
           height: 250,

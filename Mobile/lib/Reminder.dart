@@ -2,12 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:nu_parent/main.dart';
 
 class Reminder extends StatefulWidget {
-  const Reminder({super.key});
+  const Reminder({Key? key}) : super(key: key);
 
   @override
   State<Reminder> createState() => _ReminderState();
 }
-
 class _ReminderState extends State<Reminder> {
   @override
   Widget build(BuildContext context) {
@@ -23,11 +22,12 @@ class _ReminderState extends State<Reminder> {
       body: Container(
         height: double.infinity,
         decoration: const BoxDecoration(
-            image: DecorationImage(
-          image: AssetImage('assets/Vector-1.png'),
-          fit: BoxFit.scaleDown,
-          alignment: Alignment.bottomCenter,
-        )),
+          image: DecorationImage(
+            image: AssetImage('assets/Vector-1.png'),
+            fit: BoxFit.scaleDown,
+            alignment: Alignment.bottomCenter,
+          ),
+        ),
         child: SingleChildScrollView(
           child: Center(
             child: Padding(

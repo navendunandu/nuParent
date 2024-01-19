@@ -29,6 +29,8 @@ dependencies:
   flutter_tts: ^3.8.5
   video_player: ^2.8.1
   chewie: ^1.7.4
+  liquid_pull_to_refresh: ^3.0.1
+  progress_dialog_null_safe: ^1.0.7
 
 dev_dependencies:
   flutter_test:

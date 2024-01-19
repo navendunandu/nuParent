@@ -22,7 +22,6 @@ import Brushing from './Components/Brushing';
 import OralHygiene from './Components/OralHygiene';
 import Dietaryintake from './Components/Dietaryintake';
 import DashboardIcon from '@mui/icons-material/Dashboard';
-import NotificationsActiveIcon from '@mui/icons-material/NotificationsActive';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import ChildCareIcon from '@mui/icons-material/ChildCare';
 import LogoutIcon from '@mui/icons-material/Logout';
@@ -30,9 +29,6 @@ import CleanHandsTwoToneIcon from '@mui/icons-material/CleanHandsTwoTone';
 import DinnerDiningIcon from '@mui/icons-material/DinnerDining'
 import { GiToothbrush } from "react-icons/gi";
 import { FaTooth } from "react-icons/fa";
-
-
-
 import { Route, Routes, Link, useLocation, } from 'react-router-dom';
 import { Stack } from '@mui/material';
 import Logo from '../assets/nuParent.png'
@@ -92,7 +88,7 @@ const ResponsiveDrawer = (props) => {
             </ListItemButton>
           </Link>
         </ListItem>
-        <ListItem disablePadding className='inner-box'>
+        {/* <ListItem disablePadding className='inner-box'>
           <Link to={'/Admin/Reminder'} className={`sidebar-btn ${location.pathname === '/Admin/Reminder' ? 'active-link' : ''}`} onClick={handleDrawerToggle} >
             <ListItemButton >
               <ListItemIcon>
@@ -101,7 +97,7 @@ const ResponsiveDrawer = (props) => {
               <ListItemText primary='Reminder' />
             </ListItemButton>
           </Link>
-        </ListItem>
+        </ListItem> */}
         <ListItem disablePadding className='inner-box'>
           <Link to={'/Admin/UploadVideos'} className={`sidebar-btn ${location.pathname === '/Admin/UploadVideos' ? 'active-link' : ''}`} onClick={handleDrawerToggle}>
             <ListItemButton >

@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-// import 'package:nu_parent/main.dart';
+import 'package:nu_parent/main.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:nu_parent/video_player.dart';
 import 'package:video_player/video_player.dart';
-import 'package:chewie/chewie.dart';
 
 class HowToVideos extends StatelessWidget {
   const HowToVideos({super.key});
@@ -59,58 +57,59 @@ class VideoPlayerWidget extends StatefulWidget {
 }
 
 class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
-  late ChewieController _chewieController;
+  late VideoPlayerController _controller;
 
   @override
   void initState() {
     super.initState();
-
-    _chewieController = ChewieController(
-      videoPlayerController: VideoPlayerController.network(widget.videoUrl),
-      autoPlay: true,
-      looping: false,
-    );
+    _controller = VideoPlayerController.network(widget.videoUrl)
+      ..initialize().then((_) {
+        if (mounted) {
+          setState(() {});
+        }
+      })
+      ..addListener(() {
+        if (_controller.value.hasError) {
+          // Handle video playback error
+          print('Video playback error: ${_controller.value.errorDescription}');
+        }
+      });
   }
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        GestureDetector(
-          onTap: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => FullScreenVideoPlayer(
-                  videoUrl: widget.videoUrl,
-                ),
-              ),
-            );
-          },
-          child: Stack(
-            children: [
-              Chewie(
-                controller: _chewieController,
-              ),
-              Center(
-                child: _chewieController.videoPlayerController.value.isBuffering
-                    ? CircularProgressIndicator()
-                    : SizedBox.shrink(),
-              ),
-            ],
+    return GestureDetector(
+      onTap: () {
+        _onVideoTap();
+      },
+      child: Column(
+        children: [
+          _controller.value.isInitialized
+              ? AspectRatio(
+                  aspectRatio: 16 / 9,
+                  child: VideoPlayer(_controller),
+                )
+              : CircularProgressIndicator(),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text(widget.videoTitle),
           ),
-        ),
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Text(widget.videoTitle),
-        ),
-      ],
+        ],
+      ),
     );
+  }
+
+  void _onVideoTap() {
+    if (_controller.value.isPlaying) {
+      _controller.pause();
+    } else {
+      _controller.play();
+    }
   }
 
   @override
   void dispose() {
-    _chewieController.dispose();
+    _controller.dispose();
     super.dispose();
   }
 }

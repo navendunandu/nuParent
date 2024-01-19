@@ -32,7 +32,6 @@ class _RegistrationChildState extends State<RegistrationChild> {
   }
 
   final _nameController = TextEditingController();
-  final _addressController = TextEditingController();
   final _dateController = TextEditingController();
   XFile? _selectedImage;
   String? _imageUrl;
@@ -72,7 +71,6 @@ class _RegistrationChildState extends State<RegistrationChild> {
         'name': _nameController.text,
         'dateOfBirth': _dateController.text,
         'gender': selectedGender,
-        'address': _addressController.text,
         'userId': _receivedDocId,
         // Add more fields as needed
       });
@@ -313,26 +311,7 @@ class _RegistrationChildState extends State<RegistrationChild> {
                           const SizedBox(
                             height: 20,
                           ),
-                          TextFormField(
-                            decoration: InputDecoration(
-                              hintText: 'Address Line',
-                              contentPadding: const EdgeInsets.symmetric(
-                                vertical: 20.0,
-                                horizontal: 25.0,
-                              ),
-                              filled: true,
-                              fillColor:
-                                  const Color.fromARGB(241, 241, 241, 255),
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(10.0),
-                                borderSide: BorderSide.none,
-                              ),
-                            ),
-                            controller: _addressController,
-                          ),
-                          const SizedBox(
-                            height: 20,
-                          ),
+                          
                           Row(
                             children: [
                               Expanded(

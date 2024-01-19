@@ -10,6 +10,7 @@ import 'package:nu_parent/childprofile_pop.dart';
 import 'dart:io';
 import 'package:nu_parent/main.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:progress_dialog_null_safe/progress_dialog_null_safe.dart';
 
 class RegistrationScreen extends StatefulWidget {
   const RegistrationScreen({Key? key}) : super(key: key);
@@ -31,6 +32,14 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   String? _imageUrl;
   DateTime? _selectedDate;
   String? _selectedGender = '';
+
+  late ProgressDialog _progressDialog;
+
+  @override
+  void initState() {
+    super.initState();
+    _progressDialog = ProgressDialog(context);
+  }
 
   bool _obscureText = true;
   // bool _isChecked = false;
@@ -78,6 +87,9 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
 
   Future<void> _registerUser() async {
     try {
+      // Show the loading dialog
+      _progressDialog.show();
+
       UserCredential userCredential =
           await FirebaseAuth.instance.createUserWithEmailAndPassword(
         email: _emailController.text,
@@ -88,17 +100,22 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
       if (userCredential != null) {
         await _storeUserData(userCredential.user!.uid);
         Fluttertoast.showToast(
-          msg: "Regsitration Successfull",
+          msg: "Registration Successful",
           toastLength: Toast.LENGTH_SHORT,
           gravity: ToastGravity.BOTTOM,
           backgroundColor: Colors.green,
           textColor: Colors.white,
         );
+        _progressDialog.hide();
+        Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => ChildProfilePop(docId: userCredential.user!.uid)),
+      );
       }
     } catch (e) {
       print("Error registering user: $e");
       // Handle error, show message or take appropriate action
-    }
+    } 
   }
 
   Future<void> _storeUserData(String userId) async {
@@ -112,17 +129,13 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
         'prefix': _prefix,
         'gender': _selectedGender,
         'address': _addressController.text,
+        'password': _passController.text,
         // Add more fields as needed
       });
 
       await _uploadImage(userId);
-
-      // Navigate to a new page with the document ID
-      // ignore: use_build_context_synchronously
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => ChildProfilePop(docId: userId)),
-      );
+      
+      
     } catch (e) {
       print("Error storing user data: $e");
       // Handle error, show message or take appropriate action

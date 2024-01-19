@@ -4,6 +4,7 @@ import { Box, Button, Container, Stack, TextField, Typography, Dialog, DialogAct
 import DeleteIcon from '@mui/icons-material/Delete';
 import { db } from '../../config/firebase';
 import { addDoc, collection, getDocs, deleteDoc, doc } from 'firebase/firestore';
+import FullPageLoader from './FullPageLoader';
 
 
 const DentalVisit = () => {
@@ -12,6 +13,8 @@ const DentalVisit = () => {
     const [dentalvisit, setDentalvisit] = useState('');
     const [selectedRow, setSelectedRow] = useState(null);
     const [error, setError] = useState('');
+    const [checkLoad, setCheckBlur] = useState(false)
+
 
     const handleClickOpen = (params) => {
         setSelectedRow(params);
@@ -24,8 +27,11 @@ const DentalVisit = () => {
 
     const addDentalvisit = async (e) => {
         e.preventDefault(); // prevent form submission
+        setCheckBlur(true)
+
         if (!dentalvisit) {
             setError('DentalVisit Data is required');
+            setCheckBlur(false)
             return;
         }
 
@@ -34,6 +40,8 @@ const DentalVisit = () => {
             loadDentalvisitData();
             setDentalvisit('');
             setError('');
+            setCheckBlur(false)
+
         } catch (error) {
             console.error('Error adding document: ', error);
         }
@@ -44,6 +52,7 @@ const DentalVisit = () => {
             const querySnapshot = await getDocs(collection(db, "dentalvisit"));
             const dentalvisit = querySnapshot.docs.map((doc, index) => ({ id: doc.id, index: index + 1, ...doc.data() }));
             setDentalVisitData(dentalvisit);
+            setCheckBlur(false)
         } catch (error) {
             console.error('Error getting documents: ', error);
         }
@@ -53,6 +62,7 @@ const DentalVisit = () => {
         try {
             if (selectedRow) {
                 await deleteDoc(doc(db, "dentalvisit", selectedRow.id));
+                setCheckBlur(false)
                 setOpen(false);
                 setSelectedRow(null);
                 loadDentalvisitData();
@@ -64,6 +74,8 @@ const DentalVisit = () => {
 
     useEffect(() => {
         loadDentalvisitData();
+        setCheckBlur(true)
+
     }, []);
 
     const columns = [
@@ -86,6 +98,10 @@ const DentalVisit = () => {
 
     return (
         <>
+         {checkLoad ? (
+        <FullPageLoader />
+      ) : (
+        <Box>
             <div>
                 <Typography variant="h4" gutterBottom>
                 Dental Visit
@@ -141,6 +157,7 @@ const DentalVisit = () => {
                     </Button>
                 </DialogActions>
             </Dialog>
+            </Box>)}
         </>
     );
 };
