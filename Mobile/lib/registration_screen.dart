@@ -88,34 +88,46 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   Future<void> _registerUser() async {
     try {
       // Show the loading dialog
-      _progressDialog.show();
+      if (_formKey.currentState?.validate() ?? false) {
+        _progressDialog.show();
 
-      UserCredential userCredential =
-          await FirebaseAuth.instance.createUserWithEmailAndPassword(
-        email: _emailController.text,
-        password: _passController.text,
-      );
-
-      // ignore: unnecessary_null_comparison
-      if (userCredential != null) {
-        await _storeUserData(userCredential.user!.uid);
-        Fluttertoast.showToast(
-          msg: "Registration Successful",
-          toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.BOTTOM,
-          backgroundColor: Colors.green,
-          textColor: Colors.white,
+        UserCredential userCredential =
+            await FirebaseAuth.instance.createUserWithEmailAndPassword(
+          email: _emailController.text,
+          password: _passController.text,
         );
-        _progressDialog.hide();
-        Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => ChildProfilePop(docId: userCredential.user!.uid)),
-      );
+
+        // ignore: unnecessary_null_comparison
+        if (userCredential != null) {
+          await _storeUserData(userCredential.user!.uid);
+          Fluttertoast.showToast(
+            msg: "Registration Successful",
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.BOTTOM,
+            backgroundColor: Colors.green,
+            textColor: Colors.white,
+          );
+          _progressDialog.hide();
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+                builder: (context) =>
+                    ChildProfilePop(docId: userCredential.user!.uid)),
+          );
+        }
       }
     } catch (e) {
+      _progressDialog.hide();
+      Fluttertoast.showToast(
+        msg: "Registration Failed",
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM,
+        backgroundColor: Colors.red,
+        textColor: Colors.white,
+      );
       print("Error registering user: $e");
       // Handle error, show message or take appropriate action
-    } 
+    }
   }
 
   Future<void> _storeUserData(String userId) async {
@@ -134,8 +146,6 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
       });
 
       await _uploadImage(userId);
-      
-      
     } catch (e) {
       print("Error storing user data: $e");
       // Handle error, show message or take appropriate action
@@ -255,6 +265,12 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                         ),
                         TextFormField(
                           controller: _nameController,
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Please enter a valid name';
+                            }
+                            return null;
+                          },
                           decoration: InputDecoration(
                             hintText: 'Name',
                             contentPadding: const EdgeInsets.symmetric(
@@ -274,6 +290,13 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                         ),
                         TextFormField(
                           controller: _emailController,
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Please enter a valid email';
+                            }
+                            return null;
+                          },
+                          keyboardType: TextInputType.emailAddress,
                           decoration: InputDecoration(
                             hintText: 'Email',
                             contentPadding: const EdgeInsets.symmetric(
@@ -296,23 +319,34 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                           decoration: InputDecoration(
                             hintText: 'Phone Number',
                             contentPadding: const EdgeInsets.symmetric(
-                                vertical: 20.0, horizontal: 25.0),
+                              vertical: 20.0,
+                              horizontal: 25.0,
+                            ),
                             filled: true,
                             fillColor: const Color.fromARGB(241, 241, 241, 255),
                             border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(10.0),
-                                borderSide: BorderSide.none),
+                              borderRadius: BorderRadius.circular(10.0),
+                              borderSide: BorderSide.none,
+                            ),
                           ),
                           initialCountryCode: 'GB',
-                          disableLengthCheck: true,
                           onChanged: (phone) {
                             print(phone.completeNumber);
+                          },
+                          validator: (phone) {
+                            if (phone?.completeNumber.isEmpty ?? true) {
+                              return 'Please enter your phone number';
+                            }
+
+                            // You can add more complex validation if needed
+
+                            return null; // Return null if the phone number is valid
                           },
                         ),
                         const SizedBox(
                           height: 20,
                         ),
-                        TextField(
+                        TextFormField(
                           controller: _dateController,
                           readOnly: true,
                           decoration: InputDecoration(
@@ -320,14 +354,26 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                                 const Icon(Icons.calendar_month_outlined),
                             hintText: 'Date of Birth',
                             contentPadding: const EdgeInsets.symmetric(
-                                vertical: 20.0, horizontal: 25.0),
+                              vertical: 20.0,
+                              horizontal: 25.0,
+                            ),
                             filled: true,
                             fillColor: const Color.fromARGB(241, 241, 241, 255),
                             border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(10.0),
-                                borderSide: BorderSide.none),
+                              borderRadius: BorderRadius.circular(10.0),
+                              borderSide: BorderSide.none,
+                            ),
                           ),
                           onTap: _selectDate,
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Please select your date of birth';
+                            }
+
+                            // Additional validation logic can be added if needed
+
+                            return null; // Return null if the date is valid
+                          },
                         ),
                         const SizedBox(
                           height: 20,
@@ -350,6 +396,12 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                             setState(() {
                               _prefix = newValue;
                             });
+                          },
+                          validator: (String? value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Please select a prefix'; // Validation error message
+                            }
+                            return null; // No validation error
                           },
                           isExpanded: false,
                           items: prefix
@@ -422,6 +474,12 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                         ),
                         TextFormField(
                           controller: _addressController,
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Please enter a valid name';
+                            }
+                            return null;
+                          },
                           decoration: InputDecoration(
                             hintText: 'Address Line',
                             contentPadding: const EdgeInsets.symmetric(
@@ -442,6 +500,12 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                         TextFormField(
                           obscureText: _obscureText,
                           controller: _passController,
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Please enter a valid name';
+                            }
+                            return null;
+                          },
                           decoration: InputDecoration(
                             suffixIcon: InkWell(
                               onTap: _togglePasswordVisibility,

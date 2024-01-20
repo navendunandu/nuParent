@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:nu_parent/child_dashboard.dart';
 import 'package:nu_parent/main.dart';
 import 'package:nu_parent/registration_screen.dart';
+import 'package:nu_parent/forget_password.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -183,7 +184,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                         GestureDetector(
                           onTap: () {
-                            print('Forget Password!');
+                            Navigator.push(context, MaterialPageRoute(builder: (context) => const ForgotPassword(),));
                           },
                           child: const Text(
                             'Forget Password ?',
