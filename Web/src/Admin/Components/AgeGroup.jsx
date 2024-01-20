@@ -57,6 +57,8 @@ const AgeGroup = () => {
 
   const loadAgeGroups = async () => {
     try {
+      setCheckBlur(true)
+
       const querySnapshot = await getDocs(collection(db, 'ageGroups'))
       const ageGroups = querySnapshot.docs.map((doc, index) => ({
         id: doc.id,
@@ -86,8 +88,8 @@ const AgeGroup = () => {
   }
 
   useEffect(() => {
-    loadAgeGroups()
     setCheckBlur(true)
+    loadAgeGroups()
   }, [])
 
   const columns = [

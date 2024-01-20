@@ -63,6 +63,8 @@ const Brushing = () => {
 
   const loadBrushing = async () => {
     try {
+      setCheckBlur(true)
+
       const brushingQuerySnapshot = await getDocs(collection(db, 'brushing'))
       const brushingData = brushingQuerySnapshot.docs.map((doc, index) => ({
         id: doc.id,
@@ -123,9 +125,10 @@ const Brushing = () => {
   }
 
   useEffect(() => {
+    setCheckBlur(true)
+
     loadBrushing()
     loadAgeGroups()
-    setCheckBlur(true)
   }, [])
 
   const columns = [
@@ -189,12 +192,16 @@ const Brushing = () => {
                       setBrushing(event.target.value)
                       setError('')
                     }}
+                    multiline
+                    maxRows={3}
+                    sx={{ width: '60%', minWidth: 200 }}
+
                     label="Brushing Details"
                     variant="outlined"
                     autoComplete="off"
                     value={brushing}
                   />
-                  <Button variant="contained" sx={{ width: 150 }} type="submit">
+                  <Button variant="contained" sx={{ width: 150 ,maxHeight: 50 }} type="submit">
                     Submit
                   </Button>
                 </Stack>

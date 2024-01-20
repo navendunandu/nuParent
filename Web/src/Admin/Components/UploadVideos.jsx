@@ -129,6 +129,8 @@ const UploadVideos = () => {
   }
 
   useEffect(() => {
+    setCheckBlur(true)
+
     loadUploadVideo()
     setCheckBlur(true)
   }, [])
@@ -203,12 +205,15 @@ const UploadVideos = () => {
               noValidate
               autoComplete="off"
             >
-              <Stack spacing={2} direction="row" sx={{ p: 2 }}>
+              <Stack spacing={2} direction="row">
                 <TextField
                   id="outlined-basic"
                   autoComplete="off"
                   label="Video Title"
                   variant="outlined"
+                  sx={{ width: '60%', minWidth: 200 }}
+                  multiline
+                  maxRows={3}
                   value={videoTitle}
                   onChange={(event) => {
                     setVideoTitle(event.target.value)
@@ -221,6 +226,7 @@ const UploadVideos = () => {
                   variant="contained"
                   startIcon={<CloudUploadIcon />}
                   onChange={(event) => setVideo(event.target.files[0])}
+                  sx={{ maxHeight: 50 }}
                 >
                   {video
                     ? video.name.length > 20
@@ -233,7 +239,7 @@ const UploadVideos = () => {
 
                 <Button
                   variant="contained"
-                  sx={{ width: 150 }}
+                  sx={{ width: 150, maxHeight: 50 }}
                   onClick={addUploadVideo}
                 >
                   Submit
