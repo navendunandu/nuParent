@@ -132,7 +132,7 @@ class _AfterBrushState extends State<PrepareBrush> {
                     text: items1[index]["text"],
                     title: items1[index]["title"],
                     flutterTts: flutterTts,
-                    colour: AppColors.red,
+                    colour: AppColors.primaryColor,
                   );
                 },
               ),
@@ -164,7 +164,7 @@ class _AfterBrushState extends State<PrepareBrush> {
                   return Box(
                     text: item2[index],
                     flutterTts: flutterTts,
-                    colour: AppColors.red,
+                    colour: AppColors.primaryColor,
                   );
                 },
               ),

@@ -101,7 +101,7 @@ class _BeforeBrushState extends State<BeforeBrush> {
                 'How to Choose the Best Toothbrush',
                 textAlign: TextAlign.center,
                 style: TextStyle(
-                  color: AppColors.red,
+                  color: AppColors.primaryColor,
                   fontWeight: FontWeight.w600,
                   fontSize: 18,
                 ),
@@ -121,7 +121,7 @@ class _BeforeBrushState extends State<BeforeBrush> {
                     text: items1[index]["text"],
                     title: items1[index]["title"],
                     flutterTts: flutterTts,
-                    colour: AppColors.red,
+                    colour: AppColors.primaryColor,
                   );
                 },
               ),
@@ -174,16 +174,16 @@ class _BeforeBrushState extends State<BeforeBrush> {
                                 children: [
                                   Padding(
                                     padding: const EdgeInsets.fromLTRB(8, 6, 10, 0),
-                                    child: Icon(Icons.circle, size: 12, color: AppColors.red,),
+                                    child: Icon(Icons.circle, size: 12, color: AppColors.primaryColor,),
                                   ),
-                                  // Text('\u2022',style: TextStyle(fontSize: 25, fontWeight: FontWeight.w600, color: AppColors.red)),
-                                  Flexible(child: Text(item,style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600, color: AppColors.red)))
+                                  // Text('\u2022',style: TextStyle(fontSize: 25, fontWeight: FontWeight.w600, color: AppColors.primaryColor)),
+                                  Flexible(child: Text(item,style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600, color: AppColors.primaryColor)))
                                 ],
                               ),
                             )
                               // Text(
                               //   '\u2022 $item', // Unicode character for bullet point
-                              //   style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600, color: AppColors.red),
+                              //   style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600, color: AppColors.primaryColor),
                               // ),
                           ],
                         ),
@@ -214,7 +214,7 @@ class _BeforeBrushState extends State<BeforeBrush> {
             //       return Box(
             //         text: item2[index],
             //         flutterTts: flutterTts,
-            //         colour: AppColors.red,
+            //         colour: AppColors.primaryColor,
             //       );
             //     },
             //   ),

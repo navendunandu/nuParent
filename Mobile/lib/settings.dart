@@ -31,7 +31,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
         )),
         child: ListView(
           children: [
-            const CustomAppBar(),
+            const CustomAppBar(settings: false,),
             const SizedBox(
                 height: 80,
                 child: Center(

@@ -62,7 +62,7 @@ class _WhileBrushState extends State<WhileBrush> {
                   return Box(
                     text: items[index],
                     flutterTts: flutterTts,
-                    colour: AppColors.red, 
+                    colour: AppColors.primaryColor, 
                   );
                 },
               ),

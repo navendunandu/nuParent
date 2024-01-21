@@ -88,7 +88,7 @@ class _AfterBrushState extends State<AfterBrush> {
                 title,
                 textAlign: TextAlign.center,
                 style: TextStyle(
-                  color: AppColors.red,
+                  color: AppColors.primaryColor,
                   fontWeight: FontWeight.w500,
                   fontSize: 18,
                 ),
@@ -105,7 +105,7 @@ class _AfterBrushState extends State<AfterBrush> {
                   return Box(
                     text: item1[index],
                     flutterTts: flutterTts,
-                    colour: AppColors.red,
+                    colour: AppColors.primaryColor,
                   );
                 },
               ),
@@ -146,7 +146,7 @@ class _AfterBrushState extends State<AfterBrush> {
                   return Box(
                     text: item2[index],
                     flutterTts: flutterTts,
-                    colour: AppColors.red,
+                    colour: AppColors.primaryColor,
                   );
                 },
               ),

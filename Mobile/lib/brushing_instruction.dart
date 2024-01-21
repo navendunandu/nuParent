@@ -4,6 +4,7 @@ import 'package:nu_parent/after_brush.dart';
 import 'package:nu_parent/before_brush.dart';
 import 'package:nu_parent/main.dart';
 import 'package:nu_parent/prepare_brush.dart';
+import 'package:nu_parent/while_brush.dart';
 
 class BrushingInstruction extends StatefulWidget {
   final int age;
@@ -136,7 +137,9 @@ class _BrushingInstructionState extends State<BrushingInstruction> {
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       GestureDetector(
-                        onTap: () {},
+                        onTap: () {
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => const WhileBrush(),));
+                        },
                         child: Container(
                           height: 150,
                           width: 150,
