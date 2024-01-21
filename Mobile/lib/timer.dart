@@ -144,173 +144,145 @@ class _CountdownPageState extends State<CountdownPage>
                   color: AppColors.primaryColor),
             ),
             const SizedBox(height: 20),
-            Expanded(
-              child: Container(
-                decoration: BoxDecoration(
-                  color: AppColors.lightblue,
-                  borderRadius: BorderRadius.circular(20),
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.all(20.0),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Container(
-                        padding: const EdgeInsets.fromLTRB(50, 10, 50, 10),
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(30),
-                            color: AppColors.white),
-                        child: const Text(
-                          'Brushing Timer',
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 22,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      Expanded(
-                        child: Stack(
-                          alignment: Alignment.center,
-                          children: [
-                            SizedBox(
-                              width: 250,
-                              height: 250,
-                              child: CircularProgressIndicator(
-                                backgroundColor: Colors.grey.shade300,
-                                value: progress,
-                                strokeWidth: 6,
-                              ),
-                            ),
-                            GestureDetector(
-                              onTap: () {
-                                if (controller.isDismissed) {
-                                  showModalBottomSheet(
-                                    context: context,
-                                    builder: (context) => Container(
-                                      height: 300,
-                                      child: CupertinoTimerPicker(
-                                        initialTimerDuration:
-                                            controller.duration!,
-                                        onTimerDurationChanged: (time) {
-                                          setState(() {
-                                            controller.duration = time;
-                                          });
-                                        },
-                                      ),
-                                    ),
-                                  );
-                                }
-                              },
-                              child: AnimatedBuilder(
-                                animation: controller,
-                                builder: (context, child) => Text(
-                                  countText,
-                                  style: const TextStyle(
-                                    fontSize: 50,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 10, vertical: 20),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Container(
-                              width: 50,
-                              height: 50,
-                              decoration: const BoxDecoration(
-                                shape: BoxShape.circle,
-                                color: Colors.white,
-                              ),
-                              child: IconButton(
-                                onPressed: () {
-                                  if (controller.isAnimating) {
-                                    controller.stop();
-                                    setState(() {
-                                      isPlaying = false;
-                                    });
-                                  } else {
-                                    controller.reverse(
-                                        from: controller.value == 0
-                                            ? 1.0
-                                            : controller.value);
-                                    setState(() {
-                                      isPlaying = true;
-                                    });
-                                  }
-                                },
-                                icon: Icon(
-                                  isPlaying == true
-                                      ? Icons.pause
-                                      : Icons.play_arrow,
-                                  color: AppColors.primaryColor,
-                                ),
-                              ),
-                            ),
-                            const SizedBox(
-                              width: 10,
-                            ),
-                            Container(
-                              width: 50,
-                              height: 50,
-                              decoration: const BoxDecoration(
-                                shape: BoxShape.circle,
-                                color: Colors.white,
-                              ),
-                              child: IconButton(
-                                onPressed: () {
-                                  controller.reset();
-                                  setState(() {
-                                    isPlaying = false;
-                                  });
-                                },
-                                icon: const Icon(
-                                  Icons.stop,
-                                  color: AppColors.primaryColor,
-                                ),
-                              ),
-                            )
-                          ],
-                        ),
-                      )
-                    ],
-                  ),
-                ),
-              ),
-            ),
-            const SizedBox(height: 20),
             Container(
+              height: 500,
               decoration: BoxDecoration(
                 color: AppColors.lightblue,
                 borderRadius: BorderRadius.circular(20),
               ),
-              child: const Padding(
-                padding: EdgeInsets.fromLTRB(30, 10, 30, 10),
+              child: Padding(
+                padding: const EdgeInsets.all(20.0),
                 child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text(
-                      'Include a reward system that gives points, tokens or stars each time the child brushes their teeth.',
-                      style: TextStyle(
-                          color: AppColors.primaryColor,
-                          fontWeight: FontWeight.w500),
+                    Container(
+                      padding: const EdgeInsets.fromLTRB(50, 10, 50, 10),
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(30),
+                          color: AppColors.white),
+                      child: const Text(
+                        'Brushing Timer',
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 22,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
                     ),
-                    Text(
-                      'when children brushes for 7 days a week some reward.',
-                      style: TextStyle(color: AppColors.primaryColor),
+                    const SizedBox(
+                      height: 20,
                     ),
-                    Text(
-                        'or incorporate songs for 2 minutes to encourage the right length of brushing.',
-                        style: TextStyle(color: AppColors.primaryColor))
+                    Expanded(
+                      child: Stack(
+                        alignment: Alignment.center,
+                        children: [
+                          SizedBox(
+                            width: 250,
+                            height: 250,
+                            child: CircularProgressIndicator(
+                              backgroundColor: Colors.grey.shade300,
+                              value: progress,
+                              strokeWidth: 6,
+                            ),
+                          ),
+                          GestureDetector(
+                            onTap: () {
+                              if (controller.isDismissed) {
+                                showModalBottomSheet(
+                                  context: context,
+                                  builder: (context) => Container(
+                                    height: 300,
+                                    child: CupertinoTimerPicker(
+                                      initialTimerDuration:
+                                          controller.duration!,
+                                      onTimerDurationChanged: (time) {
+                                        setState(() {
+                                          controller.duration = time;
+                                        });
+                                      },
+                                    ),
+                                  ),
+                                );
+                              }
+                            },
+                            child: AnimatedBuilder(
+                              animation: controller,
+                              builder: (context, child) => Text(
+                                countText,
+                                style: const TextStyle(
+                                  fontSize: 50,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 10, vertical: 20),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Container(
+                            width: 50,
+                            height: 50,
+                            decoration: const BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: Colors.white,
+                            ),
+                            child: IconButton(
+                              onPressed: () {
+                                if (controller.isAnimating) {
+                                  controller.stop();
+                                  setState(() {
+                                    isPlaying = false;
+                                  });
+                                } else {
+                                  controller.reverse(
+                                      from: controller.value == 0
+                                          ? 1.0
+                                          : controller.value);
+                                  setState(() {
+                                    isPlaying = true;
+                                  });
+                                }
+                              },
+                              icon: Icon(
+                                isPlaying == true
+                                    ? Icons.pause
+                                    : Icons.play_arrow,
+                                color: AppColors.primaryColor,
+                              ),
+                            ),
+                          ),
+                          const SizedBox(
+                            width: 10,
+                          ),
+                          Container(
+                            width: 50,
+                            height: 50,
+                            decoration: const BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: Colors.white,
+                            ),
+                            child: IconButton(
+                              onPressed: () {
+                                controller.reset();
+                                setState(() {
+                                  isPlaying = false;
+                                });
+                              },
+                              icon: const Icon(
+                                Icons.stop,
+                                color: AppColors.primaryColor,
+                              ),
+                            ),
+                          )
+                        ],
+                      ),
+                    )
                   ],
                 ),
               ),

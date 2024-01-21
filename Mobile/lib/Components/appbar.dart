@@ -5,7 +5,7 @@ import 'package:nu_parent/settings.dart';
 class CustomAppBar extends StatefulWidget {
   final Color bgColor;
   final bool settings;
-  const CustomAppBar({super.key, this.bgColor=AppColors.white, this.settings = true});
+  const CustomAppBar({super.key, this.bgColor=const Color.fromARGB(0, 255, 255, 255), this.settings = true});
 
   @override
   State<CustomAppBar> createState() => _CustomAppBarState();

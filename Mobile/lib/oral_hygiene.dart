@@ -83,13 +83,6 @@ class _OralHygieneState extends State<OralHygiene> {
                                 fontWeight: FontWeight.w500,
                                 fontSize: 18),
                           ),
-                          Text(
-                            '(0-3 years)',
-                            style: TextStyle(
-                                color: AppColors.white,
-                                fontWeight: FontWeight.w500,
-                                fontSize: 18),
-                          ),
                         ],
                       ),
                     ),
@@ -123,13 +116,6 @@ class _OralHygieneState extends State<OralHygiene> {
                       children: [
                         Text(
                           'Children',
-                          style: TextStyle(
-                              color: AppColors.white,
-                              fontWeight: FontWeight.w500,
-                              fontSize: 18),
-                        ),
-                        Text(
-                          '(3-6 years)',
                           style: TextStyle(
                               color: AppColors.white,
                               fontWeight: FontWeight.w500,
@@ -219,15 +205,7 @@ class _OralHygieneState extends State<OralHygiene> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
-                          'Parents/',
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                              color: AppColors.white,
-                              fontWeight: FontWeight.w500,
-                              fontSize: 18),
-                        ),
-                        Text(
-                          'Carers Oral hygiene',
+                          'Parents Oral hygiene',
                           textAlign: TextAlign.center,
                           style: TextStyle(
                               color: AppColors.white,

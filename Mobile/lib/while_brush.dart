@@ -3,6 +3,7 @@ import 'package:nu_parent/main.dart';
 import 'package:nu_parent/Components/appbar.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 import 'package:nu_parent/Components/box.dart';
+import 'package:nu_parent/timer.dart';
 
 class WhileBrush extends StatefulWidget {
   const WhileBrush({super.key});
@@ -68,7 +69,16 @@ class _WhileBrushState extends State<WhileBrush> {
               ),
             ),
             const SizedBox(
-              height: 30,
+              height: 20,
+            ),
+            Center(
+              child: ElevatedButton(
+                onPressed: (){
+                Navigator.push(context, MaterialPageRoute(builder: (context) => const CountdownPage(),));
+              }, child: const Text('Timer', style: TextStyle(color: AppColors.primaryColor),)),
+            ),
+            const SizedBox(
+              height: 20,
             ),
             Image.asset('assets/BrushBasket.png', height: 200,),
             const SizedBox(

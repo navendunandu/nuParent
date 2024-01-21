@@ -137,7 +137,8 @@ class _DentalVisitState extends State<DentalVisit> {
                                   'What does a fluoride varnish do?',
                                   textAlign: TextAlign.left,
                                   style: TextStyle(
-                                    color: Colors.red,
+                                    color: AppColors.primaryColor,
+                                    fontWeight: FontWeight.w500
                                   ),
                                 ),
                               ),
@@ -146,7 +147,8 @@ class _DentalVisitState extends State<DentalVisit> {
                                 child: Text(
                                   'Fluoride in varnish enters the tooth enamel and makes the tooth hard. It prevents new cavities and slows down or stops decay from getting worse. If tooth decay is just starting, it repairs the tooth.',
                                   style: TextStyle(
-                                    color: Colors.red,
+                                    color: AppColors.primaryColor,
+                                    fontWeight: FontWeight.w500
                                   ),
                                   textAlign: TextAlign.left,
                                 ),
