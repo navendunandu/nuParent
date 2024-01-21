@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { Fragment,  useLayoutEffect, useState } from 'react'
 import { DataGrid } from '@mui/x-data-grid'
 import {
   Box,
@@ -15,8 +15,9 @@ import {
 } from '@mui/material'
 import DeleteIcon from '@mui/icons-material/Delete'
 import { db } from '../../config/firebase'
-import { addDoc, collection, getDocs, deleteDoc, doc } from 'firebase/firestore'
+import { addDoc, collection, getDocs, deleteDoc, doc, updateDoc } from 'firebase/firestore'
 import FullPageLoader from './FullPageLoader'
+import EditNoteIcon from '@mui/icons-material/EditNote'
 
 const DentalVisit = () => {
   const [open, setOpen] = useState(false)
@@ -25,6 +26,8 @@ const DentalVisit = () => {
   const [selectedRow, setSelectedRow] = useState(null)
   const [error, setError] = useState('')
   const [checkLoad, setCheckBlur] = useState(false)
+  const [selectedDoc, setSelectedDoc] = useState(null)
+
 
   const handleClickOpen = (params) => {
     setSelectedRow(params)
@@ -46,11 +49,20 @@ const DentalVisit = () => {
     }
 
     try {
-      await addDoc(collection(db, 'dentalvisit'), { dentalvisit })
+
+      if(selectedDoc){
+        const dentalvisitRef = doc(db, 'dentalvisit', selectedDoc)
+
+        await updateDoc(dentalvisitRef, {
+          dentalvisit,
+        })
+      }else{
+        await addDoc(collection(db, 'dentalvisit'), { dentalvisit })
+      }
+      setSelectedDoc(null)
       loadDentalvisitData()
       setDentalvisit('')
       setError('')
-      setCheckBlur(false)
     } catch (error) {
       console.error('Error adding document: ', error)
     }
@@ -58,7 +70,6 @@ const DentalVisit = () => {
 
   const loadDentalvisitData = async () => {
     try {
-        setCheckBlur(true)
       const querySnapshot = await getDocs(collection(db, 'dentalvisit'))
       const dentalvisit = querySnapshot.docs.map((doc, index) => ({
         id: doc.id,
@@ -75,8 +86,8 @@ const DentalVisit = () => {
   const deleteAge = async () => {
     try {
       if (selectedRow) {
+        setCheckBlur(true)
         await deleteDoc(doc(db, 'dentalvisit', selectedRow.id))
-        setCheckBlur(false)
         setOpen(false)
         setSelectedRow(null)
         loadDentalvisitData()
@@ -86,9 +97,18 @@ const DentalVisit = () => {
     }
   }
 
-  useEffect(() => {
-    setCheckBlur(true)
+  const handleClickGetOneDoc = async (selectedDoc) => {
+    try {
+       const { row } = selectedDoc
+       setDentalvisit(row.dentalvisit)
+       setSelectedDoc(row.id)
+    } catch (error) {
+       console.log(error)
+    }
+ }
 
+  useLayoutEffect(() => {
+    setCheckBlur(true)
     loadDentalvisitData()
   }, [])
 
@@ -101,10 +121,17 @@ const DentalVisit = () => {
       flex: 1,
       renderCell: (params) => {
         return (
-          <DeleteIcon
-            className="divListDelete"
-            onClick={() => handleClickOpen(params)}
-          />
+          <Fragment>
+                  <DeleteIcon
+                     className='divListDelete'
+                     onClick={() => handleClickOpen(params)}
+                     sx={{ mx: 1 }}
+                  />
+                  <EditNoteIcon
+                     sx={{ mx: 1 }}
+                     onClick={() => handleClickGetOneDoc(params)}
+                  />
+               </Fragment>
         )
       },
     },

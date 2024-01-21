@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { Fragment, useLayoutEffect, useState } from 'react'
 import { DataGrid } from '@mui/x-data-grid'
 import {
   Box,
@@ -18,8 +18,9 @@ import {
 } from '@mui/material'
 import DeleteIcon from '@mui/icons-material/Delete'
 import { db } from '../../config/firebase'
-import { addDoc, collection, getDocs, deleteDoc, doc } from 'firebase/firestore'
+import { addDoc, collection, getDocs, deleteDoc, doc, updateDoc } from 'firebase/firestore'
 import FullPageLoader from './FullPageLoader'
+import EditNoteIcon from '@mui/icons-material/EditNote'
 
 const OralHygiene = () => {
   const [open, setOpen] = useState(false)
@@ -30,6 +31,7 @@ const OralHygiene = () => {
   const [age, setAge] = useState('')
   const [error, setError] = useState('')
   const [checkLoad, setCheckBlur] = useState(false)
+  const [selectedDoc, setSelectedDoc] = useState(null)
 
   const handleClickOpen = (params) => {
     setSelectedRow(params)
@@ -49,8 +51,17 @@ const OralHygiene = () => {
       return
     }
     try {
-      await addDoc(collection(db, 'oralHygiene'), { oralHygiene, age })
-      setCheckBlur(false)
+      if(selectedDoc){
+        const oralHygieneRef = doc(db, 'oralHygiene', selectedDoc)
+
+        await updateDoc(oralHygieneRef, {
+          oralHygiene, age
+        })
+      }else{
+        await addDoc(collection(db, 'oralHygiene'), { oralHygiene, age })
+
+      }
+      setSelectedDoc(null)
       loadOralHygiene()
       setOralHygiene('')
       setAge('')
@@ -62,7 +73,6 @@ const OralHygiene = () => {
 
   const loadOralHygiene = async () => {
     try {
-      setCheckBlur(true)
       const querySnapshot = await getDocs(collection(db, 'oralHygiene'))
       const OralHygiene = querySnapshot.docs.map((doc, index) => ({
         id: doc.id,
@@ -99,7 +109,6 @@ const OralHygiene = () => {
         await deleteDoc(doc(db, 'oralHygiene', selectedRow.id))
         setOpen(false)
         setSelectedRow(null)
-        setCheckBlur(false)
         loadOralHygiene()
       }
     } catch (error) {
@@ -120,7 +129,18 @@ const OralHygiene = () => {
     }
   }
 
-  useEffect(() => {
+  const handleClickGetOneDoc = async (selectedDoc) => {
+    try {
+       const { row } = selectedDoc
+       setOralHygiene(row.oralHygiene)
+       setAge(row.age)
+       setSelectedDoc(row.id)
+    } catch (error) {
+       console.log(error)
+    }
+ }  
+
+  useLayoutEffect(() => {
     setCheckBlur(true)
     loadOralHygiene()
     loadAgeGroups()
@@ -145,12 +165,17 @@ const OralHygiene = () => {
       flex: 1,
       renderCell: (params) => {
         return (
-          <>
-            <DeleteIcon
-              className="divListDelete"
-              onClick={() => handleClickOpen(params)}
-            />
-          </>
+          <Fragment>
+          <DeleteIcon
+             className='divListDelete'
+             onClick={() => handleClickOpen(params)}
+             sx={{ mx: 1 }}
+          />
+          <EditNoteIcon
+             sx={{ mx: 1 }}
+             onClick={() => handleClickGetOneDoc(params)}
+          />
+       </Fragment>
         )
       },
     },

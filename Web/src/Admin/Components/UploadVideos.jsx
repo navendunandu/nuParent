@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, {  useLayoutEffect, useState } from 'react'
 import { DataGrid } from '@mui/x-data-grid'
 import {
   Box,
@@ -88,7 +88,6 @@ const UploadVideos = () => {
         return downloadURL
       })
       await addDoc(collection(db, 'uploadVideo'), { videoTitle, videoUrl })
-      setCheckBlur(false)
       loadUploadVideo()
       setVideoTitle('')
       setVideo('')
@@ -115,6 +114,7 @@ const UploadVideos = () => {
   const deleteUploadVideo = async () => {
     try {
       if (selectedRow) {
+        setCheckBlur(true)
         const filePath = selectedRow.row.videoUrl
         const fileRef = ref(storage, filePath)
         await deleteObject(fileRef)
@@ -128,11 +128,9 @@ const UploadVideos = () => {
     }
   }
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     setCheckBlur(true)
-
     loadUploadVideo()
-    setCheckBlur(true)
   }, [])
 
   const columns = [
