@@ -5,10 +5,12 @@ import 'package:nu_parent/brushing_instruction.dart';
 import 'package:nu_parent/dental_visit.dart';
 import 'package:nu_parent/dietary_intake.dart';
 import 'package:nu_parent/howtovideos.dart';
+import 'package:nu_parent/login_screen.dart';
 import 'package:nu_parent/main.dart';
 import 'package:nu_parent/oral_hygiene.dart';
 import 'package:nu_parent/timer.dart';
 import 'package:nu_parent/view_profile.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({super.key});
@@ -240,9 +242,36 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 textAlign: TextAlign.center,
               ),
             ),
+            GestureDetector(
+              onTap: () {
+                _logout();
+              },
+              child: Container(
+                padding: const EdgeInsets.only(top: 20, bottom: 20),
+                decoration: const BoxDecoration(
+                  color: Colors.red, // Customize the color as needed
+                ),
+                child: const Text(
+                  "Logout",
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500, color: Colors.white),
+                  textAlign: TextAlign.center,
+                ),
+              ),
+            ),
           ],
         ),
       ),
+    );
+  }
+  void _logout() async {
+    // Clear saved data
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.clear(); // This will remove all key-value pairs
+
+    // Navigate to the login screen
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(builder: (context) => LoginScreen()),
     );
   }
 }

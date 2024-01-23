@@ -26,6 +26,27 @@ class _LoginScreenState extends State<LoginScreen> {
     });
   }
 
+  @override
+  void initState() {
+    super.initState();
+    _checkKeepLoggedInStatus();
+  }
+
+  Future<void> _checkKeepLoggedInStatus() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    bool keepLoggedIn = prefs.getBool('keepLoggedIn') ?? false;
+
+    if (keepLoggedIn) {
+      String userId = prefs.getString('uid') ?? '';
+      if (userId.isNotEmpty) {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => const ChildDashboard()),
+        );
+      }
+    }
+  }
+
   Future<void> saveUserInfoToLocalDatabase(String userId) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setString('uid', userId);
@@ -37,8 +58,6 @@ class _LoginScreenState extends State<LoginScreen> {
         final FirebaseAuth auth = FirebaseAuth.instance;
         final UserCredential userCredential =
             await auth.signInWithEmailAndPassword(
-          // email: "surajks28101999@gmail.com",
-          // password: "123456",
           email: _emailController.text.trim(),
           password: _passController.text.trim(),
         );
@@ -47,11 +66,12 @@ class _LoginScreenState extends State<LoginScreen> {
         if (userCredential.user != null) {
           if (_isChecked) {
             // Save user info to shared preferences
-
             String userId = userCredential.user?.uid ?? '';
             print('User ID: $userId');
-
             await saveUserInfoToLocalDatabase(userId);
+            // Save login status
+            SharedPreferences prefs = await SharedPreferences.getInstance();
+            prefs.setBool('keepLoggedIn', true);
           }
 
           Navigator.pushReplacement(
@@ -61,8 +81,14 @@ class _LoginScreenState extends State<LoginScreen> {
         }
       } catch (e) {
         // Handle login failure and show an error toast.
+        String errorMessage = 'Login failed';
+
+        if (e is FirebaseAuthException) {
+          errorMessage = e.code;
+        }
+
         Fluttertoast.showToast(
-          msg: 'Login failed: $e',
+          msg: errorMessage,
           toastLength: Toast.LENGTH_SHORT,
           gravity: ToastGravity.BOTTOM,
           backgroundColor: Colors.red,
@@ -184,7 +210,11 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                         GestureDetector(
                           onTap: () {
-                            Navigator.push(context, MaterialPageRoute(builder: (context) => const ForgotPassword(),));
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => const ForgotPassword(),
+                                ));
                           },
                           child: const Text(
                             'Forget Password ?',
