@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:nu_parent/Components/appbar.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
@@ -18,12 +19,13 @@ class _EditProfileState extends State<EditProfile> {
   String name = '';
   String gender = '';
   String dob = '';
-  String address = '';
   String image = 'assets/dummy-profile-pic.png';
-  bool isLoading = true; // Add a loading state
-  String? selectedGender;
+  bool isLoading = true;
+  String selectedGender='';
   final TextEditingController nameController = TextEditingController();
-  final TextEditingController addressController = TextEditingController();
+  final TextEditingController dobController = TextEditingController();
+  XFile? _selectedImage;
+  DateTime? _selectedDate;
 
   @override
   void initState() {
@@ -37,27 +39,39 @@ class _EditProfileState extends State<EditProfile> {
     });
   }
 
-  void updateProfile() async {
-    if (widget.childId != null) {
-      final userDoc =
-          FirebaseFirestore.instance.collection('child').doc(widget.childId);
+void updateProfile() async {
+  if (widget.childId != null) {
+    final userDoc =
+        FirebaseFirestore.instance.collection('child').doc(widget.childId);
+
+    // Check if any data has changed
+    if (nameController.text != name ||
+        dobController.text != dob ||
+        selectedGender != gender ||
+        _selectedImage != null) {
+      // Update only if there are changes
+
+      // Check if name is null and set it to an empty string
+      final updatedName = nameController.text ?? '';
 
       await userDoc.update({
-        'name': nameController.text,
-        'address': addressController.text,
+        'name': updatedName,
+        'dateOfBirth': dobController.text,
         'gender': selectedGender,
       }).then((_) async {
         // Update the local state with the new data.
         setState(() {
-          name = nameController.text;
-          address = addressController.text;
+          name = updatedName;
+          dob = dobController.text;
+          gender = selectedGender;
         });
 
         // Handle updating the profile picture here (if needed).
         if (_selectedImage != null) {
           final storage = FirebaseStorage.instance;
-          final Reference storageRef =
-              storage.ref().child('user_profile_images/${widget.childId}.jpg');
+          final Reference storageRef = storage
+              .ref()
+              .child('user_profile_images/${widget.childId}.jpg');
           final UploadTask uploadTask =
               storageRef.putFile(File(_selectedImage!.path));
 
@@ -83,44 +97,66 @@ class _EditProfileState extends State<EditProfile> {
           content: Text('Error updating profile: $error'),
         ));
       });
+    } else {
+      // No changes were made
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+        content: Text('No changes were made.'),
+      ));
     }
   }
+}
+void loadChildData() async {
+  if (widget.childId != "") {
+    try {
+      final userDoc =
+          FirebaseFirestore.instance.collection('child').doc(widget.childId);
+      final documentSnapshot = await userDoc.get();
 
-  Future<void> loadChildData() async {
-    if (widget.childId != "") {
-      try {
-        final userDoc =
-            FirebaseFirestore.instance.collection('child').doc(widget.childId);
-        final documentSnapshot = await userDoc.get();
+      if (documentSnapshot.exists) {
+        final childData = documentSnapshot.data();
+        setState(() {
+          name = childData?['name'] ?? 'Name not Found';
+          dob = childData?['dateOfBirth'] as String? ?? 'DOB not Found';
+          selectedGender = childData?['gender'] as String? ?? 'Gender not Found';
 
-        if (documentSnapshot.exists) {
-          final childData = documentSnapshot.data();
-          setState(() {
-            name = childData?['name'] ?? 'Name not Found';
-            address = childData?['address'] ?? 'address not Found';
-            dob = childData?['dateOfBirth'] ?? 'dateOfBirth not Found';
-            selectedGender = childData?['gender'] ?? 'gender not Found';
+          if (childData?['imageUrl'] != null) {
+            image = childData?['imageUrl'] as String;
+          }
 
-            if (childData?['imageUrl'] != null) {
-              image = childData?['imageUrl'];
-            }
-
-            isLoading = false; // Set loading state to false
-          });
-        }
-      } catch (error) {
-        // Handle any potential errors
-        print('Error retrieving user data: $error');
+          isLoading = false; // Set loading state to false
+        });
       }
+    } catch (error) {
+      // Handle any potential errors
+      print('Error retrieving user data: $error');
+    }
+  }
+}
+
+  void _selectDate() async {
+    final DateTime? pickedDate = await showDatePicker(
+      context: context,
+      initialDate: _selectedDate ?? DateTime.now(),
+      firstDate: DateTime(2000, 1, 1),
+      lastDate: DateTime(2050, 12, 31),
+    );
+    if (pickedDate != null) {
+      setState(() {
+        _selectedDate = pickedDate;
+        dobController.text = DateFormat('dd-MM-yyyy').format(pickedDate);
+        dob = DateFormat('dd-MM-yyyy').format(pickedDate);
+        // Reset name when date is selected
+        // Reset profile image when date is selected
+        _selectedImage = null;
+      });
     }
   }
 
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: isLoading
-          ? _buildLoading() // Show loading indicator while data is being fetched
-          : buildProfileContent(), // Show content when data is loaded
+          ? _buildLoading()
+          : buildProfileContent(),
     );
   }
 
@@ -144,154 +180,140 @@ class _EditProfileState extends State<EditProfile> {
   Widget buildProfileContent() {
     return Container(
       decoration: const BoxDecoration(
-          gradient: RadialGradient(
-        colors: [
-          Color.fromARGB(255, 245, 251, 255),
-          Color.fromARGB(255, 175, 203, 244),
-        ],
-        radius: .5, // Adjust the radius based on your preference
-        center: Alignment(0.2, -.6),
-      )),
+        gradient: RadialGradient(
+          colors: [
+            Color.fromARGB(255, 245, 251, 255),
+            Color.fromARGB(255, 175, 203, 244),
+          ],
+          radius: .5,
+          center: Alignment(0.2, -.6),
+        ),
+      ),
       child: ListView(
         children: [
           CustomAppBar(),
           Form(
-              child: Padding(
-            padding: EdgeInsets.only(left: 20.0, right: 20.0),
-            child: Column(
-              children: [
-                Text(
-                  'Edit Profile',
-                  textAlign: TextAlign.left,
-                  style: TextStyle(
-                    fontSize: 28,
-                    fontWeight: FontWeight.w500,
+            child: Padding(
+              padding: EdgeInsets.only(left: 20.0, right: 20.0),
+              child: Column(
+                children: [
+                  Text(
+                    'Edit Profile',
+                    textAlign: TextAlign.left,
+                    style: TextStyle(
+                      fontSize: 28,
+                      fontWeight: FontWeight.w500,
+                    ),
                   ),
-                ),
-                GestureDetector(
-                  onTap: () {
-                    _pickImage(); // Open image picker
-                  },
-                  child: CircleAvatar(
-                    radius: 80,
-                    backgroundImage: _selectedImage != null
-                        ? FileImage(File(_selectedImage!.path))
-                        : (image != "assets/dummy-profile-pic.png"
-                            ? NetworkImage(image)
-                            : AssetImage('assets/dummy-profile-pic.png')
-                                as ImageProvider),
-                    child: Icon(Icons.edit),
-                  ),
-                ),
-
-                SizedBox(height: 20),
-                // Registration Details with Edit Buttons
-                ListTile(
-                  title: Text('Name: $name'),
-                  trailing: IconButton(
-                    icon: Icon(Icons.edit),
-                    onPressed: () {
-                      // Handle editing the name field.
-                      nameController.text =
-                          name; // Initialize the field with current value.
-                      showDialog(
-                        context: context,
-                        builder: (BuildContext context) {
-                          return AlertDialog(
-                            title: const Text('Edit Name'),
-                            content: TextField(
-                              controller: nameController,
-                              decoration: InputDecoration(hintText: 'New Name'),
-                            ),
-                            actions: [
-                              TextButton(
-                                onPressed: () {
-                                  Navigator.of(context).pop();
-                                },
-                                child: const Text('Cancel'),
-                              ),
-                              TextButton(
-                                onPressed: () {
-                                  updateProfile();
-                                  Navigator.of(context).pop();
-                                },
-                                child: Text('Save'),
-                              ),
-                            ],
-                          );
-                        },
-                      );
+                  GestureDetector(
+                    onTap: () {
+                      _pickImage();
                     },
+                    child: CircleAvatar(
+                      radius: 80,
+                      backgroundImage: _selectedImage != null
+                          ? FileImage(File(_selectedImage!.path))
+                          : (image != "assets/dummy-profile-pic.png"
+                              ? NetworkImage(image)
+                              : AssetImage('assets/dummy-profile-pic.png')
+                                  as ImageProvider),
+                      child: Icon(Icons.edit),
+                    ),
                   ),
-                ),
-                ListTile(
-                  title: Text('Address: $address'),
-                  trailing: IconButton(
-                    icon: Icon(Icons.edit),
+                  SizedBox(height: 20),
+                  ListTile(
+                    title: Text('Name: $name'),
+                    trailing: IconButton(
+                      icon: Icon(Icons.edit),
+                      onPressed: () {
+                        nameController.text = name;
+                        showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return _buildEditDialog(
+                              'Edit Name',
+                              'New Name',
+                              nameController,
+                              () {
+                                updateProfile();
+                                Navigator.of(context).pop();
+                              },
+                            );
+                          },
+                        );
+                      },
+                    ),
+                  ),
+                  ListTile(
+                    title: Text('Date of Birth: $dob'),
+                    trailing: IconButton(
+                      icon: Icon(Icons.edit),
+                      onPressed: () {
+                        dobController.text = dob;
+                        _selectDate();
+                      },
+                    ),
+                  ),
+                  SizedBox(height: 20.0),
+                  Padding(
+                    padding: EdgeInsets.all(8.0),
+                    child: Text(
+                      "Gender",
+                      style: TextStyle(fontSize: 18.0),
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                  SizedBox(height: 10.0),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      buildGenderButton(Icons.male, 'Male'),
+                      buildGenderButton(Icons.female, 'Female'),
+                      buildGenderButton(Icons.transgender, 'Others'),
+                    ],
+                  ),
+                  SizedBox(height: 20.0),
+                  ElevatedButton(
                     onPressed: () {
-                      // Handle editing the email field.
-                      addressController.text =
-                          address; // Initialize the field with the current value.
-                      showDialog(
-                        context: context,
-                        builder: (BuildContext context) {
-                          return AlertDialog(
-                            title: Text('Edit Email'),
-                            content: TextField(
-                              controller: addressController,
-                              decoration:
-                                  InputDecoration(hintText: 'New Email'),
-                            ),
-                            actions: [
-                              TextButton(
-                                onPressed: () {
-                                  Navigator.of(context).pop();
-                                },
-                                child: Text('Cancel'),
-                              ),
-                              TextButton(
-                                onPressed: () {
-                                  updateProfile();
-                                  Navigator.of(context).pop();
-                                },
-                                child: Text('Save'),
-                              ),
-                            ],
-                          );
-                        },
-                      );
+                      updateProfile();
                     },
+                    child: Text('Update'),
                   ),
-                ),
-                const SizedBox(height: 20.0),
-                const Padding(
-                  padding: EdgeInsets.all(8.0),
-                  child: Text(
-                    "Gender",
-                    style: TextStyle(fontSize: 18.0),
-                    textAlign: TextAlign.center,
-                  ),
-                ),
-                const SizedBox(height: 10.0),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    buildGenderButton(Icons.male, 'male'), // Male button
-                    buildGenderButton(Icons.female, 'female'), // Female button
-                    buildGenderButton(
-                        Icons.transgender, 'others'), // Female button
-                  ],
-                ),
-                const SizedBox(height: 20.0),
-              ],
+                ],
+              ),
             ),
-          ))
+          ),
         ],
       ),
     );
   }
 
-  XFile? _selectedImage;
+  Widget _buildEditDialog(
+    String title,
+    String hintText,
+    TextEditingController controller,
+    VoidCallback onSave,
+  ) {
+    return AlertDialog(
+      title: Text(title),
+      content: TextField(
+        controller: controller,
+        decoration: InputDecoration(hintText: hintText),
+      ),
+      actions: [
+        TextButton(
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+          child: Text('Cancel'),
+        ),
+        TextButton(
+          onPressed: onSave,
+          child: Text('Save'),
+        ),
+      ],
+    );
+  }
 
   Future<void> _pickImage() async {
     final pickedFile =

@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:intl/intl.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:intl_phone_field/phone_number.dart';
 import 'package:nu_parent/Components/appbar.dart';
 import 'package:nu_parent/childprofile_pop.dart';
 import 'dart:io';
@@ -42,7 +43,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   }
 
   bool _obscureText = true;
-  // bool _isChecked = false;
+
   void _togglePasswordVisibility() {
     setState(() {
       _obscureText = !_obscureText;
@@ -77,7 +78,6 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
       setState(() {
         _selectedDate = pickedDate;
         _dateController.text = DateFormat('dd-MM-yyyy').format(pickedDate);
-        print(_dateController.text);
       });
     }
   }
@@ -87,7 +87,6 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
 
   Future<void> _registerUser() async {
     try {
-      // Show the loading dialog
       if (_formKey.currentState?.validate() ?? false) {
         _progressDialog.show();
 
@@ -97,7 +96,6 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
           password: _passController.text,
         );
 
-        // ignore: unnecessary_null_comparison
         if (userCredential != null) {
           await _storeUserData(userCredential.user!.uid);
           Fluttertoast.showToast(
@@ -126,7 +124,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
         textColor: Colors.white,
       );
       print("Error registering user: $e");
-      // Handle error, show message or take appropriate action
+      // Handle error, show message, or take appropriate action
     }
   }
 
@@ -175,6 +173,71 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
     }
   }
 
+  String? _validateName(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'Please enter a valid name';
+    }
+    return null;
+  }
+
+  String? _validateEmail(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'Please enter a valid email';
+    } else if (!RegExp(r'^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$')
+        .hasMatch(value)) {
+      return 'Please enter a valid email address';
+    }
+    return null;
+  }
+
+  String? _validateDateOfBirth(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'Please select your date of birth';
+    }
+
+    // Additional validation logic can be added if needed
+
+    return null;
+  }
+
+  String? _validatePrefix(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'Please select a prefix';
+    }
+    return null;
+  }
+
+  String? _validateGender(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'Please select a gender';
+    }
+    return null;
+  }
+
+  String? _validatePhoneNumber(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'Please enter your phone number';
+    }
+    // You can add more complex validation if needed
+    return null;
+  }
+
+  String? _validateAddress(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'Please enter a valid address';
+    }
+    return null;
+  }
+
+  String? _validatePassword(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'Please enter a valid password';
+    } else if (value.length < 6) {
+      return 'Password must be at least 6 characters long';
+    }
+    return null;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -187,7 +250,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
               Color.fromARGB(255, 245, 251, 255),
               Color.fromARGB(255, 175, 203, 244),
             ],
-            radius: .5, // Adjust the radius based on your preference
+            radius: .5,
             center: Alignment(0.2, -.6),
           )),
           child: Column(
@@ -265,12 +328,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                         ),
                         TextFormField(
                           controller: _nameController,
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return 'Please enter a valid name';
-                            }
-                            return null;
-                          },
+                          validator: _validateName,
                           decoration: InputDecoration(
                             hintText: 'Name',
                             contentPadding: const EdgeInsets.symmetric(
@@ -290,12 +348,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                         ),
                         TextFormField(
                           controller: _emailController,
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return 'Please enter a valid email';
-                            }
-                            return null;
-                          },
+                          validator: _validateEmail,
                           keyboardType: TextInputType.emailAddress,
                           decoration: InputDecoration(
                             hintText: 'Email',
@@ -330,17 +383,8 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                             ),
                           ),
                           initialCountryCode: 'GB',
-                          onChanged: (phone) {
-                            print(phone.completeNumber);
-                          },
-                          validator: (phone) {
-                            if (phone?.completeNumber.isEmpty ?? true) {
-                              return 'Please enter your phone number';
-                            }
-
-                            // You can add more complex validation if needed
-
-                            return null; // Return null if the phone number is valid
+                          onChanged: (PhoneNumber? value) {
+                            _validatePhoneNumber(value?.completeNumber);
                           },
                         ),
                         const SizedBox(
@@ -365,15 +409,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                             ),
                           ),
                           onTap: _selectDate,
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return 'Please select your date of birth';
-                            }
-
-                            // Additional validation logic can be added if needed
-
-                            return null; // Return null if the date is valid
-                          },
+                          validator: _validateDateOfBirth,
                         ),
                         const SizedBox(
                           height: 20,
@@ -397,12 +433,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                               _prefix = newValue;
                             });
                           },
-                          validator: (String? value) {
-                            if (value == null || value.isEmpty) {
-                              return 'Please select a prefix'; // Validation error message
-                            }
-                            return null; // No validation error
-                          },
+                          validator: _validatePrefix,
                           isExpanded: false,
                           items: prefix
                               .map<DropdownMenuItem<String>>((String value) {
@@ -472,14 +503,11 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                         const SizedBox(
                           height: 10,
                         ),
+                        if (_validateGender(_selectedGender) != null)
+                          Text(_validateGender(_selectedGender)!),
                         TextFormField(
                           controller: _addressController,
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return 'Please enter a valid name';
-                            }
-                            return null;
-                          },
+                          validator: _validateAddress,
                           decoration: InputDecoration(
                             hintText: 'Address Line',
                             contentPadding: const EdgeInsets.symmetric(
@@ -500,12 +528,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                         TextFormField(
                           obscureText: _obscureText,
                           controller: _passController,
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return 'Please enter a valid name';
-                            }
-                            return null;
-                          },
+                          validator: _validatePassword,
                           decoration: InputDecoration(
                             suffixIcon: InkWell(
                               onTap: _togglePasswordVisibility,
@@ -538,7 +561,10 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                               Expanded(
                                 child: ElevatedButton(
                                   onPressed: () {
-                                    _registerUser();
+                                    if (_formKey.currentState?.validate() ??
+                                        false) {
+                                      _registerUser();
+                                    }
                                   },
                                   style: ElevatedButton.styleFrom(
                                     backgroundColor: AppColors.primaryColor,
