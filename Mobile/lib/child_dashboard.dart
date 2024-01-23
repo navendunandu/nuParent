@@ -73,50 +73,52 @@ class _ChildProfileState extends State<ChildDashboard> {
   List<Map<String, dynamic>> ChildDocs = [];
 
   Future<void> loadChildData() async {
-  final user = FirebaseAuth.instance.currentUser;
-  final userId = user?.uid;
-  final firestore = FirebaseFirestore.instance;
-  final childCollection = firestore.collection('child');
+    final user = FirebaseAuth.instance.currentUser;
+    final userId = user?.uid;
+    final firestore = FirebaseFirestore.instance;
+    final childCollection = firestore.collection('child');
 
-  final query = childCollection.where('userId', isEqualTo: userId);
+    final query = childCollection.where('userId', isEqualTo: userId);
 
-  QuerySnapshot querySnapshot;
-  try {
-    querySnapshot = await query.get();
-  } catch (error) {
-    print('Error getting documents: $error');
-    // You might want to throw an error or handle it as needed
-    rethrow;
-  }
-  
-  if (querySnapshot.docs.isEmpty) {
-    // Redirect to a new page because there is no data
-    Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(builder: (context) => ChildProfilePop(docId: user!.uid)), // Replace 'NoChildDataPage' with the actual new page widget
-    );
-    return;
-  }
-
-  ChildDocs.clear();
-  querySnapshot.docs.forEach((DocumentSnapshot document) {
-    // Access the data in each document
-    // print('${document.id} => ${document.data()}');
-    Map<String, dynamic> documentData =
-        document.data() as Map<String, dynamic>;
-
-    if (name.isEmpty) {
-      id = documentData['id'];
-      name = documentData['name'];
-      gender = documentData['gender'];
-      dob = documentData['dateOfBirth'];
-      calculateAge(dob);
+    QuerySnapshot querySnapshot;
+    try {
+      querySnapshot = await query.get();
+    } catch (error) {
+      print('Error getting documents: $error');
+      // You might want to throw an error or handle it as needed
+      rethrow;
     }
-    ChildDocs.add(documentData);
-    // print('Name: $name');
-  });
-}
 
+    if (querySnapshot.docs.isEmpty) {
+      // Redirect to a new page because there is no data
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+            builder: (context) => ChildProfilePop(
+                docId: user!
+                    .uid)), // Replace 'NoChildDataPage' with the actual new page widget
+      );
+      return;
+    }
+
+    ChildDocs.clear();
+    querySnapshot.docs.forEach((DocumentSnapshot document) {
+      // Access the data in each document
+      // print('${document.id} => ${document.data()}');
+      Map<String, dynamic> documentData =
+          document.data() as Map<String, dynamic>;
+
+      if (name.isEmpty) {
+        id = documentData['id'];
+        name = documentData['name'];
+        gender = documentData['gender'];
+        dob = documentData['dateOfBirth'];
+        calculateAge(dob);
+      }
+      ChildDocs.add(documentData);
+      // print('Name: $name');
+    });
+  }
 
   String displayAge() {
     if (childAge == 0) {
@@ -175,9 +177,9 @@ class _ChildProfileState extends State<ChildDashboard> {
       // ),
       body: RefreshIndicator(
         onRefresh: () async {
-        // Implement the logic to reload data here
-        await loadChildData();
-      },
+          // Implement the logic to reload data here
+          await loadChildData();
+        },
         child: FutureBuilder(
           future: loadChildData(),
           builder: (context, snapshot) {
@@ -215,7 +217,9 @@ class _ChildProfileState extends State<ChildDashboard> {
   Widget buildMainContent() {
     return ListView(
       children: [
-        CustomAppBar(bgColor: AppColors.lightblue,),
+        CustomAppBar(
+          bgColor: AppColors.lightblue,
+        ),
         Container(
           height: 250,
           decoration: BoxDecoration(
@@ -496,7 +500,9 @@ class _ChildProfileState extends State<ChildDashboard> {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => BrushingInstruction(age: childAge,)));
+                        builder: (context) => BrushingInstruction(
+                              age: childAge,
+                            )));
               },
               child: Container(
                 height: 150,
