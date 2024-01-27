@@ -108,7 +108,7 @@ const ResponsiveDrawer = (props) => {
             </ListItemButton>
           </Link>
         </ListItem>
-        <ListItem disablePadding className='inner-box'>
+        {/*<ListItem disablePadding className='inner-box'>
           <Link to={'/Admin/Brushing'} className={`sidebar-btn ${location.pathname === '/Admin/Brushing' ? 'active-link' : ''}`} onClick={handleDrawerToggle}>
             <ListItemButton >
               <ListItemIcon>
@@ -117,7 +117,7 @@ const ResponsiveDrawer = (props) => {
               <ListItemText primary='Brushing' />
             </ListItemButton>
           </Link>
-        </ListItem>
+      </ListItem>*/}
         <ListItem disablePadding className='inner-box'>
           <Link to={'/Admin/OralHygiene'} className={`sidebar-btn ${location.pathname === '/Admin/OralHygiene' ? 'active-link' : ''}`} onClick={handleDrawerToggle}>
             <ListItemButton >
