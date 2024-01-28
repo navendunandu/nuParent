@@ -21,7 +21,7 @@ class _EditProfileState extends State<EditProfile> {
   String dob = '';
   String image = 'assets/dummy-profile-pic.png';
   bool isLoading = true;
-  String selectedGender='';
+  String selectedGender = '';
   final TextEditingController nameController = TextEditingController();
   final TextEditingController dobController = TextEditingController();
   XFile? _selectedImage;
@@ -39,99 +39,101 @@ class _EditProfileState extends State<EditProfile> {
     });
   }
 
-void updateProfile() async {
-  if (widget.childId != null) {
-    final userDoc =
-        FirebaseFirestore.instance.collection('child').doc(widget.childId);
-
-    // Check if any data has changed
-    if (nameController.text != name ||
-        dobController.text != dob ||
-        selectedGender != gender ||
-        _selectedImage != null) {
-      // Update only if there are changes
-
-      // Check if name is null and set it to an empty string
-      final updatedName = nameController.text ?? '';
-
-      await userDoc.update({
-        'name': updatedName,
-        'dateOfBirth': dobController.text,
-        'gender': selectedGender,
-      }).then((_) async {
-        // Update the local state with the new data.
-        setState(() {
-          name = updatedName;
-          dob = dobController.text;
-          gender = selectedGender;
-        });
-
-        // Handle updating the profile picture here (if needed).
-        if (_selectedImage != null) {
-          final storage = FirebaseStorage.instance;
-          final Reference storageRef = storage
-              .ref()
-              .child('user_profile_images/${widget.childId}.jpg');
-          final UploadTask uploadTask =
-              storageRef.putFile(File(_selectedImage!.path));
-
-          await uploadTask.whenComplete(() async {
-            final imageUrl = await storageRef.getDownloadURL();
-            setState(() {
-              image = imageUrl; // Update profileImageUrl with new URL
-            });
-            userDoc.update({
-              'imageUrl': imageUrl,
-            });
-          });
-        }
-
-        // Show a success message or navigate to another page.
-        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-          content: Text('Profile updated successfully'),
-        ));
-      }).catchError((error) {
-        print('Error updating user data: $error');
-        // Handle the error.
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-          content: Text('Error updating profile: $error'),
-        ));
-      });
-    } else {
-      // No changes were made
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-        content: Text('No changes were made.'),
-      ));
-    }
-  }
-}
-void loadChildData() async {
-  if (widget.childId != "") {
-    try {
+  void updateProfile() async {
+    if (widget.childId != null) {
       final userDoc =
           FirebaseFirestore.instance.collection('child').doc(widget.childId);
-      final documentSnapshot = await userDoc.get();
 
-      if (documentSnapshot.exists) {
-        final childData = documentSnapshot.data();
-        setState(() {
-          name = childData?['name'] ?? 'Name not Found';
-          dob = childData?['dateOfBirth'] as String? ?? 'DOB not Found';
-          selectedGender = childData?['gender'] as String? ?? 'Gender not Found';
+      // Check if any data has changed
+      if (nameController.text != name ||
+          dobController.text != dob ||
+          selectedGender != gender ||
+          _selectedImage != null) {
+        // Update only if there are changes
 
-          if (childData?['imageUrl'] != null) {
-            image = childData?['imageUrl'] as String;
+        // Check if name is null and set it to an empty string
+        final updatedName = nameController.text ?? '';
+
+        await userDoc.update({
+          'name': updatedName,
+          'dateOfBirth': dobController.text,
+          'gender': selectedGender,
+        }).then((_) async {
+          // Update the local state with the new data.
+          setState(() {
+            name = updatedName;
+            dob = dobController.text;
+            gender = selectedGender;
+          });
+
+          // Handle updating the profile picture here (if needed).
+          if (_selectedImage != null) {
+            final storage = FirebaseStorage.instance;
+            final Reference storageRef = storage
+                .ref()
+                .child('user_profile_images/${widget.childId}.jpg');
+            final UploadTask uploadTask =
+                storageRef.putFile(File(_selectedImage!.path));
+
+            await uploadTask.whenComplete(() async {
+              final imageUrl = await storageRef.getDownloadURL();
+              setState(() {
+                image = imageUrl; // Update profileImageUrl with new URL
+              });
+              userDoc.update({
+                'imageUrl': imageUrl,
+              });
+            });
           }
 
-          isLoading = false; // Set loading state to false
+          // Show a success message or navigate to another page.
+          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+            content: Text('Profile updated successfully'),
+          ));
+        }).catchError((error) {
+          print('Error updating user data: $error');
+          // Handle the error.
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+            content: Text('Error updating profile: $error'),
+          ));
         });
+      } else {
+        // No changes were made
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          content: Text('No changes were made.'),
+        ));
       }
-    } catch (error) {
-      // Handle any potential errors
-      print('Error retrieving user data: $error');
     }
   }
-}
+
+  void loadChildData() async {
+    if (widget.childId != "") {
+      try {
+        final userDoc =
+            FirebaseFirestore.instance.collection('child').doc(widget.childId);
+        final documentSnapshot = await userDoc.get();
+
+        if (documentSnapshot.exists) {
+          final childData = documentSnapshot.data();
+          setState(() {
+            name = childData?['name'] ?? 'Name not Found';
+            dob = childData?['dateOfBirth'] as String? ?? 'DOB not Found';
+            selectedGender =
+                childData?['gender'] as String? ?? 'Gender not Found';
+
+            if (childData?['imageUrl'] != null) {
+              image = childData?['imageUrl'] as String;
+            }
+
+            isLoading = false; // Set loading state to false
+          });
+        }
+      } catch (error) {
+        // Handle any potential errors
+        print('Error retrieving user data: $error');
+      }
+    }
+  }
 
   void _selectDate() async {
     final DateTime? pickedDate = await showDatePicker(
@@ -152,11 +154,10 @@ void loadChildData() async {
     }
   }
 
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: isLoading
-          ? _buildLoading()
-          : buildProfileContent(),
+      body: isLoading ? _buildLoading() : buildProfileContent(),
     );
   }
 

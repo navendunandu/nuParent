@@ -23,31 +23,11 @@ class SuccessScreen extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Stack(
-              children: [
-                Center(
-                    child: Image.asset(
-                  'assets/success.png',
-                  width: 300,
-                )),
-                Padding(
-                  padding: const EdgeInsets.only(left: 138.0, top: 100),
-                  child: ClipOval(
-                    child: Container(
-                      color: AppColors.white,
-                      child: Padding(
-                        padding: const EdgeInsets.all(15.0),
-                        child: Image.asset(
-                          'assets/nuParent.png',
-                          width: 50,
-                          height: 50,
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            ),
+            Center(
+                child: Image.asset(
+              'assets/success.png',
+              width: 300,
+            )),
             const Text(
               'Registration Successfully',
               style: TextStyle(fontSize: 24, fontWeight: FontWeight.w600),

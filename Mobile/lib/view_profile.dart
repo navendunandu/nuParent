@@ -104,7 +104,10 @@ class _ViewProfileState extends State<ViewProfile> {
         name = documentData['name'];
         gender = documentData['gender'];
         dob = documentData['dateOfBirth'];
-        image = documentData['imageUrl'];
+        // image = documentData['imageUrl'];
+        image = documentData.containsKey('imageUrl')
+            ? documentData['imageUrl']
+            : '';
         calculateAge(dob);
       }
       ChildDocs.add(documentData);
@@ -242,7 +245,7 @@ class _ViewProfileState extends State<ViewProfile> {
                       color: Color.fromARGB(255, 216, 225, 233),
                       borderRadius: BorderRadius.all(Radius.circular(10)),
                     ),
-                    child: (image != "assets/dummy-profile-pic.png"
+                    child: (image != ""
                         ? Image.network(
                             image,
                             fit: BoxFit.cover,
@@ -250,8 +253,7 @@ class _ViewProfileState extends State<ViewProfile> {
                             width: 80,
                           )
                         : Image.asset('assets/dummy-profile-pic.png',
-                            height: 100, 
-                            width: 80, fit: BoxFit.cover)),
+                            height: 100, width: 80, fit: BoxFit.cover)),
                   ),
                   const SizedBox(
                     width: 10,

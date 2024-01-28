@@ -33,7 +33,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
         )),
         child: ListView(
           children: [
-            const CustomAppBar(settings: false,),
+            const CustomAppBar(
+              settings: false,
+            ),
             const SizedBox(
                 height: 80,
                 child: Center(
@@ -56,7 +58,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 decoration: const BoxDecoration(
                     color: Color.fromARGB(255, 83, 128, 196)),
                 child: const Text(
-                  "Edit Child's Details",
+                  "Child Profile",
                   style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
                   textAlign: TextAlign.center,
                 ),
@@ -253,7 +255,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 ),
                 child: const Text(
                   "Logout",
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500, color: Colors.white),
+                  style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.w500,
+                      color: Colors.white),
                   textAlign: TextAlign.center,
                 ),
               ),
@@ -263,6 +268,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
       ),
     );
   }
+
   void _logout() async {
     // Clear saved data
     SharedPreferences prefs = await SharedPreferences.getInstance();
