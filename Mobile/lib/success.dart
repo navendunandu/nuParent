@@ -19,9 +19,7 @@ class SuccessScreen extends StatelessWidget {
           radius: .5, // Adjust the radius based on your preference
           center: Alignment(0.2, -.6),
         )),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
+        child: ListView(
           children: [
             Stack(
               children: [
@@ -30,8 +28,9 @@ class SuccessScreen extends StatelessWidget {
                   'assets/success.png',
                   width: 300,
                 )),
-                Padding(
-                  padding: const EdgeInsets.only(left: 138.0, top: 100),
+                Positioned(
+                  left: 140,
+                  top: 100,
                   child: ClipOval(
                     child: Container(
                       color: AppColors.white,
@@ -50,10 +49,12 @@ class SuccessScreen extends StatelessWidget {
             ),
             const Text(
               'Registration Successfully',
+              textAlign: TextAlign.center,
               style: TextStyle(fontSize: 24, fontWeight: FontWeight.w600),
             ),
             Text(
               'Welcome to nuParent.',
+              textAlign: TextAlign.center,
               style: GoogleFonts.sansita(
                   textStyle: const TextStyle(
                       fontSize: 32,
@@ -72,6 +73,7 @@ class SuccessScreen extends StatelessWidget {
               },
               child: const Text(
                 'Back to Login',
+                textAlign: TextAlign.center,
                 style: TextStyle(
                     fontSize: 20,
                     color: AppColors.primaryColor,
