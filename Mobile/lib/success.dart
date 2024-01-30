@@ -21,40 +21,11 @@ class SuccessScreen extends StatelessWidget {
         )),
         child: ListView(
           children: [
-<<<<<<< HEAD
-            Stack(
-              children: [
-                Center(
-                    child: Image.asset(
-                  'assets/success.png',
-                  width: 300,
-                )),
-                Positioned(
-                  left: 140,
-                  top: 100,
-                  child: ClipOval(
-                    child: Container(
-                      color: AppColors.white,
-                      child: Padding(
-                        padding: const EdgeInsets.all(15.0),
-                        child: Image.asset(
-                          'assets/nuParent.png',
-                          width: 50,
-                          height: 50,
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-=======
             Center(
                 child: Image.asset(
               'assets/success.png',
               width: 300,
             )),
->>>>>>> 1a2fbb1bcc3d72577c380ce4a7ec01e16ee3d455
             const Text(
               'Registration Successfully',
               textAlign: TextAlign.center,
