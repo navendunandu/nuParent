@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:nu_parent/child_dashboard.dart';
 import 'package:nu_parent/Components/appbar.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
@@ -153,6 +154,34 @@ class _EditProfileState extends State<EditProfile> {
       });
     }
   }
+ void deleteChild() async {
+  if (widget.childId != null) {
+    try {
+      final userDoc = FirebaseFirestore.instance.collection('child').doc(widget.childId);
+      
+      await userDoc.delete();
+      
+      // Show a success message or navigate to another page.
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+        content: Text('Child deleted successfully'),
+      ));
+
+      // Redirect to ChildDashboard after deletion
+      Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => const ChildDashboard()),
+        );
+    } catch (error) {
+      print('Error deleting user data: $error');
+      // Handle the error.
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text('Error deleting child: $error'),
+      ));
+    }
+  }
+}
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -280,6 +309,13 @@ class _EditProfileState extends State<EditProfile> {
                     },
                     child: Text('Update'),
                   ),
+                  ElevatedButton(
+  onPressed: () {
+    deleteChild();
+  },
+  child: Text('Delete'),
+),
+
                 ],
               ),
             ),
