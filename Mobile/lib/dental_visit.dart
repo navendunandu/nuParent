@@ -126,37 +126,40 @@ class _DentalVisitState extends State<DentalVisit> {
                           );
                         } else if (index == 2) {
                           // Display specific text after the first 2 items
-                          return const Column(
-                            children: [
-                              SizedBox(
-                                height: 10,
-                              ),
-                              Padding(
-                                padding: EdgeInsets.only(left: 10, right: 10),
-                                child: Text(
-                                  'What does a fluoride varnish do?',
-                                  textAlign: TextAlign.left,
-                                  style: TextStyle(
-                                    color: AppColors.primaryColor,
-                                    fontWeight: FontWeight.w500
+                          return Container(
+                            decoration: BoxDecoration(
+                                color: AppColors.white,
+                                borderRadius: BorderRadius.circular(15)),
+                            child: const Column(
+                              children: [
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                Padding(
+                                  padding: EdgeInsets.only(left: 10, right: 10),
+                                  child: Text(
+                                    'What does a fluoride varnish do?',
+                                    textAlign: TextAlign.left,
+                                    style: TextStyle(
+                                        color: AppColors.primaryColor,
+                                        fontWeight: FontWeight.w500),
                                   ),
                                 ),
-                              ),
-                              Padding(
-                                padding: EdgeInsets.only(left: 10, right: 10),
-                                child: Text(
-                                  'Fluoride in varnish enters the tooth enamel and makes the tooth hard. It prevents new cavities and slows down or stops decay from getting worse. If tooth decay is just starting, it repairs the tooth.',
-                                  style: TextStyle(
-                                    color: AppColors.primaryColor,
-                                    fontWeight: FontWeight.w500
+                                Padding(
+                                  padding: EdgeInsets.only(left: 10, right: 10),
+                                  child: Text(
+                                    'Fluoride in varnish enters the tooth enamel and makes the tooth hard. It prevents new cavities and slows down or stops decay from getting worse. If tooth decay is just starting, it repairs the tooth.',
+                                    style: TextStyle(
+                                        color: AppColors.primaryColor,
+                                        fontWeight: FontWeight.w500),
+                                    textAlign: TextAlign.left,
                                   ),
-                                  textAlign: TextAlign.left,
                                 ),
-                              ),
-                              SizedBox(
-                                height: 10,
-                              ),
-                            ],
+                                SizedBox(
+                                  height: 10,
+                                ),
+                              ],
+                            ),
                           );
                         } else {
                           // Display the remaining items from dataList
@@ -183,10 +186,19 @@ class _DentalVisitState extends State<DentalVisit> {
             const SizedBox(
               height: 10,
             ),
-            const Padding(
-              padding: EdgeInsets.only(left: 15, right: 15),
-              child: Text(
-                'Visit British Society of Pediatric Dentistry: https://www.bspd.co.uk/Kidsvids for videos on how to take care of kids teeth age wise.',
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Container(
+                decoration: BoxDecoration(
+                    color: AppColors.white,
+                    borderRadius: BorderRadius.circular(15)),
+                child: const Padding(
+                  padding: const EdgeInsets.all(12),
+                  child: Text(
+                    'Visit British Society of Pediatric Dentistry: https://www.bspd.co.uk/Kidsvids for videos on how to take care of kids teeth age wise.',
+                    style: TextStyle(fontWeight: FontWeight.w500),
+                  ),
+                ),
               ),
             ),
             Padding(
