@@ -9,6 +9,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:nu_parent/view_profile.dart';
+import 'package:progress_dialog_null_safe/progress_dialog_null_safe.dart';
 
 class RegistrationChild extends StatefulWidget {
   final String docId;
@@ -24,10 +25,13 @@ class _RegistrationChildState extends State<RegistrationChild> {
   final _formKey = GlobalKey<FormState>();
   late String _receivedDocId;
 
+  late ProgressDialog _progressDialog;
+
   @override
   void initState() {
     super.initState();
     _receivedDocId = widget.docId;
+    _progressDialog = ProgressDialog(context);
   }
 
   final _nameController = TextEditingController();
@@ -77,66 +81,68 @@ class _RegistrationChildState extends State<RegistrationChild> {
     return null;
   }
 
- Future<void> _registerChild() async {
-  try {
-    if (_formKey.currentState?.validate() ?? false) {
-      if (selectedGender.isEmpty) {
+  Future<void> _registerChild() async {
+    try {
+      if (_formKey.currentState?.validate() ?? false) {
+        _progressDialog.show();
+        if (selectedGender.isEmpty) {
+          Fluttertoast.showToast(
+            msg: "Please select a gender",
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.BOTTOM,
+            backgroundColor: Colors.red,
+            textColor: Colors.white,
+          );
+          return;
+        }
+
+        DocumentReference childRef =
+            await FirebaseFirestore.instance.collection('child').add({
+          'name': _nameController.text,
+          'dateOfBirth': _dateController.text,
+          'gender': selectedGender,
+          'userId': _receivedDocId,
+          // Add more fields as needed
+        });
+
+        String docId = childRef.id;
+
+        await _uploadImage(docId);
+
         Fluttertoast.showToast(
-          msg: "Please select a gender",
+          msg: "Registration Successful",
           toastLength: Toast.LENGTH_SHORT,
           gravity: ToastGravity.BOTTOM,
-          backgroundColor: Colors.red,
+          backgroundColor: Colors.green,
           textColor: Colors.white,
         );
-        return;
+
+        if (widget.action == 'ADD') {
+          _progressDialog.hide();
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context) => const ViewProfile()),
+          );
+        } else {
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context) => const SuccessScreen()),
+          );
+        }
       }
-
-      DocumentReference childRef = await FirebaseFirestore.instance
-          .collection('child')
-          .add({
-        'name': _nameController.text,
-        'dateOfBirth': _dateController.text,
-        'gender': selectedGender,
-        'userId': _receivedDocId,
-        // Add more fields as needed
-      });
-
-      String docId = childRef.id;
-
-      await _uploadImage(docId);
-
+    } catch (e) {
+      _progressDialog.hide();
       Fluttertoast.showToast(
-        msg: "Registration Successful",
+        msg: "Error registering child: $e",
         toastLength: Toast.LENGTH_SHORT,
         gravity: ToastGravity.BOTTOM,
-        backgroundColor: Colors.green,
+        backgroundColor: Colors.red,
         textColor: Colors.white,
       );
-
-      if (widget.action == 'ADD') {
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(builder: (context) => const ViewProfile()),
-        );
-      } else {
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(builder: (context) => const SuccessScreen()),
-        );
-      }
+      print("Error registering child: $e");
+      // Handle error, show message, or take appropriate action
     }
-  } catch (e) {
-    Fluttertoast.showToast(
-      msg: "Error registering child: $e",
-      toastLength: Toast.LENGTH_SHORT,
-      gravity: ToastGravity.BOTTOM,
-      backgroundColor: Colors.red,
-      textColor: Colors.white,
-    );
-    print("Error registering child: $e");
-    // Handle error, show message, or take appropriate action
   }
-}
 
   Future<void> _uploadImage(String childId) async {
     try {
@@ -215,15 +221,14 @@ class _RegistrationChildState extends State<RegistrationChild> {
                                     CircleAvatar(
                                       radius: 50,
                                       backgroundColor: const Color(0xff4c505b),
-                                      backgroundImage:
-                                          _selectedImage != null
-                                              ? FileImage(
-                                                  File(_selectedImage!.path))
-                                              : _imageUrl != null
-                                                  ? NetworkImage(_imageUrl!)
-                                                  : const AssetImage(
-                                                          'assets/dummy-profile-pic.png')
-                                                      as ImageProvider,
+                                      backgroundImage: _selectedImage != null
+                                          ? FileImage(
+                                              File(_selectedImage!.path))
+                                          : _imageUrl != null
+                                              ? NetworkImage(_imageUrl!)
+                                              : const AssetImage(
+                                                      'assets/dummy-profile-pic.png')
+                                                  as ImageProvider,
                                       child: _selectedImage == null &&
                                               _imageUrl == null
                                           ? const Icon(
@@ -375,8 +380,7 @@ class _RegistrationChildState extends State<RegistrationChild> {
                                     child: const Text(
                                       'Save',
                                       style: TextStyle(
-                                          fontSize: 20,
-                                          color: AppColors.white),
+                                          fontSize: 20, color: AppColors.white),
                                     ),
                                   ),
                                 ),

@@ -21,6 +21,7 @@ class SuccessScreen extends StatelessWidget {
         )),
         child: ListView(
           children: [
+<<<<<<< HEAD
             Stack(
               children: [
                 Center(
@@ -47,6 +48,13 @@ class SuccessScreen extends StatelessWidget {
                 ),
               ],
             ),
+=======
+            Center(
+                child: Image.asset(
+              'assets/success.png',
+              width: 300,
+            )),
+>>>>>>> 1a2fbb1bcc3d72577c380ce4a7ec01e16ee3d455
             const Text(
               'Registration Successfully',
               textAlign: TextAlign.center,

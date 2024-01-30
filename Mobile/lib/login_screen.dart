@@ -6,6 +6,7 @@ import 'package:nu_parent/forget_password.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:progress_dialog_null_safe/progress_dialog_null_safe.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -26,10 +27,13 @@ class _LoginScreenState extends State<LoginScreen> {
     });
   }
 
+  late ProgressDialog _progressDialog;
+
   @override
   void initState() {
     super.initState();
     _checkKeepLoggedInStatus();
+    _progressDialog = ProgressDialog(context);
   }
 
   Future<void> _checkKeepLoggedInStatus() async {
@@ -54,6 +58,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   Future<void> _login(BuildContext context) async {
     if (_formKey.currentState!.validate()) {
+      _progressDialog.show();
       try {
         final FirebaseAuth auth = FirebaseAuth.instance;
         final UserCredential userCredential =
@@ -74,6 +79,7 @@ class _LoginScreenState extends State<LoginScreen> {
             prefs.setBool('keepLoggedIn', true);
           }
 
+          _progressDialog.hide();
           Navigator.pushReplacement(
             context,
             MaterialPageRoute(builder: (context) => const ChildDashboard()),
@@ -81,6 +87,7 @@ class _LoginScreenState extends State<LoginScreen> {
         }
       } catch (e) {
         // Handle login failure and show an error toast.
+        _progressDialog.hide();
         String errorMessage = 'Login failed';
 
         if (e is FirebaseAuthException) {
