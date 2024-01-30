@@ -94,9 +94,7 @@ class _ChildProfileState extends State<ChildDashboard> {
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(
-            builder: (context) => ChildProfilePop(
-                docId: user!
-                    .uid)), // Replace 'NoChildDataPage' with the actual new page widget
+            builder: (context) => ChildProfilePop(docId: user!.uid)),
       );
       return;
     }
