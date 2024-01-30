@@ -74,7 +74,7 @@ class _WhileBrushState extends State<WhileBrush> {
             Center(
               child: ElevatedButton(
                 onPressed: (){
-                Navigator.push(context, MaterialPageRoute(builder: (context) => const CountdownPage(),));
+                Navigator.push(context, MaterialPageRoute(builder: (context) => CountdownPage(),));
               }, child: const Text('Timer', style: TextStyle(color: AppColors.primaryColor),)),
             ),
             const SizedBox(

@@ -31,6 +31,9 @@ dependencies:
   chewie: ^1.7.4
   liquid_pull_to_refresh: ^3.0.1
   progress_dialog_null_safe: ^1.0.7
+  flutter_local_notifications: ^9.1.6
+  timezone: ^0.7.0
+
 
 dev_dependencies:
   flutter_test:
