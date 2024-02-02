@@ -21,17 +21,13 @@ class RegistrationScreen extends StatefulWidget {
 }
 
 class _RegistrationScreenState extends State<RegistrationScreen> {
-  final _dateController = TextEditingController();
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _phoneController = TextEditingController();
-  final TextEditingController _addressController = TextEditingController();
   final TextEditingController _passController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
-  String? _prefix;
   XFile? _selectedImage;
   String? _imageUrl;
-  DateTime? _selectedDate;
   String? _selectedGender = '';
 
   late ProgressDialog _progressDialog;
@@ -60,30 +56,6 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
       });
     }
   }
-
-  void _selectDate() async {
-    final DateTime currentDate = DateTime.now();
-    final DateTime lastDate = currentDate.subtract(
-        const Duration(days: 6570)); // 6570 days is approximately 18 years
-
-    DateTime? pickedDate = await showDatePicker(
-      context: context,
-      initialDate:
-          _selectedDate ?? lastDate, // Use lastDate if _selectedDate is null
-      firstDate: DateTime(1900, 1, 1),
-      lastDate: lastDate,
-    );
-
-    if (pickedDate != null) {
-      setState(() {
-        _selectedDate = pickedDate;
-        _dateController.text = DateFormat('dd-MM-yyyy').format(pickedDate);
-      });
-    }
-  }
-
-  String? selectedPrefix;
-  List<String> prefix = ['Mr', 'Mrs', 'Ms'];
 
   Future<void> _registerUser() async {
     try {
@@ -135,10 +107,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
         'name': _nameController.text,
         'email': _emailController.text,
         'phone': _phoneController.text,
-        'dateOfBirth': _dateController.text,
-        'prefix': _prefix,
         'gender': _selectedGender,
-        'address': _addressController.text,
         'password': _passController.text,
         // Add more fields as needed
       });
