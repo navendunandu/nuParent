@@ -138,6 +138,8 @@ class _ChildProfileState extends State<ChildDashboard> {
     });
   }
 
+  void AppExit() {}
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -215,8 +217,47 @@ class _ChildProfileState extends State<ChildDashboard> {
   Widget buildMainContent() {
     return ListView(
       children: [
-        CustomAppBar(
-          bgColor: AppColors.lightblue,
+        // CustomAppBar(
+        //   bgColor: AppColors.lightblue,
+        // )
+        Container(
+          color: AppColors.lightblue,
+          child: Padding(
+            padding: const EdgeInsets.only(right: 20.0, top: 10, bottom: 5),
+            child: Column(
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    IconButton(
+                        onPressed: () {
+                          showExitConfirmationDialog(context);
+                        },
+                        icon: const Icon(Icons.arrow_back_ios_new)),
+                    Container(
+                      decoration: const BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: AppColors.primaryColor,
+                      ),
+                      child: IconButton(
+                        icon: const Icon(
+                          Icons.settings,
+                          color: AppColors.white,
+                        ),
+                        onPressed: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      const SettingsScreen()));
+                        },
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
         ),
         Container(
           height: 250,
@@ -425,7 +466,7 @@ class _ChildProfileState extends State<ChildDashboard> {
                     child: Padding(
                   padding: EdgeInsets.all(15.0),
                   child: Text(
-                    'Oral hygiene',
+                    'Dental hygiene',
                     style: TextStyle(
                         color: AppColors.white,
                         fontWeight: FontWeight.w500,
@@ -476,7 +517,7 @@ class _ChildProfileState extends State<ChildDashboard> {
                     child: Padding(
                   padding: EdgeInsets.all(15.0),
                   child: Text(
-                    'Dietary intake',
+                    'Diet',
                     style: TextStyle(
                         color: AppColors.white,
                         fontWeight: FontWeight.w500,
@@ -570,6 +611,47 @@ class _ChildProfileState extends State<ChildDashboard> {
           height: 10,
         )
       ],
+    );
+  }
+
+  Future<void> showExitConfirmationDialog(BuildContext context) async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible:
+          false, // Prevents the dialog from closing when tapping outside
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Exit Confirmation'),
+          content: const SingleChildScrollView(
+            child: ListBody(
+              children: <Widget>[
+                Text('Are you sure you want to exit?'),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: const Text(
+                'Cancel',
+                style: TextStyle(color: AppColors.primaryColor),
+              ),
+              onPressed: () {
+                Navigator.of(context).pop(); // Closes the dialog
+              },
+            ),
+            TextButton(
+              child: const Text(
+                'Exit',
+                style: TextStyle(color: AppColors.primaryColor),
+              ),
+              onPressed: () {
+                Navigator.of(context).pop(); // Closes the dialog
+                exit(-1); // Exits the app
+              },
+            ),
+          ],
+        );
+      },
     );
   }
 

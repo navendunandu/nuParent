@@ -390,62 +390,6 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                         const SizedBox(
                           height: 20,
                         ),
-                        TextFormField(
-                          controller: _dateController,
-                          readOnly: true,
-                          decoration: InputDecoration(
-                            suffixIcon:
-                                const Icon(Icons.calendar_month_outlined),
-                            hintText: 'Date of Birth',
-                            contentPadding: const EdgeInsets.symmetric(
-                              vertical: 20.0,
-                              horizontal: 25.0,
-                            ),
-                            filled: true,
-                            fillColor: const Color.fromARGB(241, 241, 241, 255),
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(10.0),
-                              borderSide: BorderSide.none,
-                            ),
-                          ),
-                          onTap: _selectDate,
-                          validator: _validateDateOfBirth,
-                        ),
-                        const SizedBox(
-                          height: 20,
-                        ),
-                        DropdownButtonFormField<String>(
-                          decoration: InputDecoration(
-                            hintText: 'Prefix',
-                            contentPadding: const EdgeInsets.symmetric(
-                              vertical: 20.0,
-                              horizontal: 10.0,
-                            ),
-                            filled: true,
-                            fillColor: const Color.fromARGB(241, 241, 241, 255),
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(10.0),
-                              borderSide: BorderSide.none,
-                            ),
-                          ),
-                          onChanged: (String? newValue) {
-                            setState(() {
-                              _prefix = newValue;
-                            });
-                          },
-                          validator: _validatePrefix,
-                          isExpanded: false,
-                          items: prefix
-                              .map<DropdownMenuItem<String>>((String value) {
-                            return DropdownMenuItem<String>(
-                              value: value,
-                              child: Text(value),
-                            );
-                          }).toList(),
-                        ),
-                        const SizedBox(
-                          height: 10,
-                        ),
                         const Text('Select Gender'),
                         const SizedBox(
                           height: 10,
@@ -505,26 +449,6 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                         ),
                         if (_validateGender(_selectedGender) != null)
                           Text(_validateGender(_selectedGender)!),
-                        TextFormField(
-                          controller: _addressController,
-                          validator: _validateAddress,
-                          decoration: InputDecoration(
-                            hintText: 'Address Line',
-                            contentPadding: const EdgeInsets.symmetric(
-                              vertical: 20.0,
-                              horizontal: 25.0,
-                            ),
-                            filled: true,
-                            fillColor: const Color.fromARGB(241, 241, 241, 255),
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(10.0),
-                              borderSide: BorderSide.none,
-                            ),
-                          ),
-                        ),
-                        const SizedBox(
-                          height: 20,
-                        ),
                         TextFormField(
                           obscureText: _obscureText,
                           controller: _passController,
