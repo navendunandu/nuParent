@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:nu_parent/main.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:nu_parent/video_player.dart';
 import 'package:video_player/video_player.dart';
+import 'package:video_thumbnail/video_thumbnail.dart';
 
 class HowToVideos extends StatelessWidget {
-  const HowToVideos({super.key});
+  const HowToVideos({Key? key});
 
   @override
   Widget build(BuildContext context) {
@@ -24,9 +25,22 @@ class HowToVideos extends StatelessWidget {
             return ListView.builder(
               itemCount: videos.length,
               itemBuilder: (context, index) {
-                return VideoPlayerWidget(
-                  videoUrl: videos[index]['videoUrl'],
-                  videoTitle: videos[index]['videoTitle'],
+                return InkWell(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => FullScreenVideoPlayer(
+                          videoUrl: videos[index]['videoUrl'],
+                        ),
+                      ),
+                    );
+                  },
+                  child: VideoPlayerWidget(
+                    videoUrl: videos[index]['videoUrl'],
+                    videoTitle: videos[index]['videoTitle'],
+                    videoThumb: videos[index]['imgUrl'],
+                  ),
                 );
               },
             );
@@ -49,8 +63,13 @@ class HowToVideos extends StatelessWidget {
 class VideoPlayerWidget extends StatefulWidget {
   final String videoUrl;
   final String videoTitle;
+  final String videoThumb;
 
-  VideoPlayerWidget({required this.videoUrl, required this.videoTitle});
+  VideoPlayerWidget({
+    required this.videoUrl,
+    required this.videoTitle,
+    required this.videoThumb,
+  });
 
   @override
   _VideoPlayerWidgetState createState() => _VideoPlayerWidgetState();
@@ -58,10 +77,15 @@ class VideoPlayerWidget extends StatefulWidget {
 
 class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
   late VideoPlayerController _controller;
+  String? thumbnailUrl;
 
   @override
   void initState() {
     super.initState();
+
+    // Generate a thumbnail from the video URL
+    generateThumbnail();
+
     _controller = VideoPlayerController.network(widget.videoUrl)
       ..initialize().then((_) {
         if (mounted) {
@@ -78,36 +102,60 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        _onVideoTap();
+    return WillPopScope(
+      onWillPop: () async {
+        // Dispose of the controller when navigating back
+        _controller.dispose();
+        return true;
       },
-      child: Column(
-        children: [
-          _controller.value.isInitialized
-              ? AspectRatio(
-                  aspectRatio: 16 / 9,
-                  child: VideoPlayer(_controller),
-                )
-              : CircularProgressIndicator(),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Text(widget.videoTitle),
-          ),
-        ],
+      child: GestureDetector(
+        onTap: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => FullScreenVideoPlayer(
+                videoUrl: widget.videoUrl,
+              ),
+            ),
+          );
+        },
+        child: Column(
+          children: [
+            _controller.value.isInitialized
+                ? AspectRatio(
+                    aspectRatio: 16 / 9,
+                    child: widget.videoThumb != null
+                        ? Image.network(
+                            widget.videoThumb,
+                            fit: BoxFit.cover,
+                          )
+                        : Center(child: CircularProgressIndicator()),
+                  )
+                : CircularProgressIndicator(),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text(widget.videoTitle),
+            ),
+          ],
+        ),
       ),
     );
   }
 
-  void _onVideoTap() {
-    if (_controller.value.isPlaying) {
-      _controller.pause();
-    } else {
-      _controller.play();
+  // Function to generate a thumbnail from the video URL
+  void generateThumbnail() async {
+    thumbnailUrl = await VideoThumbnail.thumbnailFile(
+      video: widget.videoUrl,
+      imageFormat: ImageFormat.JPEG,
+      maxHeight: 100,
+      quality: 25,
+    );
+
+    if (mounted) {
+      setState(() {});
     }
   }
 
-  @override
   void dispose() {
     _controller.dispose();
     super.dispose();

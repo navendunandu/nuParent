@@ -143,38 +143,6 @@ class _ChildProfileState extends State<ChildDashboard> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: AppBar(
-      //   backgroundColor: AppColors.lightblue,
-      //   leading: IconButton(
-      //     onPressed: () {
-      //       exit(0);
-      //     },
-      //     icon: const Icon(Icons.arrow_back_ios_new),
-      //   ),
-      //   actions: [
-      //     Padding(
-      //       padding: const EdgeInsets.only(right: 20.0),
-      //       child: Container(
-      //         decoration: const BoxDecoration(
-      //           shape: BoxShape.circle,
-      //           color: AppColors.primaryColor,
-      //         ),
-      //         child: IconButton(
-      //           icon: const Icon(
-      //             Icons.settings,
-      //             color: AppColors.white,
-      //           ),
-      //           onPressed: () {
-      //             Navigator.push(
-      //                 context,
-      //                 MaterialPageRoute(
-      //                     builder: (context) => const SettingsScreen()));
-      //           },
-      //         ),
-      //       ),
-      //     ),
-      //   ],
-      // ),
       body: RefreshIndicator(
         onRefresh: () async {
           // Implement the logic to reload data here
@@ -467,6 +435,7 @@ class _ChildProfileState extends State<ChildDashboard> {
                   padding: EdgeInsets.all(15.0),
                   child: Text(
                     'Dental hygiene',
+                    textAlign: TextAlign.center,
                     style: TextStyle(
                         color: AppColors.white,
                         fontWeight: FontWeight.w500,
