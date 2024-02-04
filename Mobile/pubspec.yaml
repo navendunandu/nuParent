@@ -33,6 +33,7 @@ dependencies:
   progress_dialog_null_safe: ^1.0.7
   flutter_local_notifications: ^9.1.6
   video_thumbnail: ^0.5.3
+  lottie: ^3.0.0
 
 
 dev_dependencies:

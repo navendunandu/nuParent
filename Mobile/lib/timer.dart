@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_ringtone_player/flutter_ringtone_player.dart';
 import 'package:nu_parent/main.dart';
+import 'package:lottie/lottie.dart';
 
 class CountdownPage extends StatefulWidget {
   const CountdownPage({Key? key}) : super(key: key);
@@ -17,6 +18,55 @@ class _CountdownPageState extends State<CountdownPage>
   bool isPlaying = false;
   bool soundPlayed = false;
 
+   Future<void> showLottieAnimationDialog(BuildContext context) async {
+    await showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          content: SizedBox(
+            height: 280,
+            child: Stack(
+                      children: [
+                        Positioned(
+                          top: 0,
+                          left: 0,
+                          child: Lottie.asset(
+                            'assets/confetti.json',
+                            width: 240,
+                            height: 240,
+                            repeat: true,
+                            animate: true,
+                          ),
+                        ),
+                        Positioned(
+                          top: 0,
+                          left: 0,
+                          child: Lottie.asset(
+                            'assets/teeth.json',
+                            width: 240,
+                            height: 240,
+                            repeat: true,
+                            animate: true,
+                          ),
+                        ),
+                      ],
+                    ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                stopBeepSound(context);
+                Navigator.of(context).pop(); // Close the dialog
+              },
+              child: const Text('OK'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   String get countText {
     Duration count = controller.duration! * controller.value;
     return controller.isDismissed
@@ -30,43 +80,11 @@ class _CountdownPageState extends State<CountdownPage>
     if (countText == '0:00:00' && !soundPlayed) {
       soundPlayed = true; // Set the flag to prevent repeated sound playback
       await startBeepSound();
-      showStopSoundDialog(context);
+      showLottieAnimationDialog(context);
     }
   }
 
   bool isDialogOpen = false;
-
-  void showStopSoundDialog(BuildContext context) {
-    if (!isDialogOpen) {
-      isDialogOpen = true;
-      showDialog(
-        context: context,
-        barrierDismissible: true,
-        builder: (BuildContext context) {
-          return StatefulBuilder(
-            builder: (BuildContext context, StateSetter setState) {
-              return AlertDialog(
-                title: const Text('Times Up!'),
-                content: const Text('Do you want to stop the sound?'),
-                actions: <Widget>[
-                  TextButton(
-                    onPressed: () {
-                      stopBeepSound(context);
-                      Navigator.of(context).pop(); // Close the dialog
-                    },
-                    child: const Text('Cancel Sound'),
-                  ),
-                ],
-              );
-            },
-          );
-        },
-      ).then((value) {
-        // Reset the flag when the dialog is closed
-        isDialogOpen = false;
-      });
-    }
-  }
 
   Future<void> startBeepSound() async {
     await FlutterRingtonePlayer.playAlarm();
