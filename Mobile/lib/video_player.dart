@@ -13,17 +13,15 @@ class FullScreenVideoPlayer extends StatefulWidget {
 
 class _FullScreenVideoPlayerState extends State<FullScreenVideoPlayer> {
   late ChewieController _chewieController;
+  late VideoPlayerController _videoPlayerController;
 
   @override
   void initState() {
     super.initState();
-
-    VideoPlayerController videoPlayerController =
-        VideoPlayerController.network(widget.videoUrl);
-
+    _videoPlayerController = VideoPlayerController.network(widget.videoUrl);
     _chewieController = ChewieController(
-      videoPlayerController: videoPlayerController,
-      aspectRatio: videoPlayerController.value.aspectRatio,
+      videoPlayerController: _videoPlayerController,
+      aspectRatio: _videoPlayerController.value.aspectRatio,
       autoPlay: true,
       looping: false,
     );
@@ -31,13 +29,20 @@ class _FullScreenVideoPlayerState extends State<FullScreenVideoPlayer> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Full Screen Video'),
-      ),
-      body: Center(
-        child: Chewie(
-          controller: _chewieController,
+    return WillPopScope(
+      onWillPop: () async {
+        await _videoPlayerController.pause();
+        await _videoPlayerController.dispose();
+        return true;
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text('Full Screen Video'),
+        ),
+        body: Center(
+          child: Chewie(
+            controller: _chewieController,
+          ),
         ),
       ),
     );
@@ -45,6 +50,7 @@ class _FullScreenVideoPlayerState extends State<FullScreenVideoPlayer> {
 
   @override
   void dispose() {
+    _videoPlayerController.dispose();
     _chewieController.dispose();
     super.dispose();
   }
