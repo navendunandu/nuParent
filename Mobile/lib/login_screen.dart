@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:nu_parent/Components/bottom_bar.dart';
 import 'package:nu_parent/child_dashboard.dart';
 import 'package:nu_parent/main.dart';
 import 'package:nu_parent/registration_screen.dart';
@@ -19,6 +20,7 @@ class _LoginScreenState extends State<LoginScreen> {
   TextEditingController _emailController = TextEditingController();
   TextEditingController _passController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
+  bool check = false;
   bool _obscureText = true;
   bool _isChecked = false;
   void _togglePasswordVisibility() {
@@ -109,6 +111,7 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.white,
+      bottomNavigationBar: check ? BottomBar() : null,
       body: ListView(children: [
         Stack(
           children: [

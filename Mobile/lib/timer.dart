@@ -18,7 +18,7 @@ class _CountdownPageState extends State<CountdownPage>
   bool isPlaying = false;
   bool soundPlayed = false;
 
-   Future<void> showLottieAnimationDialog(BuildContext context) async {
+  Future<void> showLottieAnimationDialog(BuildContext context) async {
     await showDialog(
       context: context,
       barrierDismissible: false,
@@ -27,31 +27,31 @@ class _CountdownPageState extends State<CountdownPage>
           content: SizedBox(
             height: 280,
             child: Stack(
-                      children: [
-                        Positioned(
-                          top: 0,
-                          left: 0,
-                          child: Lottie.asset(
-                            'assets/confetti.json',
-                            width: 240,
-                            height: 240,
-                            repeat: true,
-                            animate: true,
-                          ),
-                        ),
-                        Positioned(
-                          top: 0,
-                          left: 0,
-                          child: Lottie.asset(
-                            'assets/teeth.json',
-                            width: 240,
-                            height: 240,
-                            repeat: true,
-                            animate: true,
-                          ),
-                        ),
-                      ],
-                    ),
+              children: [
+                Positioned(
+                  top: 0,
+                  left: 0,
+                  child: Lottie.asset(
+                    'assets/confetti.json',
+                    width: 240,
+                    height: 240,
+                    repeat: true,
+                    animate: true,
+                  ),
+                ),
+                Positioned(
+                  top: 0,
+                  left: 0,
+                  child: Lottie.asset(
+                    'assets/teeth.json',
+                    width: 240,
+                    height: 240,
+                    repeat: true,
+                    animate: true,
+                  ),
+                ),
+              ],
+            ),
           ),
           actions: <Widget>[
             TextButton(
@@ -89,6 +89,7 @@ class _CountdownPageState extends State<CountdownPage>
   Future<void> startBeepSound() async {
     await FlutterRingtonePlayer.playAlarm();
   }
+
   void playBombingSound() {
     FlutterRingtonePlayer.playAlarm();
 
@@ -149,6 +150,7 @@ class _CountdownPageState extends State<CountdownPage>
           icon: const Icon(Icons.arrow_back_ios_new),
         ),
       ),
+      bottomNavigationBar: BottomAppBar(),
       body: Padding(
         padding: const EdgeInsets.only(left: 30.0, right: 30.0),
         child: Column(
