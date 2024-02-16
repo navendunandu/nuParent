@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:nu_parent/Components/appbar.dart';
+import 'package:nu_parent/Components/icon_box.dart';
 import 'package:nu_parent/main.dart';
 import 'package:nu_parent/oral_hygiene_babies.dart';
 import 'package:nu_parent/oral_hygiene_children.dart';
@@ -20,22 +21,18 @@ class _OralHygieneState extends State<OralHygiene> {
       body: Container(
         height: double.infinity,
         decoration: const BoxDecoration(
-            color: AppColors.white,
-            image: DecorationImage(
-              image: AssetImage('assets/Vector-1.png'),
-              fit: BoxFit.scaleDown,
-              alignment: Alignment.bottomCenter,
-            )),
+          color: AppColors.white,
+        ),
         child: ListView(
           children: [
             const CustomAppBar(),
             const Center(
               child: Text(
-                "Oral Hygiene",
+                "Dental Care",
                 style: TextStyle(
                     color: AppColors.primaryColor,
-                    fontWeight: FontWeight.w500,
-                    fontSize: 20),
+                    fontWeight: FontWeight.w700,
+                    fontSize: 22),
               ),
             ),
             Center(
@@ -43,88 +40,34 @@ class _OralHygieneState extends State<OralHygiene> {
               'assets/HappyTeeths.png',
               width: 300,
             )),
-            const SizedBox(
-              height: 40,
-            ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 GestureDetector(
-                  onTap: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const OralHygieneBabies()));
-                  },
-                  child: Container(
-                    height: 150,
-                    width: 150,
-                    decoration: BoxDecoration(
-                        color: AppColors.primaryColor,
-                        borderRadius:
-                            const BorderRadius.all(Radius.circular(10)),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black.withOpacity(0.2),
-                            spreadRadius: 1,
-                            blurRadius: 5,
-                            offset: const Offset(0, 2),
-                          )
-                        ]),
-                    child: const Padding(
-                      padding: EdgeInsets.all(15.0),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            'Babies',
-                            style: TextStyle(
-                                color: AppColors.white,
-                                fontWeight: FontWeight.w500,
-                                fontSize: 18),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const OralHygieneBabies()));
+                    },
+                    child: IconBox(
+                      image: 'assets/babyteeth.png',
+                      title: 'Babies',
+                      subtitle: '(0-3 years)',
+                    )),
                 GestureDetector(
-                  onTap: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const OralHygieneChildren(),
-                        ));
-                  },
-                  child: Container(
-                    height: 150,
-                    width: 150,
-                    decoration: BoxDecoration(
-                        color: AppColors.primaryColor,
-                        borderRadius:
-                            const BorderRadius.all(Radius.circular(10)),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black.withOpacity(0.2),
-                            spreadRadius: 1,
-                            blurRadius: 5,
-                            offset: const Offset(0, 2),
-                          )
-                        ]),
-                    child: const Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          'Children',
-                          style: TextStyle(
-                              color: AppColors.white,
-                              fontWeight: FontWeight.w500,
-                              fontSize: 18),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const OralHygieneChildren(),
+                          ));
+                    },
+                    child: IconBox(
+                      image: 'assets/happytooth.png',
+                      title: 'Children',
+                      subtitle: '(3-6 years)',
+                    )),
               ],
             ),
             const SizedBox(
@@ -134,88 +77,29 @@ class _OralHygieneState extends State<OralHygiene> {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 GestureDetector(
-                  onTap: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const PregnantOralHygiene(),
-                        ));
-                  },
-                  child: Container(
-                    height: 150,
-                    width: 150,
-                    decoration: BoxDecoration(
-                        color: AppColors.primaryColor,
-                        borderRadius:
-                            const BorderRadius.all(Radius.circular(10)),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black.withOpacity(0.2),
-                            spreadRadius: 1,
-                            blurRadius: 5,
-                            offset: const Offset(0, 2),
-                          )
-                        ]),
-                    child: const Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          'Pregnant',
-                          style: TextStyle(
-                              color: AppColors.white,
-                              fontWeight: FontWeight.w500,
-                              fontSize: 18),
-                        ),
-                        Text(
-                          'mothers',
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                              color: AppColors.white,
-                              fontWeight: FontWeight.w500,
-                              fontSize: 18),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const PregnantOralHygiene(),
+                          ));
+                    },
+                    child: IconBox(
+                        image: 'assets/pregnent.png',
+                        title: 'Pregnant Mothers')),
                 GestureDetector(
-                  onTap: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const ParentOralHygiene(),
-                        ));
-                  },
-                  child: Container(
-                    height: 150,
-                    width: 150,
-                    decoration: BoxDecoration(
-                        color: AppColors.primaryColor,
-                        borderRadius:
-                            const BorderRadius.all(Radius.circular(10)),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black.withOpacity(0.2),
-                            spreadRadius: 1,
-                            blurRadius: 5,
-                            offset: const Offset(0, 2),
-                          )
-                        ]),
-                    child: const Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          'Parents Oral hygiene',
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                              color: AppColors.white,
-                              fontWeight: FontWeight.w500,
-                              fontSize: 18),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const ParentOralHygiene(),
+                          ));
+                    },
+                    child: IconBox(
+                      image: 'assets/family.png',
+                      title: 'Parents',
+                      subtitle: 'Dental Care',
+                    )),
               ],
             )
           ],

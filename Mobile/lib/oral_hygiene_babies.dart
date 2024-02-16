@@ -79,15 +79,15 @@ class _OralHygieneBabiesState extends State<OralHygieneBabies> {
                 padding: EdgeInsets.all(8.0),
                 child: Center(
                     child: Text(
-                  'Oral hygiene of children (0-3 years)',
+                  'Babies (0-3 years)',
                   textAlign: TextAlign.center,
                   style: TextStyle(
-                      color: AppColors.darkblue,
-                      fontWeight: FontWeight.w500,
+                      color: AppColors.primaryColor,
+                      fontWeight: FontWeight.w700,
                       fontSize: 18),
                 )),
               ),
-              Image.asset('assets/FamilyBrushing3.jpeg'),
+              Image.asset('assets/dentalcare.png'),
               Padding(
                 padding: const EdgeInsets.only(left: 10.0, right: 10.0),
                 child: FutureBuilder<List<Map<String, dynamic>>>(

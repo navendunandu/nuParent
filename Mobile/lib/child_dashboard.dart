@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:nu_parent/Components/appbar.dart';
+import 'package:nu_parent/Components/icon_box.dart';
 import 'package:nu_parent/brushing_instruction.dart';
 import 'package:nu_parent/childprofile_pop.dart';
 import 'package:nu_parent/dental_visit.dart';
@@ -185,11 +186,7 @@ class _ChildProfileState extends State<ChildDashboard> {
   Widget buildMainContent() {
     return ListView(
       children: [
-        // CustomAppBar(
-        //   bgColor: AppColors.lightblue,
-        // )
         Container(
-          color: AppColors.lightblue,
           child: Padding(
             padding: const EdgeInsets.only(right: 20.0, top: 10, bottom: 5),
             child: Column(
@@ -230,15 +227,6 @@ class _ChildProfileState extends State<ChildDashboard> {
         Container(
           height: 250,
           decoration: BoxDecoration(
-              color: AppColors.lightblue,
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black.withOpacity(0.2),
-                  spreadRadius: 1,
-                  blurRadius: 5,
-                  offset: const Offset(0, 8),
-                )
-              ],
               borderRadius:
                   const BorderRadius.only(bottomLeft: Radius.circular(70))),
           child: Stack(children: [
@@ -391,110 +379,55 @@ class _ChildProfileState extends State<ChildDashboard> {
             ),
           ]),
         ),
-        const SizedBox(
-          height: 40,
-        ),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             GestureDetector(
-              onTap: () {
-                if (childAge! <= 3) {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const OralHygieneBabies()));
-                } else if (childAge! <= 6) {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const OralHygieneChildren()));
-                } else {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const OralHygiene()));
-                }
-              },
-              child: Container(
-                height: 150,
-                width: 150,
-                decoration: BoxDecoration(
-                    color: AppColors.primaryColor,
-                    borderRadius: const BorderRadius.all(Radius.circular(10)),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black.withOpacity(0.2),
-                        spreadRadius: 1,
-                        blurRadius: 5,
-                        offset: const Offset(0, 2),
-                      )
-                    ]),
-                child: const Center(
-                    child: Padding(
-                  padding: EdgeInsets.all(15.0),
-                  child: Text(
-                    'Dental hygiene',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                        color: AppColors.white,
-                        fontWeight: FontWeight.w500,
-                        fontSize: 18),
-                  ),
-                )),
-              ),
-            ),
+                onTap: () {
+                  if (childAge! <= 3) {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const OralHygieneBabies()));
+                  } else if (childAge! <= 6) {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const OralHygieneChildren()));
+                  } else {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const OralHygiene()));
+                  }
+                },
+                child:
+                    IconBox(image: 'assets/floss.png', title: 'Dental Care')),
             GestureDetector(
-              onTap: () {
-                if (childAge! <= 1) {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const DietaryIntakeBirth()));
-                } else if (childAge! <= 2) {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const DietaryIntakeOne()));
-                } else if (childAge! <= 6) {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const DietaryIntakeTwo()));
-                } else {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const DietaryIntake()));
-                }
-              },
-              child: Container(
-                height: 150,
-                width: 150,
-                decoration: BoxDecoration(
-                    color: AppColors.primaryColor,
-                    borderRadius: const BorderRadius.all(Radius.circular(10)),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black.withOpacity(0.2),
-                        spreadRadius: 1,
-                        blurRadius: 5,
-                        offset: const Offset(0, 2),
-                      )
-                    ]),
-                child: const Center(
-                    child: Padding(
-                  padding: EdgeInsets.all(15.0),
-                  child: Text(
-                    'Diet',
-                    style: TextStyle(
-                        color: AppColors.white,
-                        fontWeight: FontWeight.w500,
-                        fontSize: 18),
-                  ),
-                )),
-              ),
-            ),
+                onTap: () {
+                  if (childAge! <= 1) {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const DietaryIntakeBirth()));
+                  } else if (childAge! <= 2) {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const DietaryIntakeOne()));
+                  } else if (childAge! <= 6) {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const DietaryIntakeTwo()));
+                  } else {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const DietaryIntake()));
+                  }
+                },
+                child: IconBox(image: 'assets/food.png', title: 'Diet')),
           ],
         ),
         const SizedBox(
@@ -504,76 +437,25 @@ class _ChildProfileState extends State<ChildDashboard> {
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             GestureDetector(
-              onTap: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => BrushingInstruction(
-                              age: childAge,
-                            )));
-              },
-              child: Container(
-                height: 150,
-                width: 150,
-                decoration: BoxDecoration(
-                    color: AppColors.primaryColor,
-                    borderRadius: const BorderRadius.all(Radius.circular(10)),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black.withOpacity(0.2),
-                        spreadRadius: 1,
-                        blurRadius: 5,
-                        offset: const Offset(0, 2),
-                      )
-                    ]),
-                child: const Center(
-                    child: Padding(
-                  padding: EdgeInsets.all(15.0),
-                  child: Text(
-                    'Brushing instructions',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                        color: AppColors.white,
-                        fontWeight: FontWeight.w500,
-                        fontSize: 18),
-                  ),
-                )),
-              ),
-            ),
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => BrushingInstruction(
+                                age: childAge,
+                              )));
+                },
+                child: IconBox(
+                    image: 'assets/brushteeth.png', title: 'How to Brush')),
             GestureDetector(
-              onTap: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => const DentalVisit()));
-              },
-              child: Container(
-                height: 150,
-                width: 150,
-                decoration: BoxDecoration(
-                    color: AppColors.primaryColor,
-                    borderRadius: const BorderRadius.all(Radius.circular(10)),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black.withOpacity(0.2),
-                        spreadRadius: 1,
-                        blurRadius: 5,
-                        offset: const Offset(0, 2),
-                      )
-                    ]),
-                child: const Center(
-                    child: Padding(
-                  padding: EdgeInsets.all(15.0),
-                  child: Text(
-                    'Dental visits',
-                    style: TextStyle(
-                        color: AppColors.white,
-                        fontWeight: FontWeight.w500,
-                        fontSize: 18),
-                  ),
-                )),
-              ),
-            ),
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const DentalVisit()));
+                },
+                child: IconBox(
+                    image: 'assets/checkup.png', title: 'Dental Visits')),
           ],
         ),
         const SizedBox(

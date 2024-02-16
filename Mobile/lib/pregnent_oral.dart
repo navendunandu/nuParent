@@ -88,7 +88,7 @@ class _PregnantOralHygieneState extends State<PregnantOralHygiene> {
                       Padding(
                         padding: EdgeInsets.only(left: 25),
                         child: Text(
-                          'Pregnant Mothers Oral Hygiene',
+                          'Pregnant Mothers Dental Care',
                           style: TextStyle(
                             color: AppColors.primaryColor,
                             fontWeight: FontWeight.w600,
