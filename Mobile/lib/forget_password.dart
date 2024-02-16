@@ -56,17 +56,27 @@ class ForgotPassword extends StatelessWidget {
     final TextEditingController emailController = TextEditingController();
 
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: const Color.fromARGB(255, 175, 203, 244),
+        leading: IconButton(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            icon: const Icon(
+              Icons.arrow_back_ios,
+            )),
+      ),
       body: SafeArea(
           child: Container(
         decoration: const BoxDecoration(
-                  gradient: RadialGradient(
-                colors: [
-                  Color.fromARGB(255, 245, 251, 255),
-                  Color.fromARGB(255, 175, 203, 244),
-                ],
-                radius: .5, // Adjust the radius based on your preference
-                center: Alignment(0.1, -.1),
-              )),
+            gradient: RadialGradient(
+          colors: [
+            Color.fromARGB(255, 245, 251, 255),
+            Color.fromARGB(255, 175, 203, 244),
+          ],
+          radius: .5, // Adjust the radius based on your preference
+          center: Alignment(0.1, -.1),
+        )),
         child: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -97,7 +107,8 @@ class ForgotPassword extends StatelessWidget {
                   controller: emailController,
                   decoration: const InputDecoration(
                       hintText: "Email Address",
-                      hintStyle: TextStyle(color: AppColors.primaryColor, fontSize: 12)),
+                      hintStyle: TextStyle(
+                          color: AppColors.primaryColor, fontSize: 12)),
                 ),
               ),
               ElevatedButton(
