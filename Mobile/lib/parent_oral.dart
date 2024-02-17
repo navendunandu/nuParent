@@ -83,7 +83,7 @@ class _ParentOralHygieneState extends State<ParentOralHygiene> {
                 const Padding(
                   padding: EdgeInsets.only(left: 25),
                   child: Text(
-                    'Parents / Caregivers Oral Hygiene ',
+                    'Parents Dental Care',
                     style: TextStyle(
                       color: AppColors.primaryColor,
                       fontWeight: FontWeight.w600,
@@ -109,12 +109,20 @@ class _ParentOralHygieneState extends State<ParentOralHygiene> {
                         fontWeight: FontWeight.w500),
                   ),
                   const SizedBox(
-                    height: 5,
+                    height: 15,
                   ),
                   Text(
-                    'Primary caregivers are the main source of passing the bacteria that cause tooth decay to their newborns. These bacteria can spread to infants through contact with the caregiver’s saliva, such as sharing utensils or kissing on the lips, or cleaning pacifiers with the mouth.',
+                    'Parents and caregivers are the main source of passing the germs that cause tooth decay to their babies.',
                     style: TextStyle(
-                        color: Colors.red[700], fontWeight: FontWeight.w500),
+                        color: Colors.green[600], fontWeight: FontWeight.w500),
+                  ),
+                  const SizedBox(
+                    height: 15,
+                  ),
+                  Text(
+                    'Your kids can get these germs from your saliva if you share utensils, kiss on the lips, or clean the dummy with your mouth.',
+                    style: TextStyle(
+                        color: Colors.green[600], fontWeight: FontWeight.w500),
                   )
                 ],
               ),

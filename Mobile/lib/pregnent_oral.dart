@@ -78,51 +78,37 @@ class _PregnantOralHygieneState extends State<PregnantOralHygiene> {
         child: ListView(
           children: [
             const CustomAppBar(),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                const Flexible(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.only(left: 25),
-                        child: Text(
-                          'Pregnant Mothers Dental Care',
-                          style: TextStyle(
-                            color: AppColors.primaryColor,
-                            fontWeight: FontWeight.w600,
-                            fontSize: 20,
-                          ),
-                        ),
-                      ),
-                    ],
+            const Center(
+              child: Padding(
+                padding: EdgeInsets.only(left: 25),
+                child: Text(
+                  'Pregnant Mothers Dental Care',
+                  style: TextStyle(
+                    color: AppColors.primaryColor,
+                    fontWeight: FontWeight.w600,
+                    fontSize: 20,
                   ),
                 ),
-                Image.asset(
-                  'assets/PregnentMother.png',
-                  height: 150,
-                ),
-              ],
+              ),
             ),
             Padding(
               padding: const EdgeInsets.all(15.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text(
+                  Text(
                     'Good Dental Health Is Important When Pregnant',
                     style: TextStyle(
-                        color: AppColors.primaryColor,
-                        fontWeight: FontWeight.w500),
+                        color: Colors.green[600], fontWeight: FontWeight.w500),
                   ),
                   const SizedBox(
                     height: 5,
                   ),
-                  Text(
-                    'When you’re pregnant, you may be more prone to gum disease and cavities, which can affect your baby’s health. Follow these 3 steps to protect your teeth:',
+                  const Text(
+                    "Dental cavities and gum disease may be more likely to happen to you when you're pregnant, which can be bad for the health of your baby. To keep your teeth safe, do these three things:",
                     style: TextStyle(
-                        color: Colors.red[700], fontWeight: FontWeight.w500),
+                        color: AppColors.primaryColor,
+                        fontWeight: FontWeight.w500),
                   )
                 ],
               ),
@@ -179,8 +165,12 @@ class _PregnantOralHygieneState extends State<PregnantOralHygiene> {
                 },
               ),
             ),
+            Image.asset(
+              'assets/PregnentMother.png',
+              height: 200,
+            ),
             const SizedBox(
-              height: 50,
+              height: 80,
             ),
           ],
         ),

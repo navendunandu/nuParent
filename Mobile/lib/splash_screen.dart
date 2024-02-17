@@ -23,7 +23,7 @@ class _SplashScreenState extends State<SplashScreen> {
             color: Colors.white,
             image: DecorationImage(
                 image: AssetImage('assets/Vector-1.png'),
-                fit: BoxFit.scaleDown,
+                fit: BoxFit.cover,
                 alignment: Alignment.bottomCenter)),
         child: Center(
           child: ClipOval(

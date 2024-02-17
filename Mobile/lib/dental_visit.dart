@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 import 'package:nu_parent/Components/appbar.dart';
 import 'package:nu_parent/Components/box.dart';
+import 'package:nu_parent/Components/footer.dart';
+import 'package:nu_parent/Reminder.dart';
 import 'package:nu_parent/main.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
@@ -13,34 +15,26 @@ class DentalVisit extends StatefulWidget {
 }
 
 class _DentalVisitState extends State<DentalVisit> {
-  late Future<List<Map<String, dynamic>>> _dentalVListFuture;
   FlutterTts flutterTts = FlutterTts();
+
+  Future speak(String stext) async {
+    await flutterTts.setLanguage("en-US");
+    await flutterTts.speak(stext);
+  }
+
+  final List<String> item1 = [
+    'Exam of your child’s teeth and gums',
+    'Tips for caring for your child’s mouth',
+    'Advice for safely suing fluoride',
+    'Planning for future dental visits',
+  ];
+  final List<String> item2 = [
+    'Set reminder for your child’s  next dental visit',
+  ];
 
   @override
   void initState() {
     super.initState();
-    _dentalVListFuture = _getData();
-  }
-
-  Future<List<Map<String, dynamic>>> _getData() async {
-    CollectionReference collectionReference =
-        FirebaseFirestore.instance.collection('dentalvisit');
-
-    try {
-      // Get documents from the collection
-      QuerySnapshot querySnapshot = await collectionReference.get();
-
-      // Process each document in the collection
-      List<Map<String, dynamic>> data = querySnapshot.docs
-          .map((DocumentSnapshot document) =>
-              document.data() as Map<String, dynamic>)
-          .toList();
-
-      return data;
-    } catch (e) {
-      print("Error getting data: $e");
-      return [];
-    }
   }
 
   @override
@@ -49,165 +43,316 @@ class _DentalVisitState extends State<DentalVisit> {
       body: Container(
         decoration: const BoxDecoration(
           color: AppColors.white,
-          image: DecorationImage(
-            image: AssetImage('assets/Vector-1.png'),
-            fit: BoxFit.scaleDown,
-            alignment: Alignment.bottomCenter,
-          ),
         ),
         child: ListView(
           children: [
             const CustomAppBar(),
             const Center(
               child: Text(
-                'Dental visits',
+                'Baby’s First Dental Visit',
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   color: AppColors.primaryColor,
-                  fontWeight: FontWeight.w500,
+                  fontWeight: FontWeight.w700,
                   fontSize: 18,
                 ),
               ),
             ),
-            Image.asset('assets/DentistCheck.png'),
-            Padding(
-              padding: const EdgeInsets.only(left: 10.0, right: 10.0),
-              child: FutureBuilder<List<Map<String, dynamic>>>(
-                future: _dentalVListFuture,
-                builder: (context, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    // While data is being fetched, show a custom loading layout
-                    return Container(
-                      alignment: Alignment.center,
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Image.asset(
-                            'assets/Logo.png', // Replace with the path to your logo
-                            height: 100,
-                          ),
-                          const SizedBox(height: 16),
-                          const CircularProgressIndicator(),
-                        ],
-                      ),
-                    );
-                  } else if (snapshot.hasError) {
-                    // If an error occurs during data fetching, show an error message
-                    return Text('Error: ${snapshot.error}');
-                  } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-                    // If no data is available, show a message indicating no data
-                    return const Text('No dental visit data available');
-                  } else {
-                    // If data is available, create Box widgets with custom layout
-                    final dataList = snapshot.data!;
-                    return ListView.builder(
-                      shrinkWrap: true,
-                      physics: const NeverScrollableScrollPhysics(),
-                      itemCount: dataList.length +
-                          1, // Add 1 for the additional text item
-                      itemBuilder: (context, index) {
-                        if (index == 0) {
-                          // Display the first item from dataList
-                          final text =
-                              dataList[index]['dentalvisit'] as String? ??
-                                  'Default Text';
-                          return Box(
-                            text: text,
-                            flutterTts: flutterTts,
-                          );
-                        } else if (index == 1) {
-                          // Display the second item from dataList
-                          final text =
-                              dataList[index]['dentalvisit'] as String? ??
-                                  'Default Text';
-                          return Box(
-                            text: text,
-                            flutterTts: flutterTts,
-                          );
-                        } else if (index == 2) {
-                          // Display specific text after the first 2 items
-                          return Container(
-                            decoration: BoxDecoration(
-                                color: AppColors.white,
-                                borderRadius: BorderRadius.circular(15)),
-                            child: const Column(
-                              children: [
-                                SizedBox(
-                                  height: 10,
-                                ),
-                                Padding(
-                                  padding: EdgeInsets.only(left: 10, right: 10),
-                                  child: Text(
-                                    'What does a fluoride varnish do?',
-                                    textAlign: TextAlign.left,
-                                    style: TextStyle(
-                                        color: AppColors.primaryColor,
-                                        fontWeight: FontWeight.w500),
-                                  ),
-                                ),
-                                Padding(
-                                  padding: EdgeInsets.only(left: 10, right: 10),
-                                  child: Text(
-                                    'Fluoride in varnish enters the tooth enamel and makes the tooth hard. It prevents new cavities and slows down or stops decay from getting worse. If tooth decay is just starting, it repairs the tooth.',
-                                    style: TextStyle(
-                                        color: AppColors.primaryColor,
-                                        fontWeight: FontWeight.w500),
-                                    textAlign: TextAlign.left,
-                                  ),
-                                ),
-                                SizedBox(
-                                  height: 10,
-                                ),
-                              ],
-                            ),
-                          );
-                        } else {
-                          // Display the remaining items from dataList
-                          final dataIndex =
-                              index - 1; // Adjust index for dataList
-                          final text =
-                              dataList[dataIndex]['dentalvisit'] as String? ??
-                                  'Default Text';
-                          return Column(
-                            children: [
-                              Box(
-                                text: text,
-                                flutterTts: flutterTts,
-                              ),
-                            ],
-                          );
-                        }
-                      },
-                    );
-                  }
-                },
+            Image.asset('assets/firsteeth.png'),
+            const Padding(
+              padding: EdgeInsets.all(20.0),
+              child: Text(
+                'When Should Your Baby Visit the Dentist?',
+                style: TextStyle(letterSpacing: 1),
               ),
             ),
-            const SizedBox(
-              height: 10,
+            Container(
+              height: 100,
+              decoration: const BoxDecoration(
+                  color: Color.fromARGB(225, 222, 231, 246)),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  const SizedBox(
+                    width: 140,
+                    child: Center(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            'Within 6 months',
+                            style: TextStyle(
+                                color: AppColors.primaryColor,
+                                fontWeight: FontWeight.w700,
+                                fontSize: 16),
+                          ),
+                          Text(
+                            'of his or her first baby tooth',
+                            style: TextStyle(
+                                color: AppColors.primaryColor,
+                                fontWeight: FontWeight.w500,
+                                fontSize: 10),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  Image.asset('assets/firsttooth.png'),
+                  const SizedBox(
+                    width: 140,
+                    child: Center(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'No later than ',
+                            style: TextStyle(
+                                color: AppColors.primaryColor,
+                                fontWeight: FontWeight.w500,
+                                fontSize: 10),
+                          ),
+                          Text(
+                            'Age 1',
+                            style: TextStyle(
+                                color: AppColors.primaryColor,
+                                fontWeight: FontWeight.w700,
+                                fontSize: 16),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            const Padding(
+              padding: EdgeInsets.all(18.0),
+              child: Text(
+                'Healthy Baby teeth Support Healthy Development',
+                textAlign: TextAlign.center,
+                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+              ),
             ),
             Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Container(
-                decoration: BoxDecoration(
-                    color: AppColors.white,
-                    borderRadius: BorderRadius.circular(15)),
-                child: const Padding(
-                  padding: const EdgeInsets.all(12),
-                  child: Text(
-                    'Visit British Society of Pediatric Dentistry: https://www.bspd.co.uk/Kidsvids for videos on how to take care of kids teeth age wise.',
-                    style: TextStyle(fontWeight: FontWeight.w500),
+              padding: const EdgeInsets.fromLTRB(20, 0, 20, 8),
+              child: Row(
+                children: [
+                  Image.asset(
+                    'assets/chew.jpg',
+                    height: 60,
+                    width: 60,
                   ),
+                  const SizedBox(
+                    width: 20,
+                  ),
+                  const Flexible(
+                      child: Text(
+                    'Help kids chew properly so they get nutrients',
+                    style: TextStyle(fontWeight: FontWeight.w500),
+                  ))
+                ],
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
+              child: Row(
+                children: [
+                  Image.asset(
+                    'assets/abc.png',
+                    height: 60,
+                    width: 60,
+                  ),
+                  const SizedBox(
+                    width: 20,
+                  ),
+                  const Flexible(
+                      child: Text(
+                    'Support healthy speech development',
+                    style: TextStyle(fontWeight: FontWeight.w500),
+                  ))
+                ],
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
+              child: Row(
+                children: [
+                  Image.asset(
+                    'assets/teethbaby.jpg',
+                    height: 60,
+                    width: 60,
+                  ),
+                  const SizedBox(
+                    width: 20,
+                  ),
+                  const Flexible(
+                      child: Text(
+                    'Save space for adult teeth to grow',
+                    style: TextStyle(fontWeight: FontWeight.w500),
+                  ))
+                ],
+              ),
+            ),
+            const Padding(
+              padding: EdgeInsets.all(28.0),
+              child: Text(
+                'When Should Your Baby Visit the Dentist?',
+                style: TextStyle(
+                  fontSize: 16,
                 ),
               ),
             ),
             Padding(
-              padding: const EdgeInsets.only(left: 10, right: 10),
-              child: Image.asset('assets/FamilyTeethCaring.png'),
+              padding: const EdgeInsets.only(left: 10.0, right: 10.0),
+              child: ListView.builder(
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                itemCount: item1.length,
+                itemBuilder: (BuildContext context, int index) {
+                  return Box(
+                    text: item1[index],
+                    flutterTts: flutterTts,
+                    colour: AppColors.primaryColor,
+                  );
+                },
+              ),
             ),
-            const SizedBox(
-              height: 50,
-            )
+            const Padding(
+              padding: EdgeInsets.all(18.0),
+              child: Text(
+                'Early Care Is an Investment in Your Child’s Health',
+                textAlign: TextAlign.center,
+                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(left: 25, right: 25),
+              child: Row(
+                children: [
+                  const Text(
+                    'Reduce the risk of painful tooth decay',
+                    style: TextStyle(
+                        color: AppColors.primaryColor,
+                        fontWeight: FontWeight.w600),
+                  ),
+                  const SizedBox(
+                    width: 10,
+                  ),
+                  Flexible(
+                    child: Image.asset(
+                      'assets/badteeth.png',
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(left: 25, right: 25),
+              child: Row(
+                // mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Flexible(
+                    child: Image.asset(
+                      'assets/Exclamation.png',
+                    ),
+                  ),
+                  const SizedBox(
+                    width: 10,
+                  ),
+                  const Text(
+                    'Catch oral health problems in their early stages',
+                    style: TextStyle(
+                        color: AppColors.primaryColor,
+                        fontWeight: FontWeight.w600),
+                  ),
+                ],
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(left: 25, right: 25),
+              child: Row(
+                children: [
+                  const Flexible(
+                    child: Text(
+                      'Help your child get comfortable with dental care',
+                      style: TextStyle(
+                          color: AppColors.primaryColor,
+                          fontWeight: FontWeight.w600),
+                    ),
+                  ),
+                  const SizedBox(
+                    width: 10,
+                  ),
+                  Image.asset(
+                    'assets/DentistCheck.png',
+                    width: 150,
+                  ),
+                ],
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(left: 25, right: 25),
+              child: Row(
+                // mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Image.asset(
+                    'assets/Exclamation.png',
+                    width: 45,
+                  ),
+                  const SizedBox(
+                    width: 10,
+                  ),
+                  const Flexible(
+                    child: Text(
+                      'Visit dentist every six months or as recommended by the dentist',
+                      style: TextStyle(
+                          color: AppColors.primaryColor,
+                          fontWeight: FontWeight.w600),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: Box(
+                text: 'Set reminder for your child’s  next dental visit',
+                flutterTts: flutterTts,
+                colour: AppColors.primaryColor,
+              ),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                ElevatedButton.icon(
+                    style: const ButtonStyle(
+                      backgroundColor:
+                          MaterialStatePropertyAll(AppColors.lightblue),
+                    ),
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const Reminder(),
+                          ));
+                    },
+                    icon: const Icon(
+                      Icons.notifications_none_outlined,
+                      color: AppColors.black,
+                      size: 26,
+                    ),
+                    label: const Text(
+                      'Set Reminder',
+                      style: TextStyle(
+                          color: AppColors.primaryColor,
+                          fontSize: 18,
+                          fontWeight: FontWeight.w600),
+                    )),
+              ],
+            ),
+            const BottomFooter(),
           ],
         ),
       ),

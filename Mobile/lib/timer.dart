@@ -151,166 +151,208 @@ class _CountdownPageState extends State<CountdownPage>
         ),
       ),
       bottomNavigationBar: BottomAppBar(),
-      body: Padding(
-        padding: const EdgeInsets.only(left: 30.0, right: 30.0),
-        child: Column(
-          children: [
-            const Text(
-              'Timers',
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                  fontSize: 24,
-                  fontWeight: FontWeight.bold,
-                  color: AppColors.primaryColor),
-            ),
-            const SizedBox(height: 20),
-            Container(
-              height: 500,
-              decoration: BoxDecoration(
-                color: AppColors.lightblue,
-                borderRadius: BorderRadius.circular(20),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.only(left: 30.0, right: 30.0),
+          child: Column(
+            children: [
+              const Text(
+                'Timers',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                    color: AppColors.primaryColor),
               ),
-              child: Padding(
-                padding: const EdgeInsets.all(20.0),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Container(
-                      padding: const EdgeInsets.fromLTRB(50, 10, 50, 10),
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(30),
-                          color: AppColors.white),
-                      child: const Text(
-                        'Brushing Timer',
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 22,
-                          fontWeight: FontWeight.bold,
+              const SizedBox(height: 20),
+              Container(
+                height: 500,
+                decoration: BoxDecoration(
+                  color: AppColors.lightblue,
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(20.0),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Container(
+                        padding: const EdgeInsets.fromLTRB(50, 10, 50, 10),
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(30),
+                            color: AppColors.white),
+                        child: const Text(
+                          'Brushing Timer',
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 22,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                       ),
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    Expanded(
-                      child: Stack(
-                        alignment: Alignment.center,
-                        children: [
-                          SizedBox(
-                            width: 250,
-                            height: 250,
-                            child: CircularProgressIndicator(
-                              backgroundColor: Colors.grey.shade300,
-                              value: progress,
-                              strokeWidth: 6,
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      Expanded(
+                        child: Stack(
+                          alignment: Alignment.center,
+                          children: [
+                            SizedBox(
+                              width: 250,
+                              height: 250,
+                              child: CircularProgressIndicator(
+                                backgroundColor: Colors.grey.shade300,
+                                value: progress,
+                                strokeWidth: 6,
+                              ),
                             ),
-                          ),
-                          GestureDetector(
-                            onTap: () {
-                              if (controller.isDismissed) {
-                                showModalBottomSheet(
-                                  context: context,
-                                  builder: (context) => Container(
-                                    height: 300,
-                                    child: CupertinoTimerPicker(
-                                      initialTimerDuration:
-                                          controller.duration!,
-                                      onTimerDurationChanged: (time) {
-                                        setState(() {
-                                          controller.duration = time;
-                                        });
-                                      },
+                            GestureDetector(
+                              onTap: () {
+                                if (controller.isDismissed) {
+                                  showModalBottomSheet(
+                                    context: context,
+                                    builder: (context) => Container(
+                                      height: 300,
+                                      child: CupertinoTimerPicker(
+                                        initialTimerDuration:
+                                            controller.duration!,
+                                        onTimerDurationChanged: (time) {
+                                          setState(() {
+                                            controller.duration = time;
+                                          });
+                                        },
+                                      ),
                                     ),
+                                  );
+                                }
+                              },
+                              child: AnimatedBuilder(
+                                animation: controller,
+                                builder: (context, child) => Text(
+                                  countText,
+                                  style: const TextStyle(
+                                    fontSize: 50,
+                                    fontWeight: FontWeight.bold,
                                   ),
-                                );
-                              }
-                            },
-                            child: AnimatedBuilder(
-                              animation: controller,
-                              builder: (context, child) => Text(
-                                countText,
-                                style: const TextStyle(
-                                  fontSize: 50,
-                                  fontWeight: FontWeight.bold,
                                 ),
                               ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 10, vertical: 20),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Container(
-                            width: 50,
-                            height: 50,
-                            decoration: const BoxDecoration(
-                              shape: BoxShape.circle,
-                              color: Colors.white,
+                      Padding(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 10, vertical: 20),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Container(
+                              width: 50,
+                              height: 50,
+                              decoration: const BoxDecoration(
+                                shape: BoxShape.circle,
+                                color: Colors.white,
+                              ),
+                              child: IconButton(
+                                onPressed: () {
+                                  if (controller.isAnimating) {
+                                    controller.stop();
+                                    setState(() {
+                                      isPlaying = false;
+                                    });
+                                  } else {
+                                    controller.reverse(
+                                        from: controller.value == 0
+                                            ? 1.0
+                                            : controller.value);
+                                    setState(() {
+                                      isPlaying = true;
+                                    });
+                                  }
+                                },
+                                icon: Icon(
+                                  isPlaying == true
+                                      ? Icons.pause
+                                      : Icons.play_arrow,
+                                  color: AppColors.primaryColor,
+                                ),
+                              ),
                             ),
-                            child: IconButton(
-                              onPressed: () {
-                                if (controller.isAnimating) {
-                                  controller.stop();
+                            const SizedBox(
+                              width: 10,
+                            ),
+                            Container(
+                              width: 50,
+                              height: 50,
+                              decoration: const BoxDecoration(
+                                shape: BoxShape.circle,
+                                color: Colors.white,
+                              ),
+                              child: IconButton(
+                                onPressed: () {
+                                  controller.reset();
                                   setState(() {
                                     isPlaying = false;
                                   });
-                                } else {
-                                  controller.reverse(
-                                      from: controller.value == 0
-                                          ? 1.0
-                                          : controller.value);
-                                  setState(() {
-                                    isPlaying = true;
-                                  });
-                                }
-                              },
-                              icon: Icon(
-                                isPlaying == true
-                                    ? Icons.pause
-                                    : Icons.play_arrow,
-                                color: AppColors.primaryColor,
+                                },
+                                icon: const Icon(
+                                  Icons.stop,
+                                  color: AppColors.primaryColor,
+                                ),
                               ),
-                            ),
-                          ),
-                          const SizedBox(
-                            width: 10,
-                          ),
-                          Container(
-                            width: 50,
-                            height: 50,
-                            decoration: const BoxDecoration(
-                              shape: BoxShape.circle,
-                              color: Colors.white,
-                            ),
-                            child: IconButton(
-                              onPressed: () {
-                                controller.reset();
-                                setState(() {
-                                  isPlaying = false;
-                                });
-                              },
-                              icon: const Icon(
-                                Icons.stop,
-                                color: AppColors.primaryColor,
-                              ),
-                            ),
-                          )
-                        ],
-                      ),
-                    )
+                            )
+                          ],
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              Container(
+                padding: EdgeInsets.all(15),
+                decoration: BoxDecoration(
+                  color: AppColors.lightblue,
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Brush your kid’s teeth for two minutes!',
+                      style: TextStyle(
+                          color: AppColors.primaryColor,
+                          fontWeight: FontWeight.w600),
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Text(
+                      'Ask your children to hold the brush at a 45-degree angle and teach them to brush gently in short strokes. ',
+                      style: TextStyle(
+                          color: AppColors.primaryColor,
+                          fontWeight: FontWeight.w600),
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Text(
+                      'Teach your children to clean their tongue from back to front as this will help to remove odor causing bacteria and will freshen their breath.',
+                      style: TextStyle(
+                          color: AppColors.primaryColor,
+                          fontWeight: FontWeight.w600),
+                    ),
                   ],
                 ),
               ),
-            ),
-            const SizedBox(
-              height: 20,
-            )
-          ],
+              const SizedBox(
+                height: 20,
+              ),
+              Image.asset('assets/BrusingFamily.jpg')
+            ],
+          ),
         ),
       ),
     );

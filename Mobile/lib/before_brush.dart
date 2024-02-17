@@ -52,13 +52,13 @@ class _BeforeBrushState extends State<BeforeBrush> {
 
   final List<String> item2 = [
     'Do not wet the toothbrush before use.',
-    'A healthy mouth will require a clean and sanitary toothbrush, and by taking the time to make sure that you are storing yours properly, you can ensure that you are cleaning your teeth as effectively as possible.Seek advice from a dentist on whether your child would benefit from interdental flossing.',
+    'Seek advice from a dentist on whether your child would benefit from interdental flossing.',
     'Floss before brushing. If you floss after brushing, food, plaque, and bacteria will remain in your mouth until you brush again.',
     'The fluoride in your toothpaste is also better able to protect your teeth when particles are removed first.',
   ];
 
   final String items3 =
-      'Do not wet the toothbrush before use. A healthy mouth will require a clean and sanitary toothbrush, and by taking the time to make sure that you are storing yours properly, you can ensure that you are cleaning your teeth as effectively as possible.Seek advice from a dentist on whether your child would benefit from interdental flossing. Floss before brushing. If you floss after brushing, food, plaque, and bacteria will remain in your mouth until you brush again. The fluoride in your toothpaste is also better able to protect your teeth when particles are removed first.';
+      'Do not wet the toothbrush before use. Seek advice from a dentist on whether your child would benefit from interdental flossing. Floss before brushing. If you floss after brushing, food, plaque, and bacteria will remain in your mouth until you brush again. The fluoride in your toothpaste is also better able to protect your teeth when particles are removed first.';
 
   @override
   Widget build(BuildContext context) {
@@ -167,24 +167,35 @@ class _BeforeBrushState extends State<BeforeBrush> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             for (String item in item2)
-                            Padding(
-                              padding: const EdgeInsets.only(top: 7, bottom: 7),
-                              child: Row(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Padding(
-                                    padding: const EdgeInsets.fromLTRB(8, 6, 10, 0),
-                                    child: Icon(Icons.circle, size: 12, color: AppColors.primaryColor,),
-                                  ),
-                                  // Text('\u2022',style: TextStyle(fontSize: 25, fontWeight: FontWeight.w600, color: AppColors.primaryColor)),
-                                  Flexible(child: Text(item,style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600, color: AppColors.primaryColor)))
-                                ],
-                              ),
-                            )
-                              // Text(
-                              //   '\u2022 $item', // Unicode character for bullet point
-                              //   style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600, color: AppColors.primaryColor),
-                              // ),
+                              Padding(
+                                padding:
+                                    const EdgeInsets.only(top: 7, bottom: 7),
+                                child: Row(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.fromLTRB(
+                                          8, 6, 10, 0),
+                                      child: Icon(
+                                        Icons.circle,
+                                        size: 12,
+                                        color: AppColors.primaryColor,
+                                      ),
+                                    ),
+                                    // Text('\u2022',style: TextStyle(fontSize: 25, fontWeight: FontWeight.w600, color: AppColors.primaryColor)),
+                                    Flexible(
+                                        child: Text(item,
+                                            style: TextStyle(
+                                                fontSize: 16,
+                                                fontWeight: FontWeight.w600,
+                                                color: AppColors.primaryColor)))
+                                  ],
+                                ),
+                              )
+                            // Text(
+                            //   '\u2022 $item', // Unicode character for bullet point
+                            //   style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600, color: AppColors.primaryColor),
+                            // ),
                           ],
                         ),
                       ),

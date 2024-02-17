@@ -26,7 +26,7 @@ class _ReminderState extends State<Reminder> {
   DateTime? _toothbrushReplacementDate;
   DateTime? _dentalVisitDate;
 
-   Future<void> _selectToothbrushReplacementDate() async {
+  Future<void> _selectToothbrushReplacementDate() async {
     final DateTime? picked = await showDatePicker(
       context: context,
       initialDate: _toothbrushReplacementDate ?? DateTime.now(),
@@ -67,11 +67,10 @@ class _ReminderState extends State<Reminder> {
     }
   }
 
-
   TimeOfDay _selectedMorningTime =
-      TimeOfDay(hour: 8, minute: 0); // Default morning time
+      const TimeOfDay(hour: 8, minute: 0); // Default morning time
   TimeOfDay _selectedEveningTime =
-      TimeOfDay(hour: 20, minute: 0); // Default evening time
+      const TimeOfDay(hour: 20, minute: 0); // Default evening time
 
   Future<void> _selectMorningTime() async {
     final TimeOfDay? picked = await showTimePicker(
@@ -110,36 +109,33 @@ class _ReminderState extends State<Reminder> {
       print('Error updating time in Firestore: $e');
     }
   }
-Future<void> _loadDateFromFirestore() async {
-  try {
-    final dentalSnapshot = await firestore
-        .collection('dentalVisitDate')
-        .doc(userId)
-        .get();
-    final brushSnapshot = await firestore
-        .collection('toothbrushReplacement')
-        .doc(userId)
-        .get();
 
-    if (dentalSnapshot.exists) {
-      final dentalData = dentalSnapshot.data() as Map<String, dynamic>;
-      final Timestamp dentalTimestamp = dentalData['date'];
-      setState(() {
-        _dentalVisitDate = dentalTimestamp.toDate();
-      });
-    }
+  Future<void> _loadDateFromFirestore() async {
+    try {
+      final dentalSnapshot =
+          await firestore.collection('dentalVisitDate').doc(userId).get();
+      final brushSnapshot =
+          await firestore.collection('toothbrushReplacement').doc(userId).get();
 
-    if (brushSnapshot.exists) {
-      final brushData = brushSnapshot.data() as Map<String, dynamic>;
-      final Timestamp brushTimestamp = brushData['date'];
-      setState(() {
-        _toothbrushReplacementDate = brushTimestamp.toDate();
-      });
+      if (dentalSnapshot.exists) {
+        final dentalData = dentalSnapshot.data() as Map<String, dynamic>;
+        final Timestamp dentalTimestamp = dentalData['date'];
+        setState(() {
+          _dentalVisitDate = dentalTimestamp.toDate();
+        });
+      }
+
+      if (brushSnapshot.exists) {
+        final brushData = brushSnapshot.data() as Map<String, dynamic>;
+        final Timestamp brushTimestamp = brushData['date'];
+        setState(() {
+          _toothbrushReplacementDate = brushTimestamp.toDate();
+        });
+      }
+    } catch (e) {
+      print('Error loading Date from Firestore: $e');
     }
-  } catch (e) {
-    print('Error loading Date from Firestore: $e');
   }
-}
 
   // Load the user's times from Firestore
   Future<void> _loadTimesFromFirestore() async {
@@ -187,7 +183,7 @@ Future<void> _loadDateFromFirestore() async {
         decoration: const BoxDecoration(
           image: DecorationImage(
             image: AssetImage('assets/Vector-1.png'),
-            fit: BoxFit.scaleDown,
+            fit: BoxFit.cover,
             alignment: Alignment.bottomCenter,
           ),
         ),
@@ -200,12 +196,24 @@ Future<void> _loadDateFromFirestore() async {
                   const SizedBox(
                     height: 20,
                   ),
-                  const Text(
-                    'Reminder',
-                    style: TextStyle(
-                        fontSize: 22,
-                        fontWeight: FontWeight.bold,
-                        color: AppColors.primaryColor),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Text(
+                        'Reminder',
+                        style: TextStyle(
+                            fontSize: 22,
+                            fontWeight: FontWeight.bold,
+                            color: AppColors.primaryColor),
+                      ),
+                      const SizedBox(
+                        width: 30,
+                      ),
+                      Image.asset(
+                        'assets/reminder.png',
+                        width: 150,
+                      )
+                    ],
                   ),
                   const SizedBox(
                     height: 20,
@@ -239,7 +247,7 @@ Future<void> _loadDateFromFirestore() async {
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Text(
+                                  const Text(
                                     'Morning',
                                     style: TextStyle(
                                         fontWeight: FontWeight.w600,
@@ -247,7 +255,7 @@ Future<void> _loadDateFromFirestore() async {
                                   ),
                                   Text(
                                     '${_selectedMorningTime.format(context)}',
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                         fontWeight: FontWeight.w600,
                                         fontSize: 16),
                                   ),
@@ -270,7 +278,7 @@ Future<void> _loadDateFromFirestore() async {
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Text(
+                                  const Text(
                                     'Evening',
                                     style: TextStyle(
                                         fontWeight: FontWeight.w600,
@@ -278,7 +286,7 @@ Future<void> _loadDateFromFirestore() async {
                                   ),
                                   Text(
                                     '${_selectedEveningTime.format(context)}',
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                         fontWeight: FontWeight.w600,
                                         fontSize: 16),
                                   ),
@@ -290,7 +298,13 @@ Future<void> _loadDateFromFirestore() async {
                       ),
                     ),
                   ),
-                  const SizedBox(height: 20),
+                  const SizedBox(height: 10),
+                  Text(
+                    "Brush your child’s teeth twice a day – in the morning and at night before bed",
+                    style: TextStyle(
+                        color: Colors.green[600], fontWeight: FontWeight.w600),
+                  ),
+                  const SizedBox(height: 10),
                   GestureDetector(
                     onTap: _selectToothbrushReplacementDate,
                     child: Container(
@@ -322,8 +336,8 @@ Future<void> _loadDateFromFirestore() async {
                                 children: [
                                   Text(
                                     _toothbrushReplacementDate != null
-                                        ? DateFormat('yyyy-MM-dd').format(
-                                            _toothbrushReplacementDate!)
+                                        ? DateFormat('yyyy-MM-dd')
+                                            .format(_toothbrushReplacementDate!)
                                         : 'Select Date',
                                     style: const TextStyle(
                                       fontWeight: FontWeight.w600,
@@ -339,7 +353,13 @@ Future<void> _loadDateFromFirestore() async {
                       ),
                     ),
                   ),
-                  const SizedBox(height: 20),
+                  const SizedBox(height: 10),
+                  Text(
+                    "Replace your child’s toothbrush every 3 months ",
+                    style: TextStyle(
+                        color: Colors.green[600], fontWeight: FontWeight.w600),
+                  ),
+                  const SizedBox(height: 10),
                   GestureDetector(
                     onTap: _selectDentalVisitDate,
                     child: Container(
@@ -371,8 +391,8 @@ Future<void> _loadDateFromFirestore() async {
                                 children: [
                                   Text(
                                     _dentalVisitDate != null
-                                        ? DateFormat('yyyy-MM-dd').format(
-                                            _dentalVisitDate!)
+                                        ? DateFormat('yyyy-MM-dd')
+                                            .format(_dentalVisitDate!)
                                         : 'Select Date',
                                     style: const TextStyle(
                                       fontWeight: FontWeight.w600,
@@ -388,6 +408,13 @@ Future<void> _loadDateFromFirestore() async {
                       ),
                     ),
                   ),
+                  const SizedBox(height: 10),
+                  Text(
+                    "Visit a dentist before turning one year old, or as soon as their first teeth appear.",
+                    style: TextStyle(
+                        color: Colors.green[600], fontWeight: FontWeight.w600),
+                  ),
+                  const SizedBox(height: 80),
                 ],
               ),
             ),

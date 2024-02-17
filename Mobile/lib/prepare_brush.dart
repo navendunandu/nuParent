@@ -53,10 +53,9 @@ class _AfterBrushState extends State<PrepareBrush> {
   ];
 
   final List<String> item2 = [
-    'You should never store your brush in a closed or airtight container, as bacteria love moisture and will thrive in this environment. Instead, place the brush in a cup or holder in an upright position to ensure that it dries off thoroughly. Avoid putting it in a drawer or cabinet, as well.',
-    'A healthy mouth will require a clean and sanitary toothbrush, and by taking the time to make sure that you are storing yours properly, you can ensure that you are cleaning your teeth as effectively as possible.',
-    'Parents or carers should brush the teeth more than once daily.',
-    'Brush your child’s teeth last thing at night before bed and on 1 other occasion.',
+    'Replace the toothbrush when the bristles start twisting or bending, or every three months, whichever comes first.',
+    "Change toothbrushes after you've had a cold or any contagious disease since the bristles can collect germs that can lead to reinfection.",
+    "Store your toothbrush in a place where it will dry quickly. Don't store it in a toothbrush box, or in water after you have finished brushing.",
   ];
 
   @override
@@ -172,19 +171,33 @@ class _AfterBrushState extends State<PrepareBrush> {
             const SizedBox(
               height: 30,
             ),
-            Center(
-                child: ElevatedButton(
-              onPressed: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => const Reminder()));
+            GestureDetector(
+              onTap: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => Reminder(),
+                    ));
               },
-              child: const Text(
-                'Set Reminder',
-                style: TextStyle(fontSize: 20),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Image.asset(
+                    'assets/planning.png',
+                    width: 80,
+                  ),
+                  Text(
+                    'Set Reminder',
+                    style: TextStyle(
+                        color: AppColors.primaryColor,
+                        fontSize: 18,
+                        fontWeight: FontWeight.w700),
+                  )
+                ],
               ),
-            )),
+            ),
             const SizedBox(
-              height: 50,
+              height: 60,
             ),
           ],
         ),

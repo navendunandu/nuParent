@@ -8,7 +8,7 @@ import 'package:nu_parent/while_brush.dart';
 
 class BrushingInstruction extends StatefulWidget {
   final int age;
-  const BrushingInstruction({Key? key, this.age=0}) :super(key: key);
+  const BrushingInstruction({Key? key, this.age = 0}) : super(key: key);
 
   @override
   State<BrushingInstruction> createState() => _BrushingInstructionState();
@@ -70,8 +70,11 @@ class _BrushingInstructionState extends State<BrushingInstruction> {
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       GestureDetector(
-                        onTap: (){
-                          Navigator.push(context, MaterialPageRoute(builder: (context)=> const PrepareBrush()));
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const PrepareBrush()));
                         },
                         child: Container(
                           height: 150,
@@ -100,8 +103,12 @@ class _BrushingInstructionState extends State<BrushingInstruction> {
                         ),
                       ),
                       GestureDetector(
-                        onTap: (){
-                          Navigator.push(context, MaterialPageRoute(builder: (context) => const BeforeBrush(),));
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const BeforeBrush(),
+                              ));
                         },
                         child: Container(
                           height: 150,
@@ -138,7 +145,11 @@ class _BrushingInstructionState extends State<BrushingInstruction> {
                     children: [
                       GestureDetector(
                         onTap: () {
-                          Navigator.push(context, MaterialPageRoute(builder: (context) => const WhileBrush(),));
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const WhileBrush(),
+                              ));
                         },
                         child: Container(
                           height: 150,
@@ -167,8 +178,12 @@ class _BrushingInstructionState extends State<BrushingInstruction> {
                         ),
                       ),
                       GestureDetector(
-                        onTap: (){
-                          Navigator.push(context, MaterialPageRoute(builder: (context) => AfterBrush(age: widget.age),));
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => AfterBrush(),
+                              ));
                         },
                         child: Container(
                           height: 150,

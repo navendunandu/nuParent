@@ -28,7 +28,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
         decoration: const BoxDecoration(
             image: DecorationImage(
           image: AssetImage('assets/Vector-1.png'),
-          fit: BoxFit.scaleDown,
+          fit: BoxFit.cover,
           alignment: Alignment.bottomCenter,
         )),
         child: ListView(
@@ -198,10 +198,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
             ),
             GestureDetector(
               onTap: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => CountdownPage()));
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => CountdownPage()));
               },
               child: Container(
                 padding: const EdgeInsets.only(top: 20, bottom: 20),

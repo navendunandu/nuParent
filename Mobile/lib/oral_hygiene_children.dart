@@ -67,7 +67,7 @@ class _OralHygieneChildrenState extends State<OralHygieneChildren> {
             color: AppColors.white,
             image: DecorationImage(
               image: AssetImage('assets/Vector-1.png'),
-              fit: BoxFit.scaleDown,
+              fit: BoxFit.cover,
               alignment: Alignment.bottomCenter,
             )),
         child: Padding(
