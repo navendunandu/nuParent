@@ -137,50 +137,116 @@ class _ChildProfileState extends State<ChildDashboard> {
       dob = selectedChild['dateOfBirth'] ?? '';
       calculateAge(dob);
     });
+    Navigator.pop(context);
+  }
+
+  void _showChildDetailsModal(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      builder: (BuildContext context) {
+        return ListView(
+          shrinkWrap: true,
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(18.0),
+              child: Text(
+                'Childrens',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                    color: AppColors.primaryColor,
+                    fontWeight: FontWeight.w800,
+                    fontSize: 28),
+              ),
+            ),
+            GridView.builder(
+              itemCount: ChildDocs.length,
+              shrinkWrap: true,
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+                childAspectRatio: 0.8, // Adjust this aspect ratio as needed
+              ),
+              itemBuilder: (context, index) {
+                return GestureDetector(
+                  onTap: () {
+                    _childChange(ChildDocs[index]);
+                  },
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      CircleAvatar(
+                        radius: 50,
+                        backgroundColor: const Color(0xff4c505b),
+                        backgroundImage: ChildDocs[index]['imageUrl'] != null
+                            ? NetworkImage(ChildDocs[index]['imageUrl']!)
+                            : const AssetImage('assets/dummy-profile-pic.png')
+                                as ImageProvider,
+                      ),
+                      SizedBox(height: 8), // Adjust spacing between items
+                      Text(
+                        ChildDocs[index]['name'],
+                        style: TextStyle(
+                            fontSize: 16, fontWeight: FontWeight.w500),
+                        textAlign: TextAlign.center,
+                      )
+                    ],
+                  ),
+                );
+              },
+            ),
+          ],
+        );
+      },
+    );
   }
 
   void AppExit() {}
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: RefreshIndicator(
-        onRefresh: () async {
-          // Implement the logic to reload data here
-          await loadChildData();
+    return WillPopScope(
+        onWillPop: () async {
+          showExitConfirmationDialog(context);
+          return true;
         },
-        child: FutureBuilder(
-          future: loadChildData(),
-          builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              // Return a loading indicator while data is being fetched
-              return Container(
-                alignment: Alignment.center,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Image.asset(
-                      'assets/Logo.png', // Replace with the path to your logo
-                      height: 150,
+        child: Scaffold(
+          body: RefreshIndicator(
+            onRefresh: () async {
+              // Implement the logic to reload data here
+              await loadChildData();
+            },
+            child: FutureBuilder(
+              future: loadChildData(),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  // Return a loading indicator while data is being fetched
+                  return Container(
+                    alignment: Alignment.center,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Image.asset(
+                          'assets/Logo.png', // Replace with the path to your logo
+                          height: 150,
+                        ),
+                        const SizedBox(height: 40),
+                        const CircularProgressIndicator(),
+                      ],
                     ),
-                    const SizedBox(height: 40),
-                    const CircularProgressIndicator(),
-                  ],
-                ),
-              );
-            } else if (snapshot.hasError) {
-              // Handle the error if loading fails
-              return Center(
-                child: Text('Error loading data: ${snapshot.error}'),
-              );
-            } else {
-              // Data has been successfully loaded, display the main content
-              return buildMainContent();
-            }
-          },
-        ),
-      ),
-    );
+                  );
+                } else if (snapshot.hasError) {
+                  // Handle the error if loading fails
+                  return Center(
+                    child: Text('Error loading data: ${snapshot.error}'),
+                  );
+                } else {
+                  // Data has been successfully loaded, display the main content
+                  return buildMainContent();
+                }
+              },
+            ),
+          ),
+        ));
   }
 
   Widget buildMainContent() {
@@ -347,22 +413,11 @@ class _ChildProfileState extends State<ChildDashboard> {
                                 fontWeight: FontWeight.w700,
                                 color: AppColors.primaryColor),
                           ),
-                          PopupMenuButton<String>(
-                            icon: const Icon(Icons.keyboard_arrow_down_rounded),
-                            itemBuilder: (BuildContext context) {
-                              return ChildDocs.map(
-                                  (Map<String, dynamic> child) {
-                                return PopupMenuItem<String>(
-                                  onTap: () {
-                                    print(child);
-                                    _childChange(child);
-                                  },
-                                  value: child['id'],
-                                  child: Text(child['name']),
-                                );
-                              }).toList();
-                            },
-                          ),
+                          IconButton(
+                              onPressed: () {
+                                _showChildDetailsModal(context);
+                              },
+                              icon: Icon(Icons.arrow_drop_down_circle))
                         ],
                       ),
                       Text(
