@@ -45,8 +45,8 @@ class _ChildProfileState extends State<ChildDashboard> {
       if (difference.inDays < 365) {
         int ageInMonths = (difference.inDays / 30).floor();
         setState(() {
-          childAge = ageInMonths;
-          childMonth = 0;
+          childAge = 0;
+          childMonth = ageInMonths;
         });
       } else if (difference.inDays < 365 * 2) {
         // Less than two years
@@ -66,6 +66,8 @@ class _ChildProfileState extends State<ChildDashboard> {
           childMonth = ageInMonths;
         });
       }
+      print(childAge);
+      print(childMonth);
     } catch (e) {
       print("Error parsing date of birth: $e");
     }
