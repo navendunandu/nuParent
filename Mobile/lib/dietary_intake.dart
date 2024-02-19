@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:nu_parent/Components/appbar.dart';
+import 'package:nu_parent/Components/bottom_bar.dart';
 import 'package:nu_parent/dietary_intake_birth.dart';
 import 'package:nu_parent/dietary_intake_one.dart';
 import 'package:nu_parent/dietary_intake_two.dart';
@@ -13,10 +14,13 @@ class DietaryIntake extends StatefulWidget {
   State<DietaryIntake> createState() => _DietaryIntakeState();
 }
 
+bool check = false;
+
 class _DietaryIntakeState extends State<DietaryIntake> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      bottomNavigationBar: check ? BottomBar() : null,
       body: Container(
         height: double.infinity,
         decoration: const BoxDecoration(

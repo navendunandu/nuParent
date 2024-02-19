@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:nu_parent/Components/bottom_bar.dart';
 import 'package:nu_parent/main.dart';
 import 'package:nu_parent/Components/appbar.dart';
 import 'package:flutter_tts/flutter_tts.dart';
@@ -70,9 +71,11 @@ class _WhileBrushState extends State<WhileBrush> {
     }
   }
 
+  bool check = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      bottomNavigationBar: check ? BottomBar() : null,
       body: Container(
         decoration: const BoxDecoration(
           color: AppColors.white,

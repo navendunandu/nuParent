@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:nu_parent/Components/appbar.dart';
+import 'package:nu_parent/Components/bottom_bar.dart';
 import 'package:nu_parent/child_registration.dart';
 import 'package:nu_parent/edit_profile.dart';
 import 'package:nu_parent/main.dart';
@@ -127,9 +128,11 @@ class _ViewProfileState extends State<ViewProfile> {
     });
   }
 
+  bool check = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      bottomNavigationBar: check ? BottomBar() : null,
       body: FutureBuilder(
         future: loadChildData(),
         builder: (context, snapshot) {

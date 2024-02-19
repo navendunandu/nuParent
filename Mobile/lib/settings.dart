@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:nu_parent/Components/appbar.dart';
+import 'package:nu_parent/Components/bottom_bar.dart';
 import 'package:nu_parent/Reminder.dart';
 import 'package:nu_parent/brushing_instruction.dart';
 import 'package:nu_parent/dental_visit.dart';
@@ -19,11 +20,14 @@ class SettingsScreen extends StatefulWidget {
   State<SettingsScreen> createState() => _SettingsScreenState();
 }
 
+bool check = false;
+
 class _SettingsScreenState extends State<SettingsScreen> {
   bool isHomeListVisible = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      bottomNavigationBar: check ? BottomBar() : null,
       body: Container(
         decoration: const BoxDecoration(
             image: DecorationImage(

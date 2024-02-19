@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:nu_parent/Components/appbar.dart';
+import 'package:nu_parent/Components/bottom_bar.dart';
 import 'package:nu_parent/after_brush.dart';
 import 'package:nu_parent/before_brush.dart';
 import 'package:nu_parent/main.dart';
@@ -15,9 +16,11 @@ class BrushingInstruction extends StatefulWidget {
 }
 
 class _BrushingInstructionState extends State<BrushingInstruction> {
+  bool check = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      bottomNavigationBar: check ? BottomBar() : null,
       body: Container(
         height: double.infinity,
         decoration: const BoxDecoration(

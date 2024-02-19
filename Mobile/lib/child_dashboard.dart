@@ -201,7 +201,7 @@ class _ChildProfileState extends State<ChildDashboard> {
   }
 
   void AppExit() {}
-
+  bool check = false;
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
@@ -210,6 +210,7 @@ class _ChildProfileState extends State<ChildDashboard> {
           return true;
         },
         child: Scaffold(
+          bottomNavigationBar: check ? BottomAppBar() : null,
           body: RefreshIndicator(
             onRefresh: () async {
               // Implement the logic to reload data here

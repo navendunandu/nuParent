@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:nu_parent/Components/bottom_bar.dart';
 import 'package:nu_parent/main.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:intl/intl.dart';
@@ -167,6 +168,7 @@ class _ReminderState extends State<Reminder> {
     }
   }
 
+  bool check = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -178,6 +180,7 @@ class _ReminderState extends State<Reminder> {
           icon: const Icon(Icons.arrow_back_ios_new),
         ),
       ),
+      bottomNavigationBar: check ? BottomBar() : null,
       body: Container(
         height: double.infinity,
         decoration: const BoxDecoration(

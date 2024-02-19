@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:nu_parent/Components/bottom_bar.dart';
 import 'package:nu_parent/main.dart';
 import 'package:nu_parent/Components/appbar.dart';
 import 'package:flutter_tts/flutter_tts.dart';
@@ -59,10 +60,11 @@ class _BeforeBrushState extends State<BeforeBrush> {
 
   final String items3 =
       'Do not wet the toothbrush before use. Seek advice from a dentist on whether your child would benefit from interdental flossing. Floss before brushing. If you floss after brushing, food, plaque, and bacteria will remain in your mouth until you brush again. The fluoride in your toothpaste is also better able to protect your teeth when particles are removed first.';
-
+  bool check = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      bottomNavigationBar: check ? BottomBar() : null,
       body: Container(
         decoration: const BoxDecoration(
           color: AppColors.white,

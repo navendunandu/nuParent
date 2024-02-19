@@ -13,7 +13,7 @@ class AfterBrush extends StatefulWidget {
 
 class _AfterBrushState extends State<AfterBrush> {
   FlutterTts flutterTts = FlutterTts();
-
+  bool check = false;
   Future speak(String stext) async {
     await flutterTts.setLanguage("en-US");
     await flutterTts.speak(stext);
@@ -33,6 +33,7 @@ class _AfterBrushState extends State<AfterBrush> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      bottomNavigationBar: check ? BottomAppBar() : null,
       body: Container(
         decoration: const BoxDecoration(
           color: AppColors.white,

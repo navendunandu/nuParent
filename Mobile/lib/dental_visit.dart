@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 import 'package:nu_parent/Components/appbar.dart';
+import 'package:nu_parent/Components/bottom_bar.dart';
 import 'package:nu_parent/Components/box.dart';
 import 'package:nu_parent/Components/footer.dart';
 import 'package:nu_parent/Reminder.dart';
@@ -37,9 +38,11 @@ class _DentalVisitState extends State<DentalVisit> {
     super.initState();
   }
 
+  bool check = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      bottomNavigationBar: check ? BottomBar() : null,
       body: Container(
         decoration: const BoxDecoration(
           color: AppColors.white,

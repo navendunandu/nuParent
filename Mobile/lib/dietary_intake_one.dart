@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:nu_parent/Components/appbar.dart';
+import 'package:nu_parent/Components/bottom_bar.dart';
 import 'package:nu_parent/Components/box.dart';
 import 'package:nu_parent/main.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -63,9 +64,11 @@ class _DietaryIntakeOneState extends State<DietaryIntakeOne> {
     await flutterTts.speak(stext);
   }
 
+  bool check = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      bottomNavigationBar: check ? BottomBar() : null,
       body: Container(
         height: double.infinity,
         decoration: const BoxDecoration(

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:nu_parent/Components/bottom_bar.dart';
 import 'package:nu_parent/Reminder.dart';
 import 'package:nu_parent/main.dart';
 import 'package:nu_parent/Components/appbar.dart';
@@ -57,10 +58,11 @@ class _AfterBrushState extends State<PrepareBrush> {
     "Change toothbrushes after you've had a cold or any contagious disease since the bristles can collect germs that can lead to reinfection.",
     "Store your toothbrush in a place where it will dry quickly. Don't store it in a toothbrush box, or in water after you have finished brushing.",
   ];
-
+  bool check = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      bottomNavigationBar: check ? BottomBar() : null,
       body: Container(
         decoration: const BoxDecoration(
           color: AppColors.white,

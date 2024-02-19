@@ -1,15 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:nu_parent/Components/bottom_bar.dart';
 import 'package:nu_parent/video_player.dart';
 import 'package:video_player/video_player.dart';
 import 'package:video_thumbnail/video_thumbnail.dart';
 
+bool check = false;
+
 class HowToVideos extends StatelessWidget {
-  const HowToVideos({Key? key});
+  const HowToVideos({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      bottomNavigationBar: check ? BottomBar() : null,
       appBar: AppBar(
         title: Text('Video Screen'),
       ),
