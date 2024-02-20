@@ -128,11 +128,71 @@ class _ViewProfileState extends State<ViewProfile> {
     });
   }
 
+  void _showChildDetailsModal(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      builder: (BuildContext context) {
+        return ListView(
+          shrinkWrap: true,
+          children: [
+            const Padding(
+              padding: EdgeInsets.all(18.0),
+              child: Text(
+                'Childrens',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                    color: AppColors.primaryColor,
+                    fontWeight: FontWeight.w800,
+                    fontSize: 28),
+              ),
+            ),
+            GridView.builder(
+              itemCount: ChildDocs.length,
+              shrinkWrap: true,
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+                childAspectRatio: 0.8, // Adjust this aspect ratio as needed
+              ),
+              itemBuilder: (context, index) {
+                return GestureDetector(
+                  onTap: () {
+                    _childChange(ChildDocs[index]);
+                  },
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      CircleAvatar(
+                        radius: 50,
+                        backgroundColor: const Color(0xff4c505b),
+                        backgroundImage: ChildDocs[index]['imageUrl'] != null
+                            ? NetworkImage(ChildDocs[index]['imageUrl']!)
+                            : const AssetImage('assets/dummy-profile-pic.png')
+                                as ImageProvider,
+                      ),
+                      const SizedBox(height: 8), // Adjust spacing between items
+                      Text(
+                        ChildDocs[index]['name'],
+                        style: const TextStyle(
+                            fontSize: 16, fontWeight: FontWeight.w500),
+                        textAlign: TextAlign.center,
+                      )
+                    ],
+                  ),
+                );
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   bool check = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: check ? BottomBar() : null,
+      bottomNavigationBar: check ? const BottomBar() : null,
       body: FutureBuilder(
         future: loadChildData(),
         builder: (context, snapshot) {
@@ -268,21 +328,11 @@ class _ViewProfileState extends State<ViewProfile> {
                         fontWeight: FontWeight.w500,
                         color: AppColors.black),
                   ),
-                  PopupMenuButton<String>(
-                    icon: const Icon(Icons.keyboard_arrow_down_rounded),
-                    itemBuilder: (BuildContext context) {
-                      return ChildDocs.map((Map<String, dynamic> child) {
-                        return PopupMenuItem<String>(
-                          onTap: () {
-                            print(child);
-                            _childChange(child);
-                          },
-                          value: child['id'],
-                          child: Text(child['name']),
-                        );
-                      }).toList();
-                    },
-                  ),
+                  IconButton(
+                      onPressed: () {
+                        _showChildDetailsModal(context);
+                      },
+                      icon: const Icon(Icons.arrow_drop_down_circle))
                 ],
               ),
             ),

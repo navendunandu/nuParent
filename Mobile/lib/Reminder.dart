@@ -180,7 +180,7 @@ class _ReminderState extends State<Reminder> {
           icon: const Icon(Icons.arrow_back_ios_new),
         ),
       ),
-      bottomNavigationBar: check ? BottomBar() : null,
+      bottomNavigationBar: check ? const BottomBar() : null,
       body: Container(
         height: double.infinity,
         decoration: const BoxDecoration(
@@ -302,11 +302,9 @@ class _ReminderState extends State<Reminder> {
                     ),
                   ),
                   const SizedBox(height: 10),
-                  Text(
-                    "Brush your child’s teeth twice a day – in the morning and at night before bed",
-                    style: TextStyle(
-                        color: Colors.green[600], fontWeight: FontWeight.w600),
-                  ),
+                  const Card(
+                      text:
+                          "Brush your child’s teeth twice a day – in the morning and at night before bed"),
                   const SizedBox(height: 10),
                   GestureDetector(
                     onTap: _selectToothbrushReplacementDate,
@@ -357,10 +355,8 @@ class _ReminderState extends State<Reminder> {
                     ),
                   ),
                   const SizedBox(height: 10),
-                  Text(
-                    "Replace your child’s toothbrush every 3 months ",
-                    style: TextStyle(
-                        color: Colors.green[600], fontWeight: FontWeight.w600),
+                  const Card(
+                    text: "Replace your child’s toothbrush every 3 months ",
                   ),
                   const SizedBox(height: 10),
                   GestureDetector(
@@ -412,17 +408,41 @@ class _ReminderState extends State<Reminder> {
                     ),
                   ),
                   const SizedBox(height: 10),
-                  Text(
-                    "Visit a dentist before turning one year old, or as soon as their first teeth appear.",
-                    style: TextStyle(
-                        color: Colors.green[600], fontWeight: FontWeight.w600),
+                  const Card(
+                    text:
+                        "Visit a dentist before turning one year old, or as soon as their first teeth appear.",
                   ),
-                  const SizedBox(height: 80),
+                  const SizedBox(height: 50),
                 ],
               ),
             ),
           ),
         ),
+      ),
+    );
+  }
+}
+
+class Card extends StatefulWidget {
+  final String text;
+  const Card({super.key, required this.text});
+
+  @override
+  State<Card> createState() => _CardState();
+}
+
+class _CardState extends State<Card> {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.all(15),
+      decoration: BoxDecoration(
+          color: AppColors.tilesecondaryblue,
+          borderRadius: BorderRadius.circular(10)),
+      child: Text(
+        widget.text,
+        textAlign: TextAlign.center,
+        style: TextStyle(color: Colors.green[600], fontWeight: FontWeight.w600),
       ),
     );
   }

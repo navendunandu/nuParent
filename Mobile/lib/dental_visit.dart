@@ -6,7 +6,6 @@ import 'package:nu_parent/Components/box.dart';
 import 'package:nu_parent/Components/footer.dart';
 import 'package:nu_parent/Reminder.dart';
 import 'package:nu_parent/main.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 
 class DentalVisit extends StatefulWidget {
   const DentalVisit({Key? key}) : super(key: key);
@@ -52,7 +51,7 @@ class _DentalVisitState extends State<DentalVisit> {
             const CustomAppBar(),
             const Center(
               child: Text(
-                'Baby’s First Dental Visit',
+                'Dental Visit',
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   color: AppColors.primaryColor,
@@ -66,7 +65,8 @@ class _DentalVisitState extends State<DentalVisit> {
               padding: EdgeInsets.all(20.0),
               child: Text(
                 'When Should Your Baby Visit the Dentist?',
-                style: TextStyle(letterSpacing: 1),
+                textAlign: TextAlign.center,
+                style: TextStyle(fontSize: 17, letterSpacing: 1),
               ),
             ),
             Container(
@@ -202,9 +202,8 @@ class _DentalVisitState extends State<DentalVisit> {
               padding: EdgeInsets.all(28.0),
               child: Text(
                 'When Should Your Baby Visit the Dentist?',
-                style: TextStyle(
-                  fontSize: 16,
-                ),
+                textAlign: TextAlign.center,
+                style: TextStyle(fontSize: 17, letterSpacing: 1),
               ),
             ),
             Padding(
@@ -233,6 +232,7 @@ class _DentalVisitState extends State<DentalVisit> {
             Padding(
               padding: const EdgeInsets.only(left: 25, right: 25),
               child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   const Text(
                     'Reduce the risk of painful tooth decay',
@@ -240,12 +240,13 @@ class _DentalVisitState extends State<DentalVisit> {
                         color: AppColors.primaryColor,
                         fontWeight: FontWeight.w600),
                   ),
-                  const SizedBox(
-                    width: 10,
-                  ),
                   Flexible(
-                    child: Image.asset(
-                      'assets/badteeth.png',
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 20.0, right: 20.0),
+                      child: Image.asset(
+                        'assets/badteeth.png',
+                        width: 200,
+                      ),
                     ),
                   ),
                 ],
@@ -259,6 +260,7 @@ class _DentalVisitState extends State<DentalVisit> {
                   Flexible(
                     child: Image.asset(
                       'assets/Exclamation.png',
+                      width: 45,
                     ),
                   ),
                   const SizedBox(
@@ -276,6 +278,7 @@ class _DentalVisitState extends State<DentalVisit> {
             Padding(
               padding: const EdgeInsets.only(left: 25, right: 25),
               child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   const Flexible(
                     child: Text(
@@ -285,12 +288,14 @@ class _DentalVisitState extends State<DentalVisit> {
                           fontWeight: FontWeight.w600),
                     ),
                   ),
-                  const SizedBox(
-                    width: 10,
-                  ),
-                  Image.asset(
-                    'assets/DentistCheck.png',
-                    width: 150,
+                  Flexible(
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 20.0, right: 20.0),
+                      child: Image.asset(
+                        'assets/DentistCheck.png',
+                        width: 200,
+                      ),
+                    ),
                   ),
                 ],
               ),
