@@ -12,6 +12,7 @@ class BottomBar extends StatefulWidget {
 }
 
 class _BottomBarState extends State<BottomBar> {
+  bool _check = true;
   String countDown = "";
   TimerSingleton timer = TimerSingleton();
 
@@ -133,18 +134,14 @@ class _BottomBarState extends State<BottomBar> {
             children: [
               IconButton(
                   onPressed: () {
-                    timer.stopTimer();
-                  },
-                  icon: const Icon(
-                    Icons.stop_rounded,
-                    size: 40,
-                  )),
-              IconButton(
-                  onPressed: () {
-                    timer.pauseTimer();
+                    _check ? timer.pauseTimer() : timer.resumeTimer();
+                    setState(() {
+                      _check = !_check;
+                    });
+                    print(_check);
                   },
                   icon: Icon(
-                    Icons.pause_rounded,
+                    _check ? Icons.pause_rounded : Icons.play_arrow_rounded,
                     size: 40,
                   )),
             ],

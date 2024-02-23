@@ -64,5 +64,6 @@ class TimerSingleton {
     _paused = false;
     time = '0:02:00';
     _secondsRemaining = duration.inSeconds;
+    // showBottomBar = false;
   }
 }
