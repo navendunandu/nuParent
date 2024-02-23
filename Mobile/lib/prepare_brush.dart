@@ -62,7 +62,7 @@ class _AfterBrushState extends State<PrepareBrush> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: check ? BottomBar() : null,
+      bottomNavigationBar: BottomBar(),
       body: Container(
         decoration: const BoxDecoration(
           color: AppColors.white,

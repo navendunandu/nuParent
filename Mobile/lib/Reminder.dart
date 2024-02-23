@@ -180,7 +180,7 @@ class _ReminderState extends State<Reminder> {
           icon: const Icon(Icons.arrow_back_ios_new),
         ),
       ),
-      bottomNavigationBar: check ? const BottomBar() : null,
+      bottomNavigationBar: BottomBar(),
       body: Container(
         height: double.infinity,
         decoration: const BoxDecoration(

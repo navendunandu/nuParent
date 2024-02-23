@@ -13,7 +13,7 @@ class HowToVideos extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: check ? BottomBar() : null,
+      bottomNavigationBar: BottomBar(),
       appBar: AppBar(
         title: Text('Video Screen'),
       ),

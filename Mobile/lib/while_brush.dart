@@ -75,7 +75,7 @@ class _WhileBrushState extends State<WhileBrush> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: check ? BottomBar() : null,
+      bottomNavigationBar: const BottomBar(),
       body: Container(
         decoration: const BoxDecoration(
           color: AppColors.white,
@@ -103,7 +103,7 @@ class _WhileBrushState extends State<WhileBrush> {
               child: Text(
                 title,
                 textAlign: TextAlign.center,
-                style: TextStyle(
+                style: const TextStyle(
                   color: AppColors.primaryColor,
                   fontWeight: FontWeight.w500,
                   fontSize: 16,
@@ -133,8 +133,8 @@ class _WhileBrushState extends State<WhileBrush> {
                     borderRadius: BorderRadius.circular(20),
                     boxShadow: [
                       BoxShadow(
-                        color:
-                            Color.fromARGB(255, 149, 149, 149).withOpacity(0.5),
+                        color: const Color.fromARGB(255, 149, 149, 149)
+                            .withOpacity(0.5),
                         spreadRadius: 1.0,
                         blurRadius: 8.0,
                         offset: const Offset(2, 2),
@@ -152,7 +152,7 @@ class _WhileBrushState extends State<WhileBrush> {
             Text(
               text,
               textAlign: TextAlign.center,
-              style: TextStyle(
+              style: const TextStyle(
                 color: AppColors.primaryColor,
                 fontWeight: FontWeight.w500,
                 fontSize: 16,

@@ -64,7 +64,7 @@ class _BeforeBrushState extends State<BeforeBrush> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: check ? BottomBar() : null,
+      bottomNavigationBar: BottomBar(),
       body: Container(
         decoration: const BoxDecoration(
           color: AppColors.white,

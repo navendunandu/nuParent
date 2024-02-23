@@ -192,7 +192,7 @@ class _ViewProfileState extends State<ViewProfile> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: check ? const BottomBar() : null,
+      bottomNavigationBar: const BottomBar(),
       body: FutureBuilder(
         future: loadChildData(),
         builder: (context, snapshot) {

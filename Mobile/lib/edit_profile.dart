@@ -188,7 +188,7 @@ class _EditProfileState extends State<EditProfile> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: check ? BottomBar() : null,
+      bottomNavigationBar: BottomBar(),
       body: isLoading ? _buildLoading() : buildProfileContent(),
     );
   }

@@ -111,7 +111,6 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.white,
-      bottomNavigationBar: check ? BottomBar() : null,
       body: ListView(children: [
         Stack(
           children: [

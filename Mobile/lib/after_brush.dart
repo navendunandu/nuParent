@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:nu_parent/Components/bottom_bar.dart';
 import 'package:nu_parent/main.dart';
 import 'package:nu_parent/Components/appbar.dart';
 import 'package:flutter_tts/flutter_tts.dart';
@@ -33,7 +34,7 @@ class _AfterBrushState extends State<AfterBrush> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: check ? BottomAppBar() : null,
+      bottomNavigationBar: BottomBar(),
       body: Container(
         decoration: const BoxDecoration(
           color: AppColors.white,

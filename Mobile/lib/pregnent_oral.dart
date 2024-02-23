@@ -68,7 +68,7 @@ class _PregnantOralHygieneState extends State<PregnantOralHygiene> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: check ? BottomBar() : null,
+      bottomNavigationBar: BottomBar(),
       body: Container(
         height: double.infinity,
         decoration: const BoxDecoration(
