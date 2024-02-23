@@ -27,7 +27,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: check ? BottomBar() : null,
+      bottomNavigationBar: const BottomBar(),
       body: Container(
         decoration: const BoxDecoration(
             image: DecorationImage(

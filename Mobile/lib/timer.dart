@@ -1,8 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_ringtone_player/flutter_ringtone_player.dart';
+import 'package:nu_parent/TimerSingleton.dart';
 import 'package:nu_parent/main.dart';
-import 'package:lottie/lottie.dart';
+import 'package:nu_parent/Components/bottom_bar.dart';
 
 class CountdownPage extends StatefulWidget {
   const CountdownPage({Key? key}) : super(key: key);
@@ -15,98 +16,10 @@ class _CountdownPageState extends State<CountdownPage>
     with TickerProviderStateMixin {
   late AnimationController controller;
 
+  TimerSingleton timer = TimerSingleton();
   bool isPlaying = false;
-  bool soundPlayed = false;
-
-  Future<void> showLottieAnimationDialog(BuildContext context) async {
-    await showDialog(
-      context: context,
-      barrierDismissible: false,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          content: SizedBox(
-            height: 280,
-            child: Stack(
-              children: [
-                Positioned(
-                  top: 0,
-                  left: 0,
-                  child: Lottie.asset(
-                    'assets/confetti.json',
-                    width: 240,
-                    height: 240,
-                    repeat: true,
-                    animate: true,
-                  ),
-                ),
-                Positioned(
-                  top: 0,
-                  left: 0,
-                  child: Lottie.asset(
-                    'assets/teeth.json',
-                    width: 240,
-                    height: 240,
-                    repeat: true,
-                    animate: true,
-                  ),
-                ),
-              ],
-            ),
-          ),
-          actions: <Widget>[
-            TextButton(
-              onPressed: () {
-                stopBeepSound(context);
-                Navigator.of(context).pop(); // Close the dialog
-              },
-              child: const Text('OK'),
-            ),
-          ],
-        );
-      },
-    );
-  }
-
-  String get countText {
-    Duration count = controller.duration! * controller.value;
-    return controller.isDismissed
-        ? '${controller.duration!.inHours}:${(controller.duration!.inMinutes % 60).toString().padLeft(2, '0')}:${(controller.duration!.inSeconds % 60).toString().padLeft(2, '0')}'
-        : '${count.inHours}:${(count.inMinutes % 60).toString().padLeft(2, '0')}:${(count.inSeconds % 60).toString().padLeft(2, '0')}';
-  }
-
   double progress = 1.0;
-
-  void notify() async {
-    if (countText == '0:00:00' && !soundPlayed) {
-      soundPlayed = true; // Set the flag to prevent repeated sound playback
-      await startBeepSound();
-      showLottieAnimationDialog(context);
-    }
-  }
-
-  bool isDialogOpen = false;
-
-  Future<void> startBeepSound() async {
-    await FlutterRingtonePlayer.playAlarm();
-  }
-
-  void playBombingSound() {
-    FlutterRingtonePlayer.playAlarm();
-
-    // Schedule the stop action after 3 seconds using a delayed future
-    Future.delayed(const Duration(seconds: 3), () {
-      FlutterRingtonePlayer.stop();
-    });
-  }
-
-  void stopBeepSound(BuildContext context) {
-    FlutterRingtonePlayer.stop();
-    setState(() {
-      controller.duration = const Duration(seconds: 10);
-    });
-    soundPlayed = false; // Reset the flag when stopping the sound
-    Navigator.pop(context);
-  }
+  String countDown = "0:02:00";
 
   @override
   void initState() {
@@ -117,7 +30,7 @@ class _CountdownPageState extends State<CountdownPage>
     );
 
     controller.addListener(() {
-      notify();
+      // notify();
       if (controller.isAnimating) {
         setState(() {
           progress = controller.value;
@@ -139,6 +52,11 @@ class _CountdownPageState extends State<CountdownPage>
 
   @override
   Widget build(BuildContext context) {
+    timer.timerStream.listen((event) {
+      setState(() {
+        countDown = event;
+      });
+    });
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 255, 255, 255),
       appBar: AppBar(
@@ -150,7 +68,6 @@ class _CountdownPageState extends State<CountdownPage>
           icon: const Icon(Icons.arrow_back_ios_new),
         ),
       ),
-      bottomNavigationBar: BottomAppBar(),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.only(left: 30.0, right: 30.0),
@@ -206,34 +123,14 @@ class _CountdownPageState extends State<CountdownPage>
                                 strokeWidth: 6,
                               ),
                             ),
-                            GestureDetector(
-                              onTap: () {
-                                if (controller.isDismissed) {
-                                  showModalBottomSheet(
-                                    context: context,
-                                    builder: (context) => Container(
-                                      height: 300,
-                                      child: CupertinoTimerPicker(
-                                        initialTimerDuration:
-                                            controller.duration!,
-                                        onTimerDurationChanged: (time) {
-                                          setState(() {
-                                            controller.duration = time;
-                                          });
-                                        },
-                                      ),
-                                    ),
-                                  );
-                                }
-                              },
-                              child: AnimatedBuilder(
-                                animation: controller,
-                                builder: (context, child) => Text(
-                                  countText,
-                                  style: const TextStyle(
-                                    fontSize: 50,
-                                    fontWeight: FontWeight.bold,
-                                  ),
+                            AnimatedBuilder(
+                              animation: controller,
+                              builder: (context, child) => Text(
+                                countDown,
+                                style: TextStyle(
+                                  fontSize: 24,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.black,
                                 ),
                               ),
                             ),
@@ -257,10 +154,12 @@ class _CountdownPageState extends State<CountdownPage>
                                 onPressed: () {
                                   if (controller.isAnimating) {
                                     controller.stop();
+                                    timer.pauseTimer();
                                     setState(() {
                                       isPlaying = false;
                                     });
                                   } else {
+                                    timer.startTimer();
                                     controller.reverse(
                                         from: controller.value == 0
                                             ? 1.0
@@ -290,6 +189,7 @@ class _CountdownPageState extends State<CountdownPage>
                               ),
                               child: IconButton(
                                 onPressed: () {
+                                  timer.stopTimer();
                                   controller.reset();
                                   setState(() {
                                     isPlaying = false;
