@@ -8,6 +8,8 @@ class SplashScreen extends StatefulWidget {
   State<SplashScreen> createState() => _SplashScreenState();
 }
 
+const IconData copyright = IconData(0xe198, fontFamily: 'MaterialIcons');
+
 class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
@@ -25,14 +27,30 @@ class _SplashScreenState extends State<SplashScreen> {
                 image: AssetImage('assets/Vector-1.png'),
                 fit: BoxFit.cover,
                 alignment: Alignment.bottomCenter)),
-        child: Center(
-          child: ClipOval(
-            child: Image.asset(
-              'assets/nuParent.png',
-              fit: BoxFit.contain,
-              width: 250,
+        child: Column(
+          children: [
+            Expanded(
+              child: SizedBox(
+                child: Center(
+                  child: ClipOval(
+                    child: Image.asset(
+                      'assets/nuParent.png',
+                      fit: BoxFit.contain,
+                      width: 250,
+                    ),
+                  ),
+                ),
+              ),
             ),
-          ),
+            Container(
+              padding: const EdgeInsets.all(10),
+              child: const Text(
+                '© Copyright Teesside University 2024',
+                style: TextStyle(
+                    color: Colors.white, fontSize: 15, letterSpacing: .7),
+              ),
+            )
+          ],
         ),
       ),
     );
