@@ -20,7 +20,7 @@ class _BrushingInstructionState extends State<BrushingInstruction> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: BottomBar(),
+      bottomNavigationBar: const BottomBar(),
       body: Container(
         height: double.infinity,
         decoration: const BoxDecoration(
@@ -82,6 +82,7 @@ class _BrushingInstructionState extends State<BrushingInstruction> {
                         child: Container(
                           height: 150,
                           width: 150,
+                          padding: const EdgeInsets.all(10),
                           decoration: BoxDecoration(
                               color: AppColors.primaryColor,
                               borderRadius:
@@ -128,9 +129,11 @@ class _BrushingInstructionState extends State<BrushingInstruction> {
                                   offset: const Offset(0, 2),
                                 )
                               ]),
+                          padding: const EdgeInsets.all(10),
                           child: const Center(
                               child: Text(
                             'Before Brushing',
+                            textAlign: TextAlign.center,
                             style: TextStyle(
                                 color: AppColors.white,
                                 fontWeight: FontWeight.w500,
@@ -157,6 +160,7 @@ class _BrushingInstructionState extends State<BrushingInstruction> {
                         child: Container(
                           height: 150,
                           width: 150,
+                          padding: const EdgeInsets.all(10),
                           decoration: BoxDecoration(
                               color: AppColors.primaryColor,
                               borderRadius:
@@ -185,12 +189,13 @@ class _BrushingInstructionState extends State<BrushingInstruction> {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => AfterBrush(),
+                                builder: (context) => const AfterBrush(),
                               ));
                         },
                         child: Container(
                           height: 150,
                           width: 150,
+                          padding: const EdgeInsets.all(10),
                           decoration: BoxDecoration(
                               color: AppColors.primaryColor,
                               borderRadius:
@@ -206,6 +211,7 @@ class _BrushingInstructionState extends State<BrushingInstruction> {
                           child: const Center(
                               child: Text(
                             'After Brushing',
+                            textAlign: TextAlign.center,
                             style: TextStyle(
                                 color: AppColors.white,
                                 fontWeight: FontWeight.w500,

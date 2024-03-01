@@ -160,10 +160,10 @@ class _CountdownPageState extends State<CountdownPage>
                                     });
                                   } else {
                                     timer.startTimer();
-                                    controller.reverse(
-                                        from: controller.value == 0
-                                            ? 1.0
-                                            : controller.value);
+                                    // controller.reverse(
+                                    //     from: controller.value == 0
+                                    //         ? 1.0
+                                    //         : controller.value);
                                     setState(() {
                                       isPlaying = true;
                                     });
