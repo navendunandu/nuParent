@@ -1,15 +1,28 @@
 import 'package:flutter/material.dart';
+import 'package:nu_parent/local_notification_service.dart';
 import 'package:nu_parent/splash_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:nu_parent/work_manager_service.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'firebase_options.dart';
+import 'package:flutter/services.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await Future.wait([
+    LocalNotificationService.init(),
+    WorkManagerService().init(),
+  ]);
+  var status = await Permission.notification.status;
+if (status.isDenied) {
+  Permission.notification.request();
+}
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
   runApp(const MainApp());
 }
+
 
 class AppColors {
   static const primaryColor = Color.fromARGB(255, 0, 30, 80);

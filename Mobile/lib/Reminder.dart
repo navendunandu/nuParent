@@ -4,6 +4,9 @@ import 'package:nu_parent/Components/bottom_bar.dart';
 import 'package:nu_parent/main.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:intl/intl.dart';
+import 'dart:developer';
+import 'package:nu_parent/local_notification_service.dart';
+import 'package:nu_parent/notification_details.dart';
 
 class Reminder extends StatefulWidget {
   const Reminder({Key? key}) : super(key: key);
@@ -15,13 +18,32 @@ class Reminder extends StatefulWidget {
 class _ReminderState extends State<Reminder> {
   late String userId;
   late FirebaseFirestore firestore = FirebaseFirestore.instance;
-  @override
+
   void initState() {
     super.initState();
+    listenToNotificationStream();
     final user = FirebaseAuth.instance.currentUser;
     userId = user!.uid;
     _loadTimesFromFirestore();
     _loadDateFromFirestore();
+  }
+
+  void listenToNotificationStream() {
+    LocalNotificationService.streamController.stream.listen(
+      (notificationResponse) {
+        log(notificationResponse.id!.toString());
+        log(notificationResponse.payload!.toString());
+        //logic to get product from database.
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (_) => NotificationDetailsScreen(
+              response: notificationResponse,
+            ),
+          ),
+        );
+      },
+    );
   }
 
   DateTime? _toothbrushReplacementDate;
@@ -40,6 +62,11 @@ class _ReminderState extends State<Reminder> {
         _updateDateInFirestore('toothbrushReplacement', picked);
       });
     }
+    final DateTime replacementDate = picked!.add(const Duration(days: 90));
+
+    final DateTime notificationDateTime = DateTime(replacementDate.year, replacementDate.month, replacementDate.day, 9, 0);
+
+    LocalNotificationService.scheduleToothbrushReplacementNotification(notificationDateTime);
   }
 
   Future<void> _selectDentalVisitDate() async {
@@ -55,6 +82,10 @@ class _ReminderState extends State<Reminder> {
         _updateDateInFirestore('dentalVisitDate', picked);
       });
     }
+    final DateTime notificationDateTime = DateTime(picked!.year, picked.month, picked.day, 9, 0);
+
+
+    LocalNotificationService.scheduleDentalVisitNotification(notificationDateTime);
   }
 
   Future<void> _updateDateInFirestore(String dateType, DateTime date) async {
@@ -82,9 +113,19 @@ class _ReminderState extends State<Reminder> {
       setState(() {
         _selectedMorningTime = picked;
       });
+       
       _updateTimeInFirestore('morning', picked);
+      _scheduleDailyMorningNotification(picked);
     }
   }
+
+  void _scheduleDailyMorningNotification(TimeOfDay pickedTime) async {
+  final now = DateTime.now();
+  final selectedTime = DateTime(now.year, now.month, now.day, pickedTime.hour, pickedTime.minute);
+  LocalNotificationService.showDailyMorningNotification(selectedTime);
+}
+
+
 
   Future<void> _selectEveningTime() async {
     final TimeOfDay? picked = await showTimePicker(
@@ -96,8 +137,16 @@ class _ReminderState extends State<Reminder> {
         _selectedEveningTime = picked;
       });
       _updateTimeInFirestore('evening', picked);
+       _scheduleDailyEveningNotification(picked);
     }
   }
+
+   void _scheduleDailyEveningNotification(TimeOfDay pickedTime) async {
+  final now = DateTime.now();
+  final selectedTime = DateTime(now.year, now.month, now.day, pickedTime.hour, pickedTime.minute);
+  LocalNotificationService.showDailyEveningNotification(selectedTime);
+}
+
 
   Future<void> _updateTimeInFirestore(String timeType, TimeOfDay time) async {
     try {
