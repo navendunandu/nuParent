@@ -19,6 +19,8 @@ import AgeGroup from './Components/AgeGroup';
 import Reminder from './Components/Reminder';
 import UploadVideos from './Components/UploadVideos';
 import Brushing from './Components/Brushing';
+import BrushingGroup from './Components/BrushingGroup';
+import BrushingDetails from './Components/BrushingDetails';
 import OralHygiene from './Components/OralHygiene';
 import Dietaryintake from './Components/Dietaryintake';
 import DashboardIcon from '@mui/icons-material/Dashboard';
@@ -88,16 +90,17 @@ const ResponsiveDrawer = (props) => {
             </ListItemButton>
           </Link>
         </ListItem>
-        {/* <ListItem disablePadding className='inner-box'>
-          <Link to={'/Admin/Reminder'} className={`sidebar-btn ${location.pathname === '/Admin/Reminder' ? 'active-link' : ''}`} onClick={handleDrawerToggle} >
+        <ListItem disablePadding className='inner-box'>
+          <Link to={'/Admin/BrushingGroup'} className={`sidebar-btn ${location.pathname === '/Admin/BrushingGroup' ? 'active-link' : ''}`} onClick={handleDrawerToggle} >
             <ListItemButton >
               <ListItemIcon>
-                <NotificationsActiveIcon className='icon-clr'/>
+                <ChildCareIcon className='icon-clr' />
               </ListItemIcon>
-              <ListItemText primary='Reminder' />
+              <ListItemText primary='BrushingType' />
             </ListItemButton>
           </Link>
-        </ListItem> */}
+        </ListItem>
+        
         <ListItem disablePadding className='inner-box'>
           <Link to={'/Admin/UploadVideos'} className={`sidebar-btn ${location.pathname === '/Admin/UploadVideos' ? 'active-link' : ''}`} onClick={handleDrawerToggle}>
             <ListItemButton >
@@ -108,7 +111,7 @@ const ResponsiveDrawer = (props) => {
             </ListItemButton>
           </Link>
         </ListItem>
-        {/*<ListItem disablePadding className='inner-box'>
+        <ListItem disablePadding className='inner-box'>
           <Link to={'/Admin/Brushing'} className={`sidebar-btn ${location.pathname === '/Admin/Brushing' ? 'active-link' : ''}`} onClick={handleDrawerToggle}>
             <ListItemButton >
               <ListItemIcon>
@@ -117,7 +120,7 @@ const ResponsiveDrawer = (props) => {
               <ListItemText primary='Brushing' />
             </ListItemButton>
           </Link>
-      </ListItem>*/}
+      </ListItem>
         <ListItem disablePadding className='inner-box'>
           <Link to={'/Admin/OralHygiene'} className={`sidebar-btn ${location.pathname === '/Admin/OralHygiene' ? 'active-link' : ''}`} onClick={handleDrawerToggle}>
             <ListItemButton >
@@ -135,6 +138,16 @@ const ResponsiveDrawer = (props) => {
                 <DinnerDiningIcon className='icon-clr'/>
               </ListItemIcon>
               <ListItemText primary='Dietary Intake' />
+            </ListItemButton>
+          </Link>
+        </ListItem>
+        <ListItem disablePadding className='inner-box'>
+          <Link to={'/Admin/BrushingDetails'} className={`sidebar-btn ${location.pathname === '/Admin/BrushingDetails' ? 'active-link' : ''}`} onClick={handleDrawerToggle}>
+            <ListItemButton >
+              <ListItemIcon>
+                <DinnerDiningIcon className='icon-clr'/>
+              </ListItemIcon>
+              <ListItemText primary='Brushing Details' />
             </ListItemButton>
           </Link>
         </ListItem>
@@ -268,6 +281,8 @@ const ResponsiveDrawer = (props) => {
           <Route path='/OralHygiene' element={<OralHygiene />} />
           <Route path='/Dietaryintake' element={<Dietaryintake />} />
           <Route path='/DentalVisit' element={<DentalVisit />} />
+          <Route path='/BrushingGroup' element={<BrushingGroup />} />
+          <Route path='/BrushingDetails' element={<BrushingDetails />} />
         </Routes>
 
 
