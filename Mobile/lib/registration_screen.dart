@@ -1,3 +1,5 @@
+
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -28,6 +30,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   XFile? _selectedImage;
   String? _imageUrl;
   String? _selectedGender = '';
+  bool genderCheck = true;
 
   late ProgressDialog _progressDialog;
 
@@ -175,11 +178,18 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
     return null;
   }
 
-  String? _validateGender(String? value) {
-    if (value == null || value.isEmpty) {
-      return 'Please select a gender';
+  bool _validateGender() {
+    if (_selectedGender == null || _selectedGender!.isEmpty) {
+      setState(() {
+        genderCheck = false;
+      });
+      return false;
+    } else {
+      setState(() {
+        genderCheck = true;
+      });
+      return true;
     }
-    return null;
   }
 
   String? _validatePhoneNumber(String? value) {
@@ -415,8 +425,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                         const SizedBox(
                           height: 10,
                         ),
-                        if (_validateGender(_selectedGender) != null)
-                          Text(_validateGender(_selectedGender)!),
+                        if (!genderCheck) const Text('Please select a gender', style: TextStyle(color: Colors.red),),
                         TextFormField(
                           obscureText: _obscureText,
                           controller: _passController,
@@ -453,9 +462,9 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                               Expanded(
                                 child: ElevatedButton(
                                   onPressed: () {
-                                    if (_formKey.currentState?.validate() ??
-                                        false) {
-                                      _registerUser();
+                                    if (genderCheck && _formKey.currentState!.validate()) {
+                                     
+                                        _registerUser();
                                     }
                                   },
                                   style: ElevatedButton.styleFrom(
