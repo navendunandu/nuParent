@@ -6,8 +6,8 @@ import 'package:timezone/timezone.dart' as tz;
 class LocalNotificationService {
   static FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
       FlutterLocalNotificationsPlugin();
-  static StreamController<NotificationResponse> streamController =
-      StreamController();
+  static final StreamController<NotificationResponse> streamController =
+      StreamController<NotificationResponse>.broadcast();
   static onTap(NotificationResponse notificationResponse) {
     streamController.add(notificationResponse);
   }
@@ -31,8 +31,6 @@ class LocalNotificationService {
         InitializationSettings(android: initializationSettingsAndroid);
     await flutterLocalNotificationsPlugin.initialize(initializationSettings);
   }
-
-
 
   static void showDailyMorningNotification(DateTime scheduledTime) async {
     const AndroidNotificationDetails android = AndroidNotificationDetails(
@@ -83,7 +81,7 @@ class LocalNotificationService {
       priority: Priority.high,
     );
     await flutterLocalNotificationsPlugin.zonedSchedule(
-      3, 
+      3,
       'Replace Toothbrush',
       'It\'s time to replace the toothbrush!',
       tz.TZDateTime.from(replacementDate, tz.local),
@@ -96,7 +94,7 @@ class LocalNotificationService {
   }
 
   static void scheduleDentalVisitNotification(DateTime notificationDateTime) {
-    const AndroidNotificationDetails android =  AndroidNotificationDetails(
+    const AndroidNotificationDetails android = AndroidNotificationDetails(
       'dental_visit_notification',
       'Dental Visit',
       importance: Importance.max,
