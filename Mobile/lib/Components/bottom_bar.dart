@@ -100,54 +100,72 @@ class _BottomBarState extends State<BottomBar> {
         : SizedBox(); // Conditional rendering of bottom bar
   }
 
-  Widget _buildBottomBar() {
-    return Container(
-      padding: EdgeInsets.all(10),
-      decoration: BoxDecoration(
-        color: AppColors.white,
-        borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(15), topRight: Radius.circular(15)),
-        boxShadow: [
-          BoxShadow(
-            color: Color.fromARGB(255, 90, 90, 90).withOpacity(0.5),
-            spreadRadius: 5,
-            blurRadius: 7,
-            offset: Offset(0, 3),
-          ),
-        ],
+Widget _buildBottomBar() {
+  return Container(
+    padding: EdgeInsets.all(10),
+    decoration: BoxDecoration(
+      color: AppColors.white,
+      borderRadius: BorderRadius.only(
+        topLeft: Radius.circular(15),
+        topRight: Radius.circular(15),
       ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Lottie.asset(
-            'assets/TeethBrushing.json',
-            width: 70,
-            height: 70,
-            repeat: true,
-            animate: true,
+      boxShadow: [
+        BoxShadow(
+          color: Color.fromARGB(255, 90, 90, 90).withOpacity(0.5),
+          spreadRadius: 5,
+          blurRadius: 7,
+          offset: Offset(0, 3),
+        ),
+      ],
+    ),
+    child: Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        IconButton(
+          onPressed: () {
+            // Stop button logic
+            timer.stopTimer();
+            setState(() {
+              timer.showBottomBar = false; // Hide the bottom bar
+            });
+          },
+          icon: Icon(
+            Icons.stop,
+            size: 40,
+            color: AppColors.primaryColor,
           ),
-          Text(
-            countDown,
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 28),
-          ),
-          Row(
-            children: [
-              IconButton(
-                  onPressed: () {
-                    _check ? timer.pauseTimer() : timer.resumeTimer();
-                    setState(() {
-                      _check = !_check;
-                    });
-                    print(_check);
-                  },
-                  icon: Icon(
-                    _check ? Icons.pause_rounded : Icons.play_arrow_rounded,
-                    size: 40,
-                  )),
-            ],
-          )
-        ],
-      ),
-    );
-  }
+        ),
+        Lottie.asset(
+          'assets/TeethBrushing.json',
+          width: 70,
+          height: 70,
+          repeat: true,
+          animate: true,
+        ),
+        Text(
+          countDown,
+          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 28),
+        ),
+        Row(
+          children: [
+            IconButton(
+              onPressed: () {
+                _check ? timer.pauseTimer() : timer.resumeTimer();
+                setState(() {
+                  _check = !_check;
+                });
+              },
+              icon: Icon(
+                _check ? Icons.pause_rounded : Icons.play_arrow_rounded,
+                size: 40,
+                color: AppColors.primaryColor,
+              ),
+            ),
+          ],
+        )
+      ],
+    ),
+  );
+}
+
 }

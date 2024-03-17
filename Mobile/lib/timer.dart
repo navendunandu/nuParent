@@ -1,9 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_ringtone_player/flutter_ringtone_player.dart';
 import 'package:nu_parent/TimerSingleton.dart';
 import 'package:nu_parent/main.dart';
-import 'package:nu_parent/Components/bottom_bar.dart';
 
 class CountdownPage extends StatefulWidget {
   const CountdownPage({Key? key}) : super(key: key);

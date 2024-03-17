@@ -65,13 +65,26 @@ class _BrushingState extends State<Brushing> {
               builder:
                   (context, AsyncSnapshot<List<DocumentSnapshot>> snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
-                  return const CircularProgressIndicator();
+                  return Center(
+                    child: SizedBox(
+                        height: 100,
+                        width: 100,
+                        child: Padding(
+                          padding: const EdgeInsets.all(10.0),
+                          child: const CircularProgressIndicator(),
+                        )),
+                  );
                 }
                 if (snapshot.hasError) {
                   return Text('Error: ${snapshot.error}');
                 }
                 if (!snapshot.hasData || snapshot.data!.isEmpty) {
-                  return const Text('No data found');
+                  return Padding(
+                    padding: const EdgeInsets.only(top: 20.0, bottom: 20.0),
+                    child: const Text('No data found', 
+                    textAlign: TextAlign.center,
+                    style: TextStyle(fontSize: 30, fontWeight: FontWeight.w600),),
+                  );
                 }
                 return Padding(
                   padding: const EdgeInsets.only(left: 10.0, right: 10.0),
@@ -159,6 +172,7 @@ class _BrushingState extends State<Brushing> {
     QuerySnapshot snapshot = await FirebaseFirestore.instance
         .collection('brushingDetails')
         .where('brushGroup', isEqualTo: widget.documentId)
+        .orderBy('brushingOrder', descending: false)
         .get();
     return snapshot.docs;
   }

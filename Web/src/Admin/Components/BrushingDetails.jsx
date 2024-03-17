@@ -50,7 +50,7 @@ const Brushing = () => {
    const [brushContent, setBrushContent] = useState(['']) // State to hold array of brush content
    const [error, setError] = useState('')
    const [checkLoad, setCheckBlur] = useState(false)
-   const [brushingOrder, setBrushingOrder] = useState('')
+   const [brushingOrder, setBrushingOrder] = useState(0)
    const [selectedDoc, setSelectedDoc] = useState(null)
 
    const handleClickOpen = (params) => {
@@ -112,7 +112,7 @@ const Brushing = () => {
                brushingTitle,
                brushGroup,
                brushContent,
-               brushingOrder,
+               brushingOrder:parseInt(brushingOrder),
             })
          }
          setSelectedDoc(null)
