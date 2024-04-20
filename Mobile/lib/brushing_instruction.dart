@@ -13,22 +13,25 @@ class BrushingInstruction extends StatefulWidget {
 }
 
 class _BrushingInstructionState extends State<BrushingInstruction> {
-  late Future<List<String>> brushingGroup;
+  late Future<List<Map<String, dynamic>>> brushingGroup;
   bool check = false;
-  Future<List<String>> fetchBrushingGroup() async {
+
+  Future<List<Map<String, dynamic>>> fetchBrushingGroup() async {
     QuerySnapshot querySnapshot =
         await FirebaseFirestore.instance.collection('brushingGroups').get();
 
     return querySnapshot.docs.map((doc) {
-      return doc['brushing'] as String;
+        return {
+          'brushing': doc['brushing'] as String,
+          'image': doc['image'] as String,
+        };
     }).toList();
   }
 
   @override
   void initState() {
     super.initState();
-    brushingGroup = fetchBrushingGroup()
-        as Future<List<String>>; // Call function to fetch data from Firestore
+    brushingGroup = fetchBrushingGroup(); // Call function to fetch data from Firestore
   }
 
   @override
@@ -43,16 +46,17 @@ class _BrushingInstructionState extends State<BrushingInstruction> {
             alignment: Alignment.topCenter,
           ),
         ),
-        child: FutureBuilder<List<String>>(
-          future: fetchBrushingGroup(),
+        child: FutureBuilder<List<Map<String, dynamic>>>(
+          future: brushingGroup,
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return Center(
-                  child: SizedBox(
-                      height: 100,
-                      width: 100,
-                      child:
-                          CircularProgressIndicator())); // Show loading indicator while fetching data
+                child: SizedBox(
+                  height: 100,
+                  width: 100,
+                  child: CircularProgressIndicator(),
+                ),
+              ); // Show loading indicator while fetching data
             } else if (snapshot.hasError) {
               return Text('Error: ${snapshot.error}');
             } else if (snapshot.data == null) {
@@ -104,30 +108,34 @@ class _BrushingInstructionState extends State<BrushingInstruction> {
                           shrinkWrap: true,
                           itemCount: snapshot.data!.length,
                           gridDelegate:
-                              SliverGridDelegateWithFixedCrossAxisCount(
+                              const SliverGridDelegateWithFixedCrossAxisCount(
                             crossAxisSpacing: 30,
                             mainAxisSpacing: 30,
                             crossAxisCount: 2,
                           ),
                           itemBuilder: (BuildContext context, int index) {
-                            final String brushing = snapshot.data![index];
+                            final String brushing =
+                                snapshot.data![index]['brushing'] as String;
+                            final String image =
+                                snapshot.data![index]['image'] as String;
 
                             return GestureDetector(
                               onTap: () async {
-                                // Fetch the document ID when needed
-                                QuerySnapshot querySnapshot =
-                                    await FirebaseFirestore.instance
-                                        .collection('brushingGroups')
-                                        .get();
                                 String documentId =
-                                    querySnapshot.docs[index].id;
+                                    (await FirebaseFirestore.instance
+                                            .collection('brushingGroups')
+                                            .get())
+                                        .docs[index]
+                                        .id;
 
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
                                     builder: (context) => Brushing(
-                                        documentId: documentId,
-                                        brushing: brushing),
+                                      documentId: documentId,
+                                      brushing: brushing,
+                                      image: image
+                                    ),
                                   ),
                                 );
                               },
@@ -148,16 +156,20 @@ class _BrushingInstructionState extends State<BrushingInstruction> {
                                   ],
                                 ),
                                 padding: const EdgeInsets.all(10),
-                                child: Center(
-                                  child: Text(
-                                    brushing,
-                                    textAlign: TextAlign.center,
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.w500,
-                                      fontSize: 18,
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    
+                                    Text(
+                                      brushing,
+                                      textAlign: TextAlign.center,
+                                      style: const TextStyle(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.w500,
+                                        fontSize: 18,
+                                      ),
                                     ),
-                                  ),
+                                  ],
                                 ),
                               ),
                             );
@@ -175,3 +187,4 @@ class _BrushingInstructionState extends State<BrushingInstruction> {
     );
   }
 }
+

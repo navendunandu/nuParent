@@ -56,6 +56,9 @@ const UploadVideos = () => {
     setSinglePhoto(params.row.imgUrl)
     setOpenImagePlayer(true)
   }
+  const handleCloseImagePlayer = () => {
+    setOpenImagePlayer(false)
+  }
 
   const handleClose = () => {
     setOpen(false)
@@ -65,9 +68,7 @@ const UploadVideos = () => {
     setOpenPlayer(false)
   }
 
-  const handleCloseImagePlayer = () => {
-    setOpenImagePlayer(false)
-  }
+  
 
   const generateRandomName = (prefix) => {
     const randomString = Math.random().toString(36).substring(2, 8)

@@ -7,11 +7,12 @@ import 'package:nu_parent/Components/box.dart';
 import 'package:nu_parent/main.dart';
 
 class Brushing extends StatefulWidget {
-  const Brushing({Key? key, required this.documentId, required this.brushing})
+  const Brushing({Key? key, required this.documentId, required this.brushing, required this.image})
       : super(key: key);
 
   final String documentId;
   final String brushing;
+  final String image;
 
   @override
   State<Brushing> createState() => _BrushingState();
@@ -57,6 +58,7 @@ class _BrushingState extends State<Brushing> {
             const SizedBox(
               height: 10,
             ),
+            Image.network(widget.image),
             const SizedBox(
               height: 10,
             ),
