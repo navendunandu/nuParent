@@ -95,7 +95,7 @@ class _BrushingInstructionState extends State<BrushingInstruction> {
                           height: 20,
                         ),
                         const Text(
-                          'Brushing Instruction',
+                          'Brushing Instructions',
                           style: TextStyle(
                               fontSize: 22,
                               fontWeight: FontWeight.bold,
