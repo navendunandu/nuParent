@@ -149,8 +149,8 @@ class _ChildProfileState extends State<ChildDashboard> {
         return ListView(
           shrinkWrap: true,
           children: [
-            Padding(
-              padding: const EdgeInsets.all(18.0),
+            const Padding(
+              padding: EdgeInsets.all(18.0),
               child: Text(
                 'Childrens',
                 textAlign: TextAlign.center,
@@ -163,7 +163,7 @@ class _ChildProfileState extends State<ChildDashboard> {
             GridView.builder(
               itemCount: ChildDocs.length,
               shrinkWrap: true,
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2,
                 childAspectRatio: 0.8, // Adjust this aspect ratio as needed
               ),
@@ -183,10 +183,10 @@ class _ChildProfileState extends State<ChildDashboard> {
                             : const AssetImage('assets/dummy-profile-pic.png')
                                 as ImageProvider,
                       ),
-                      SizedBox(height: 8), // Adjust spacing between items
+                      const SizedBox(height: 8), // Adjust spacing between items
                       Text(
                         ChildDocs[index]['name'],
-                        style: TextStyle(
+                        style: const TextStyle(
                             fontSize: 16, fontWeight: FontWeight.w500),
                         textAlign: TextAlign.center,
                       )
@@ -211,7 +211,7 @@ class _ChildProfileState extends State<ChildDashboard> {
           return true;
         },
         child: Scaffold(
-          bottomNavigationBar: BottomBar(),
+          bottomNavigationBar: const BottomBar(),
           body: RefreshIndicator(
             onRefresh: () async {
               // Implement the logic to reload data here
@@ -294,9 +294,9 @@ class _ChildProfileState extends State<ChildDashboard> {
         ),
         Container(
           height: 250,
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
               borderRadius:
-                  const BorderRadius.only(bottomLeft: Radius.circular(70))),
+                  BorderRadius.only(bottomLeft: Radius.circular(70))),
           child: Stack(children: [
             Positioned(
               left: 320,
@@ -419,7 +419,7 @@ class _ChildProfileState extends State<ChildDashboard> {
                               onPressed: () {
                                 _showChildDetailsModal(context);
                               },
-                              icon: Icon(Icons.arrow_drop_down_circle))
+                              icon: const Icon(Icons.arrow_drop_down_circle))
                         ],
                       ),
                       Text(
@@ -459,7 +459,7 @@ class _ChildProfileState extends State<ChildDashboard> {
                   }
                 },
                 child:
-                    IconBox(image: 'assets/floss.png', title: 'Dental Care')),
+                    const IconBox(image: 'assets/floss.png', title: 'Dental Care')),
             GestureDetector(
                 onTap: () {
                   if (childAge <= 1) {
@@ -484,7 +484,7 @@ class _ChildProfileState extends State<ChildDashboard> {
                             builder: (context) => const DietaryIntake()));
                   }
                 },
-                child: IconBox(image: 'assets/food.png', title: 'Diet')),
+                child: const IconBox(image: 'assets/food.png', title: 'Diet')),
           ],
         ),
         const SizedBox(
@@ -502,7 +502,7 @@ class _ChildProfileState extends State<ChildDashboard> {
                                 age: childAge,
                               )));
                 },
-                child: IconBox(
+                child: const IconBox(
                     image: 'assets/brushteeth.png', title: 'How to Brush')),
             GestureDetector(
                 onTap: () {
@@ -511,7 +511,7 @@ class _ChildProfileState extends State<ChildDashboard> {
                       MaterialPageRoute(
                           builder: (context) => const DentalVisit()));
                 },
-                child: IconBox(
+                child: const IconBox(
                     image: 'assets/checkup.png', title: 'Dental Visits')),
           ],
         ),
