@@ -441,12 +441,12 @@ class _ChildProfileState extends State<ChildDashboard> {
           children: [
             GestureDetector(
                 onTap: () {
-                  if (childAge! <= 3) {
+                  if (childAge <= 3) {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
                             builder: (context) => const OralHygieneBabies()));
-                  } else if (childAge! <= 6) {
+                  } else if (childAge <= 6) {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
@@ -462,17 +462,17 @@ class _ChildProfileState extends State<ChildDashboard> {
                     IconBox(image: 'assets/floss.png', title: 'Dental Care')),
             GestureDetector(
                 onTap: () {
-                  if (childAge! <= 1) {
+                  if (childAge <= 1) {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
                             builder: (context) => const DietaryIntakeBirth()));
-                  } else if (childAge! <= 2) {
+                  } else if (childAge <= 2) {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
                             builder: (context) => const DietaryIntakeOne()));
-                  } else if (childAge! <= 6) {
+                  } else if (childAge <= 6) {
                     Navigator.push(
                         context,
                         MaterialPageRoute(

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:nu_parent/Components/bottom_bar.dart';
 import 'package:nu_parent/child_dashboard.dart';
 import 'package:nu_parent/main.dart';
 import 'package:nu_parent/registration_screen.dart';
