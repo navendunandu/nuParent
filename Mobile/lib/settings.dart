@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
 import 'package:nu_parent/Components/appbar.dart';
 import 'package:nu_parent/Components/bottom_bar.dart';
@@ -203,7 +205,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
             GestureDetector(
               onTap: () {
                 Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => CountdownPage()));
+                    MaterialPageRoute(builder: (context) => const CountdownPage()));
               },
               child: Container(
                 padding: const EdgeInsets.only(top: 20, bottom: 20),
@@ -279,7 +281,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
     // Navigate to the login screen
     Navigator.pushReplacement(
       context,
-      MaterialPageRoute(builder: (context) => LoginScreen()),
+      MaterialPageRoute(builder: (context) => const LoginScreen()),
     );
   }
 }

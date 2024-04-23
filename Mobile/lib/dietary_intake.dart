@@ -20,7 +20,7 @@ class _DietaryIntakeState extends State<DietaryIntake> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: BottomBar(),
+      bottomNavigationBar: const BottomBar(),
       body: Container(
         height: double.infinity,
         decoration: const BoxDecoration(

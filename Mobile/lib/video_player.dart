@@ -1,3 +1,5 @@
+// ignore_for_file: deprecated_member_use
+
 import 'package:flutter/material.dart';
 import 'package:chewie/chewie.dart';
 import 'package:video_player/video_player.dart';
@@ -5,7 +7,7 @@ import 'package:video_player/video_player.dart';
 class FullScreenVideoPlayer extends StatefulWidget {
   final String videoUrl;
 
-  FullScreenVideoPlayer({required this.videoUrl});
+  const FullScreenVideoPlayer({super.key, required this.videoUrl});
 
   @override
   _FullScreenVideoPlayerState createState() => _FullScreenVideoPlayerState();
@@ -37,7 +39,7 @@ class _FullScreenVideoPlayerState extends State<FullScreenVideoPlayer> {
       },
       child: Scaffold(
         appBar: AppBar(
-          title: Text('Full Screen Video'),
+          title: const Text('Full Screen Video'),
         ),
         body: Center(
           child: Chewie(

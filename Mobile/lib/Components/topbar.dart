@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'package:flutter/material.dart';
 import 'package:nu_parent/main.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -34,7 +36,6 @@ class _CustomTopBarState extends State<CustomTopBar> {
   void initState() {
     super.initState();
     _receivedDocId = widget.docId;
-    print(widget.docId);
     if (_receivedDocId != "") {
       final userDoc =
           FirebaseFirestore.instance.collection('users').doc(_receivedDocId);

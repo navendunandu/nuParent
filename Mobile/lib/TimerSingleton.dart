@@ -14,7 +14,7 @@ class TimerSingleton {
   String time = '0:02:00';
   Timer? _timer;
   bool soundPlayed = false;
-  Duration duration = Duration(seconds: 120);
+  Duration duration = const Duration(seconds: 120);
   late StreamController<String> _timerController;
   bool _paused = false;
   int _secondsRemaining = 0;
@@ -30,7 +30,7 @@ class TimerSingleton {
 
     _secondsRemaining = duration.inSeconds;
 
-    _timer = Timer.periodic(Duration(seconds: 1), (Timer t) {
+    _timer = Timer.periodic(const Duration(seconds: 1), (Timer t) {
       if (!_paused) {
         if (_secondsRemaining >= 0) {
           int hours = _secondsRemaining ~/ 3600;

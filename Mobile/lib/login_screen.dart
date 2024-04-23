@@ -115,7 +115,7 @@ class _LoginScreenState extends State<LoginScreen> {
         Stack(
           children: [
             Padding(
-              padding: const EdgeInsets.only(top: 50.0),
+              padding: const EdgeInsets.only(top: 40.0),
               child: Image.asset('assets/TeethFamily.jpg',
                   height: 400, fit: BoxFit.cover),
             ),
@@ -268,14 +268,13 @@ class _LoginScreenState extends State<LoginScreen> {
                         child: ElevatedButton(
                           onPressed: () => _login(context),
                           style: ElevatedButton.styleFrom(
-                            backgroundColor:
-                                const Color.fromARGB(255, 0, 30, 80),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(30.0),
-                            ),
-                            padding:
-                                const EdgeInsets.fromLTRB(130.0, 15, 130.0, 15),
-                          ),
+                              backgroundColor:
+                                  const Color.fromARGB(255, 0, 30, 80),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(30.0),
+                              ),
+                              padding:
+                                  const EdgeInsets.only(top: 15, bottom: 15)),
                           child: const Text(
                             'Login',
                             style:

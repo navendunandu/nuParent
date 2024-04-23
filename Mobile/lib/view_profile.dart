@@ -46,7 +46,7 @@ class _ViewProfileState extends State<ViewProfile> {
       } else {
         int ageInYears = (difference.inDays / 365).floor();
         setState(() {
-          childAge = "${ageInYears} Years"; // Convert int to String
+          childAge = "$ageInYears Years"; // Convert int to String
           childMonth = 0;
         });
       }

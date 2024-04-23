@@ -1,6 +1,5 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:nu_parent/Components/appbar.dart';
 import 'package:nu_parent/Components/bottom_bar.dart';
 import 'package:nu_parent/Components/icon_box.dart';
 import 'package:nu_parent/brushing_instruction.dart';
@@ -18,7 +17,6 @@ import 'package:nu_parent/settings.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:intl/intl.dart';
-// import 'package:nu_parent/Components/bottom_bar.dart';
 
 class ChildDashboard extends StatefulWidget {
   const ChildDashboard({super.key});

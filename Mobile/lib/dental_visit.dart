@@ -41,7 +41,7 @@ class _DentalVisitState extends State<DentalVisit> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: BottomBar(),
+      bottomNavigationBar: const BottomBar(),
       body: Container(
         decoration: const BoxDecoration(
           color: AppColors.white,

@@ -52,7 +52,6 @@ class _BoxState extends State<Box> {
 
   Future speak(String stext) async {
     if (isPlaying) {
-      print('Speech Stops');
       widget.flutterTts.stop();
       setState(() {
         isPlaying = false;

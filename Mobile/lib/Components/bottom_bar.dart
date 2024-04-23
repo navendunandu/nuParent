@@ -97,24 +97,24 @@ class _BottomBarState extends State<BottomBar> {
     });
     return timer.showBottomBar
         ? _buildBottomBar()
-        : SizedBox(); // Conditional rendering of bottom bar
+        : const SizedBox(); // Conditional rendering of bottom bar
   }
 
 Widget _buildBottomBar() {
   return Container(
-    padding: EdgeInsets.all(10),
+    padding: const EdgeInsets.all(10),
     decoration: BoxDecoration(
       color: AppColors.white,
-      borderRadius: BorderRadius.only(
+      borderRadius: const BorderRadius.only(
         topLeft: Radius.circular(15),
         topRight: Radius.circular(15),
       ),
       boxShadow: [
         BoxShadow(
-          color: Color.fromARGB(255, 90, 90, 90).withOpacity(0.5),
+          color: const Color.fromARGB(255, 90, 90, 90).withOpacity(0.5),
           spreadRadius: 5,
           blurRadius: 7,
-          offset: Offset(0, 3),
+          offset: const Offset(0, 3),
         ),
       ],
     ),
@@ -129,7 +129,7 @@ Widget _buildBottomBar() {
               timer.showBottomBar = false; // Hide the bottom bar
             });
           },
-          icon: Icon(
+          icon: const Icon(
             Icons.stop,
             size: 40,
             color: AppColors.primaryColor,
@@ -144,7 +144,7 @@ Widget _buildBottomBar() {
         ),
         Text(
           countDown,
-          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 28),
+          style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 28),
         ),
         Row(
           children: [

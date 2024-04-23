@@ -1,14 +1,21 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 import 'package:nu_parent/Components/appbar.dart';
 import 'package:nu_parent/Components/bottom_bar.dart';
 import 'package:nu_parent/Components/box.dart';
+import 'package:nu_parent/Reminder.dart';
+import 'package:nu_parent/howtovideos.dart';
 import 'package:nu_parent/main.dart';
 
 class Brushing extends StatefulWidget {
-  const Brushing({Key? key, required this.documentId, required this.brushing, required this.image})
-      : super(key: key);
+  const Brushing({
+    Key? key,
+    required this.documentId,
+    required this.brushing,
+    required this.image,
+  }) : super(key: key);
 
   final String documentId;
   final String brushing;
@@ -31,7 +38,7 @@ class _BrushingState extends State<Brushing> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: BottomBar(),
+      bottomNavigationBar: const BottomBar(),
       body: Container(
         decoration: const BoxDecoration(
           color: AppColors.white,
@@ -67,13 +74,13 @@ class _BrushingState extends State<Brushing> {
               builder:
                   (context, AsyncSnapshot<List<DocumentSnapshot>> snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
-                  return Center(
+                  return const Center(
                     child: SizedBox(
                         height: 100,
                         width: 100,
                         child: Padding(
-                          padding: const EdgeInsets.all(10.0),
-                          child: const CircularProgressIndicator(),
+                          padding: EdgeInsets.all(10.0),
+                          child: CircularProgressIndicator(),
                         )),
                   );
                 }
@@ -81,11 +88,14 @@ class _BrushingState extends State<Brushing> {
                   return Text('Error: ${snapshot.error}');
                 }
                 if (!snapshot.hasData || snapshot.data!.isEmpty) {
-                  return Padding(
-                    padding: const EdgeInsets.only(top: 20.0, bottom: 20.0),
-                    child: const Text('No data found', 
-                    textAlign: TextAlign.center,
-                    style: TextStyle(fontSize: 30, fontWeight: FontWeight.w600),),
+                  return const Padding(
+                    padding: EdgeInsets.only(top: 20.0, bottom: 20.0),
+                    child: Text(
+                      'No data found',
+                      textAlign: TextAlign.center,
+                      style:
+                          TextStyle(fontSize: 30, fontWeight: FontWeight.w600),
+                    ),
                   );
                 }
                 return Padding(
@@ -137,6 +147,68 @@ class _BrushingState extends State<Brushing> {
                   ),
                 );
               },
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+            GestureDetector(
+              onTap: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const Reminder(),
+                    ));
+              },
+              child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Image.asset(
+                      'assets/calender.png',
+                      width: 100,
+                    ),
+                    const Text(
+                      'Set Reminder',
+                      style:
+                          TextStyle(fontWeight: FontWeight.w600, fontSize: 18),
+                    ),
+                  ]),
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const HowToVideos(),
+                      ));
+                },
+                child: Container(
+                  padding: const EdgeInsets.all(20),
+                  decoration: BoxDecoration(
+                      color: AppColors.primaryColor,
+                      borderRadius: BorderRadius.circular(10)),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Image.asset(
+                        'assets/toothbrushing.png',
+                        height: 50,
+                      ),
+                      const Text(
+                        '2 minute brushing video',
+                        style: TextStyle(
+                            color: AppColors.white,
+                            fontWeight: FontWeight.w700,
+                            fontSize: 16),
+                      )
+                    ],
+                  ),
+                ),
+              ),
             ),
             Padding(
               padding: const EdgeInsets.all(10.0),

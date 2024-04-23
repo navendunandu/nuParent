@@ -26,7 +26,7 @@ class _IconBoxState extends State<IconBox> {
               widget.image,
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 5,
           ),
           Column(
@@ -35,7 +35,7 @@ class _IconBoxState extends State<IconBox> {
               Text(
                 widget.title,
                 textAlign: TextAlign.center,
-                style: TextStyle(
+                style: const TextStyle(
                     fontWeight: FontWeight.w700,
                     fontSize: 18,
                     letterSpacing: .8),
@@ -44,7 +44,7 @@ class _IconBoxState extends State<IconBox> {
                 Text(
                   widget.subtitle,
                   textAlign: TextAlign.center,
-                  style: TextStyle(
+                  style: const TextStyle(
                       fontWeight: FontWeight.w700,
                       fontSize: 18,
                       letterSpacing: .8),

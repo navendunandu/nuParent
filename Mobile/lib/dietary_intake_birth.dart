@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'package:flutter/material.dart';
 import 'package:nu_parent/Components/appbar.dart';
 import 'package:nu_parent/Components/bottom_bar.dart';
@@ -68,7 +70,7 @@ class _DietaryIntakeBirthState extends State<DietaryIntakeBirth> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: BottomBar(),
+      bottomNavigationBar: const BottomBar(),
       body: Container(
         height: double.infinity,
         decoration: const BoxDecoration(

@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'package:flutter/material.dart';
 import 'package:nu_parent/Components/appbar.dart';
 import 'package:nu_parent/Components/bottom_bar.dart';

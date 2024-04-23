@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously, avoid_print
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -188,7 +190,7 @@ class _EditProfileState extends State<EditProfile> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: BottomBar(),
+      bottomNavigationBar: const BottomBar(),
       body: isLoading ? _buildLoading() : buildProfileContent(),
     );
   }
@@ -224,13 +226,13 @@ class _EditProfileState extends State<EditProfile> {
       ),
       child: ListView(
         children: [
-          CustomAppBar(),
+          const CustomAppBar(),
           Form(
             child: Padding(
-              padding: EdgeInsets.only(left: 20.0, right: 20.0),
+              padding: const EdgeInsets.only(left: 20.0, right: 20.0),
               child: Column(
                 children: [
-                  Text(
+                  const Text(
                     'Edit Profile',
                     textAlign: TextAlign.left,
                     style: TextStyle(
@@ -248,16 +250,16 @@ class _EditProfileState extends State<EditProfile> {
                           ? FileImage(File(_selectedImage!.path))
                           : (image != "assets/dummy-profile-pic.png"
                               ? NetworkImage(image)
-                              : AssetImage('assets/dummy-profile-pic.png')
+                              : const AssetImage('assets/dummy-profile-pic.png')
                                   as ImageProvider),
-                      child: Icon(Icons.edit),
+                      child: const Icon(Icons.edit),
                     ),
                   ),
-                  SizedBox(height: 20),
+                  const SizedBox(height: 20),
                   ListTile(
                     title: Text('Name: $name'),
                     trailing: IconButton(
-                      icon: Icon(Icons.edit),
+                      icon: const Icon(Icons.edit),
                       onPressed: () {
                         nameController.text = name;
                         showDialog(
@@ -280,15 +282,15 @@ class _EditProfileState extends State<EditProfile> {
                   ListTile(
                     title: Text('Date of Birth: $dob'),
                     trailing: IconButton(
-                      icon: Icon(Icons.edit),
+                      icon: const Icon(Icons.edit),
                       onPressed: () {
                         dobController.text = dob;
                         _selectDate();
                       },
                     ),
                   ),
-                  SizedBox(height: 20.0),
-                  Padding(
+                  const SizedBox(height: 20.0),
+                  const Padding(
                     padding: EdgeInsets.all(8.0),
                     child: Text(
                       "Gender",
@@ -296,7 +298,7 @@ class _EditProfileState extends State<EditProfile> {
                       textAlign: TextAlign.center,
                     ),
                   ),
-                  SizedBox(height: 10.0),
+                  const SizedBox(height: 10.0),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
@@ -305,18 +307,18 @@ class _EditProfileState extends State<EditProfile> {
                       buildGenderButton(Icons.transgender, 'Others'),
                     ],
                   ),
-                  SizedBox(height: 20.0),
+                  const SizedBox(height: 20.0),
                   ElevatedButton(
                     onPressed: () {
                       updateProfile();
                     },
-                    child: Text('Update'),
+                    child: const Text('Update'),
                   ),
                   ElevatedButton(
                     onPressed: () {
                       deleteChild();
                     },
-                    child: Text('Delete'),
+                    child: const Text('Delete'),
                   ),
                 ],
               ),
@@ -344,11 +346,11 @@ class _EditProfileState extends State<EditProfile> {
           onPressed: () {
             Navigator.of(context).pop();
           },
-          child: Text('Cancel'),
+          child: const Text('Cancel'),
         ),
         TextButton(
           onPressed: onSave,
-          child: Text('Save'),
+          child: const Text('Save'),
         ),
       ],
     );
@@ -370,7 +372,7 @@ class _EditProfileState extends State<EditProfile> {
       style: ButtonStyle(
         side: MaterialStateProperty.all(BorderSide(
           width: 1,
-          color: selectedGender == gender ? Colors.blue : Color(0xff4338CA),
+          color: selectedGender == gender ? Colors.blue : const Color(0xff4338CA),
         )),
         backgroundColor: MaterialStateProperty.resolveWith<Color>(
           (Set<MaterialState> states) {

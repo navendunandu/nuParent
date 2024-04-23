@@ -13,15 +13,15 @@ class HowToVideos extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: BottomBar(),
+      bottomNavigationBar: const BottomBar(),
       appBar: AppBar(
-        title: Text('Video Screen'),
+        title: const Text('Video Screen'),
       ),
       body: FutureBuilder<List<Map<String, dynamic>>>(
         future: fetchVideos(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(child: CircularProgressIndicator());
+            return const Center(child: CircularProgressIndicator());
           } else if (snapshot.hasError) {
             return Center(child: Text('Error: ${snapshot.error}'));
           } else {
@@ -133,9 +133,9 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
                             widget.videoThumb,
                             fit: BoxFit.cover,
                           )
-                        : Center(child: CircularProgressIndicator()),
+                        : const Center(child: CircularProgressIndicator()),
                   )
-                : CircularProgressIndicator(),
+                : const CircularProgressIndicator(),
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Text(widget.videoTitle),

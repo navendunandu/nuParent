@@ -34,8 +34,6 @@ class _PregnantOralHygieneState extends State<PregnantOralHygiene> {
         // Access the first (and only) document
         DocumentSnapshot doc = querySnapshot.docs[0];
         ageId = doc.id;
-        // doc.id will give you the document ID
-        print('Document ID: ${doc.id}');
       } else {
         print('No document found with age = 0 - 1');
       }
@@ -68,7 +66,7 @@ class _PregnantOralHygieneState extends State<PregnantOralHygiene> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: BottomBar(),
+      bottomNavigationBar: const BottomBar(),
       body: Container(
         height: double.infinity,
         decoration: const BoxDecoration(

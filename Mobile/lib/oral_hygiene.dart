@@ -20,7 +20,7 @@ class _OralHygieneState extends State<OralHygiene> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: BottomBar(),
+      bottomNavigationBar: const BottomBar(),
       body: Container(
         height: double.infinity,
         decoration: const BoxDecoration(
@@ -53,7 +53,7 @@ class _OralHygieneState extends State<OralHygiene> {
                           MaterialPageRoute(
                               builder: (context) => const OralHygieneBabies()));
                     },
-                    child: IconBox(
+                    child: const IconBox(
                       image: 'assets/babyteeth.png',
                       title: 'Babies',
                       subtitle: '(0-3 years)',
@@ -66,7 +66,7 @@ class _OralHygieneState extends State<OralHygiene> {
                             builder: (context) => const OralHygieneChildren(),
                           ));
                     },
-                    child: IconBox(
+                    child: const IconBox(
                       image: 'assets/happytooth.png',
                       title: 'Children',
                       subtitle: '(3-6 years)',
@@ -87,7 +87,7 @@ class _OralHygieneState extends State<OralHygiene> {
                             builder: (context) => const PregnantOralHygiene(),
                           ));
                     },
-                    child: IconBox(
+                    child: const IconBox(
                         image: 'assets/pregnent.png',
                         title: 'Pregnant Mothers')),
                 GestureDetector(
@@ -98,7 +98,7 @@ class _OralHygieneState extends State<OralHygiene> {
                             builder: (context) => const ParentOralHygiene(),
                           ));
                     },
-                    child: IconBox(
+                    child: const IconBox(
                       image: 'assets/family.png',
                       title: 'Parents',
                       subtitle: 'Dental Care',

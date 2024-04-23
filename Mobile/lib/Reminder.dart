@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:nu_parent/Components/bottom_bar.dart';
@@ -19,6 +21,7 @@ class _ReminderState extends State<Reminder> {
   late String userId;
   late FirebaseFirestore firestore = FirebaseFirestore.instance;
 
+  @override
   void initState() {
     super.initState();
     listenToNotificationStream();
@@ -229,7 +232,7 @@ class _ReminderState extends State<Reminder> {
           icon: const Icon(Icons.arrow_back_ios_new),
         ),
       ),
-      bottomNavigationBar: BottomBar(),
+      bottomNavigationBar: const BottomBar(),
       body: Container(
         height: double.infinity,
         decoration: const BoxDecoration(

@@ -5,7 +5,6 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:nu_parent/work_manager_service.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'firebase_options.dart';
-import 'package:flutter/services.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

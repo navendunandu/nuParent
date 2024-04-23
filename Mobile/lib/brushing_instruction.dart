@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:nu_parent/Components/appbar.dart';
 import 'package:nu_parent/brushing.dart';
 import 'package:nu_parent/main.dart';
+import 'package:nu_parent/timer.dart';
 
 class BrushingInstruction extends StatefulWidget {
   final int age;
@@ -21,17 +22,18 @@ class _BrushingInstructionState extends State<BrushingInstruction> {
         await FirebaseFirestore.instance.collection('brushingGroups').get();
 
     return querySnapshot.docs.map((doc) {
-        return {
-          'brushing': doc['brushing'] as String,
-          'image': doc['image'] as String,
-        };
+      return {
+        'brushing': doc['brushing'] as String,
+        'image': doc['image'] as String,
+      };
     }).toList();
   }
 
   @override
   void initState() {
     super.initState();
-    brushingGroup = fetchBrushingGroup(); // Call function to fetch data from Firestore
+    brushingGroup =
+        fetchBrushingGroup(); // Call function to fetch data from Firestore
   }
 
   @override
@@ -50,7 +52,7 @@ class _BrushingInstructionState extends State<BrushingInstruction> {
           future: brushingGroup,
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
-              return Center(
+              return const Center(
                 child: SizedBox(
                   height: 100,
                   width: 100,
@@ -60,11 +62,12 @@ class _BrushingInstructionState extends State<BrushingInstruction> {
             } else if (snapshot.hasError) {
               return Text('Error: ${snapshot.error}');
             } else if (snapshot.data == null) {
-              return Center(
+              return const Center(
                 child: Text('No data available'),
               );
             } else {
               return ListView(
+                shrinkWrap: true,
                 children: [
                   const CustomAppBar(),
                   Padding(
@@ -105,6 +108,7 @@ class _BrushingInstructionState extends State<BrushingInstruction> {
                           height: 20,
                         ),
                         GridView.builder(
+                          physics: const NeverScrollableScrollPhysics(),
                           shrinkWrap: true,
                           itemCount: snapshot.data!.length,
                           gridDelegate:
@@ -121,21 +125,20 @@ class _BrushingInstructionState extends State<BrushingInstruction> {
 
                             return GestureDetector(
                               onTap: () async {
-                                String documentId =
-                                    (await FirebaseFirestore.instance
-                                            .collection('brushingGroups')
-                                            .get())
-                                        .docs[index]
-                                        .id;
+                                String documentId = (await FirebaseFirestore
+                                        .instance
+                                        .collection('brushingGroups')
+                                        .get())
+                                    .docs[index]
+                                    .id;
 
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
                                     builder: (context) => Brushing(
-                                      documentId: documentId,
-                                      brushing: brushing,
-                                      image: image
-                                    ),
+                                        documentId: documentId,
+                                        brushing: brushing,
+                                        image: image),
                                   ),
                                 );
                               },
@@ -145,7 +148,7 @@ class _BrushingInstructionState extends State<BrushingInstruction> {
                                 decoration: BoxDecoration(
                                   color: AppColors.primaryColor,
                                   borderRadius:
-                                      BorderRadius.all(Radius.circular(10)),
+                                      const BorderRadius.all(Radius.circular(10)),
                                   boxShadow: [
                                     BoxShadow(
                                       color: Colors.black.withOpacity(0.2),
@@ -159,7 +162,6 @@ class _BrushingInstructionState extends State<BrushingInstruction> {
                                 child: Column(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
-                                    
                                     Text(
                                       brushing,
                                       textAlign: TextAlign.center,
@@ -175,6 +177,32 @@ class _BrushingInstructionState extends State<BrushingInstruction> {
                             );
                           },
                         ),
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => const CountdownPage(),
+                                ));
+                          },
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Image.asset(
+                                'assets/timer.png',
+                                width: 100,
+                              ),
+                              const Text(
+                                'Toothbrushing Timer',
+                                style: TextStyle(
+                                    fontWeight: FontWeight.w600, fontSize: 18),
+                              ),
+                              const SizedBox(
+                                height: 10,
+                              )
+                            ],
+                          ),
+                        )
                       ],
                     ),
                   ),
@@ -187,4 +215,3 @@ class _BrushingInstructionState extends State<BrushingInstruction> {
     );
   }
 }
-
